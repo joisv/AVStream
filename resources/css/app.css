@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .shadow-me{
+        box-shadow: 6px 6px 4px 0px rgba(246, 246, 246, 0.25)
+    }
+    .error{
+        font-size: small;
+        color: rgb(255, 54, 19);
+    }
+}
