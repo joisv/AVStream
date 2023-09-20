@@ -33,7 +33,7 @@
     <div class="sm:hidden flex">
         <div class="w-full">
             <button @click="category = ! category" class="flex justify-between w-full items-center px-2 font-medium">
-                <span class="text-sm">Category</span>
+                <span class="text-sm font-semibold">Category</span>
                 <div class="ease-in duration-100" :class="{ 'rotate-180': category }">
                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                         <path fill-rule="evenodd"

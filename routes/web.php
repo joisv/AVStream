@@ -22,6 +22,7 @@ use App\Http\Livewire\Plan\Index as PlanIndex;
 use App\Http\Livewire\Post\Create as PostCreate;
 use App\Http\Livewire\Post\Edit as PostEdit;
 use App\Http\Livewire\Post\Index as PostIndex;
+use App\Http\Livewire\Report\Index;
 use App\Http\Livewire\Role\Index as RoleIndex;
 use App\Http\Livewire\Studio\Index as StudioIndex;
 use App\Http\Livewire\Subscription\SubscriptionLog;
@@ -131,6 +132,8 @@ Route::middleware(['auth', 'role:admin|super-admin|writer'])->prefix('admin')->g
 
         Route::get('/subscription/log', SubscriptionLog::class)->name('subscription.log');
     });
+
+    Route::get('/reports', Index::class)->name('reports');
 });
 
 require __DIR__ . '/auth.php';

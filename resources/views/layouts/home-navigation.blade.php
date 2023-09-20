@@ -114,20 +114,20 @@
                                     <x-dropdown-link href="{{ route('vip') }}">
                                         <p class="font-semibold">Upgrade VIP</p>
                                     </x-dropdown-link>
-                                    <x-dropdown-link href="{{ route('user.profile') }}">
-                                        <p class="font-semibold">Profile</p>
-                                    </x-dropdown-link>
-                                    <livewire:navigation.subscription-log />
-                                    <livewire:navigation.notification />
                                     <x-dropdown-link href="{{ route('actress.collection') }}">
                                         <p class="font-semibold">Actress Collection</p>
                                     </x-dropdown-link>
                                     <x-dropdown-link href="{{ route('save') }}">
                                         <p class="font-semibold">Jav Collection</p>
                                     </x-dropdown-link>
+                                    <livewire:navigation.subscription-log />
+                                    <livewire:navigation.notification />
+                                    <x-dropdown-link href="{{ route('user.profile') }}">
+                                        <p class="font-semibold">Profile</p>
+                                    </x-dropdown-link>
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
-
+                                        
                                         <x-dropdown-link href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                             this.closest('form').submit();">
@@ -169,7 +169,7 @@
     <nav class="md:hidden fixed top-0 z-50">
         <div
             class="w-full py-3 px-4 fixed z-50 flex justify-between backdrop-brightness-90 backdrop-blur-sm items-center">
-            <div class="">
+            <div>
                 <a href="/">
                     @if ($logo)
                         <div class="w-24">
@@ -177,14 +177,14 @@
                                 class="object-containt">
                         </div>
                     @else
-                        <h1 class="text-rose-400 font-semibold text-3xl uppercase">AV<span
-                                class="text-gray-200">STREAM</span>
+                        <h1 class="text-rose-400 font-semibold text-3xl">AV<span
+                                class="text-gray-200">Stream</span>
                         </h1>
                     @endif
                 </a>
             </div>
             <div class="flex space-x-3 items-center">
-                <button type="button" @click="search = ! search">
+                <button class="mb-1" type="button" @click="search = ! search">
                     <svg width="22px" height="22px" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -217,7 +217,7 @@
                             <li>
                                 <button @click="watchJav = ! watchJav"
                                     class="flex justify-between w-full items-center px-2 font-medium">
-                                    <span class="text-sm">Watch JAV</span>
+                                    <span class="text-sm font-semibold">Watch JAV</span>
                                     <div class="ease-in duration-100" :class="{ 'rotate-180': watchJav }">
                                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 20 20">
@@ -256,19 +256,19 @@
                             </li>
                             <li>
                                 <a href="{{ route('genres') }}">
-                                    <span class="text-sm px-2 font-medium">Genres</span>
+                                    <span class="text-sm px-2 font-semibold">Genres</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ route('studios') }}">
-                                    <span class="text-sm px-2 font-medium">Studios</span>
+                                    <span class="text-sm px-2 font-semibold">Studios</span>
                                 </a>
                             </li>
                             {{-- my collection --}}
                             <li>
                                 <button @click="myCollection = ! myCollection"
                                     class="flex justify-between w-full items-center px-2 font-medium">
-                                    <span class="text-sm">My Collection: @auth
+                                    <span class="text-sm font-semibold">My Collection: @auth
                                             {{ $userName }}
                                         @endauth
                                     </span>
@@ -287,16 +287,16 @@
                                             <x-dropdown-link href="{{ route('vip') }}">
                                                 <p class="font-semibold text-gray-200">Upgrade VIP</p>
                                             </x-dropdown-link>
-                                            <x-dropdown-link href="{{ route('user.profile') }}">
-                                                <p class="font-semibold text-gray-200">Profile</p>
-                                            </x-dropdown-link>
-                                            <livewire:navigation.subscription-log />
-                                            <livewire:navigation.notification />
                                             <x-dropdown-link href="{{ route('actress.collection') }}">
                                                 <p class="font-semibold text-gray-200">Actress Collection</p>
                                             </x-dropdown-link>
                                             <x-dropdown-link href="{{ route('save') }}">
                                                 <p class="font-semibold text-gray-200">Jav Collection</p>
+                                            </x-dropdown-link>
+                                            <livewire:navigation.subscription-log />
+                                            <livewire:navigation.notification />
+                                            <x-dropdown-link href="{{ route('user.profile') }}">
+                                                <p class="font-semibold text-gray-200">Profile</p>
                                             </x-dropdown-link>
                                             <form method="POST" action="{{ route('logout') }}">
                                                 @csrf

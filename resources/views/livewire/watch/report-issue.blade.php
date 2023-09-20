@@ -11,7 +11,7 @@
             @foreach ($reportContent as $index => $report)
                 <div class="flex items-center">
                     <input id="default-radio-1-{{ $index }}" type="radio" value="{{ $report }}"
-                        wire:model.delay="content" name="default-radio"
+                        wire:model.defer="content" name="default-radio"
                         class="w-4 h-4 bg-gray-100 border-gray-300 focus:ring-blue-500  ">
                     <label for="default-radio-1-{{ $index }}"
                         class="ml-2 text-sm font-medium ">{{ $report }}</label>
@@ -29,7 +29,7 @@
             </div>
         </div>
     </form>
-    <div class="absolute w-full left-0 top-0 bg-gray-400 opacity-70 h-full" wire:loading.flex>
+    <div class="absolute w-full left-0 top-0 opacity-70 h-full" wire:loading.flex>
         <div class="w-full flex justify-center h-full items-center">
             <x-icons.loading-circle />
         </div>
