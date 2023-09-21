@@ -27,10 +27,8 @@ class VipSubmit extends Component
 
     public function save()
     {
-        // Pengecekan apakah pengguna memiliki berlangganan "pending"
         if (auth()->check() && $this->hasPendingSubscription()) {
-            // Tampilkan sweetAlert untuk konfirmasi
-            $this->alert('error', 'You already have a pending subscription.', [
+            $this->alert('error', 'You already have a subscription.', [
                 'position' => 'top-end',
                 'timer' => 5000,
                 'toast' => true,
@@ -40,16 +38,22 @@ class VipSubmit extends Component
                 // 'onDismissed' => '',
             ]);
         } else {
-           $this->modal = false;
+        //    $this->modal = false;
+           $this->createSubscription();
         }
     }
 
     public function hasPendingSubscription()
     {
         $user = auth()->user();
-        return $user->subscriptions()->where('status', 'pending')->exists();
+    
+        if ($user->can('can premium content') || $user->subscriptions()->where('status', 'pending')->exists()) {
+            return true;
+        }
+    
+        return false;
     }
-
+    
     public function createSubscription()
     {
         $duration = $this->duration;
