@@ -4,7 +4,7 @@
     </header>
     <form wire:submit.prevent="save" class="py-4">
         <div class="md:w-[65%] w-full space-y-5">
-            <div class="col-span-full">
+            {{-- <div class="col-span-full">
                 <div class="mt-2 flex items-center gap-x-3">
                     @if ($favicon)
 
@@ -38,7 +38,7 @@
                         <x-icons.loading />
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             {{-- Logo --}}
             <div class="col-span-full">

@@ -72,19 +72,17 @@
                 </label>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
+            <div class="flex items-center md:justify-end justify-start mt-4">
+                {{-- @if (Route::has('password.request'))
                     <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         href="{{ route('password.request') }}">
                         {{ __('Forgot your password?') }}
                     </a>
-                @endif
+                @endif --}}
 
-                <x-primary-button type="submit" custom="bg-rose-500 hover:bg-rose-600 focus:ring-rose-300">
-                    <x-slot name="child">
-                        Login
-                    </x-slot>
-                </x-primary-button>
+               <button type="submit" class="bg-rose-500 w-[85%] p-2 text-accent flex justify-center text-xl font-medium focus:ring-4 focus:ring-gray-500">
+                Login
+               </button>
             </div>
         </form>
     </div>

@@ -1,12 +1,7 @@
-@php
-    $admin = auth()
-        ->user()
-        ->hasRole('admin');
-@endphp
 <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg space-y-4">
     <h1 class="text-xl font-semibold">Switch maintenance mode</h1>
     <div class="space-y-3">
-        @hasRole('admin')
+        @hasrole('admin|super-admin')
             <button wire:click="toggleMaintenance()" wire:loading.attr="disabled"
                 class="p-1 rounded-sm text-white focus:ring-4 focus:ring-rose-500 flex items-center hover:ring-4 hover:ring-rose-500 ease-in duration-150 {{ $maintenanceMode ? 'bg-gray-500' : 'bg-rose-500' }}">
                 <div wire:loading>
@@ -19,7 +14,7 @@
             <h1 class="text-gray-500 font-medium">Status: <span
                     class=" {{ $maintenanceMode ? 'text-green-600' : 'text-rose-500' }}">{{ $maintenanceMode ? 'Enable' : 'Disable' }}</span>
             </h1>
-            @hasRole('admin')
+            @hasrole('admin|super-admin')
                 <p class="text-gray-500 font-medium">secret: <span class="text-black">{{ $secret }}</span></p>
             @endhasrole
         </div>

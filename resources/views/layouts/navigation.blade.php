@@ -128,7 +128,7 @@
                         </div>
                     </div>
                 </div>
-                @hasrole('admin')
+                @hasrole('admin|super-admin')
                     <div>
                         <button
                             class="focus:outline-none text-white focus:ring-4 focus:border-0 focus:bg-gray-700 border border-gray-200 font-medium items-center text-sm p-3 flex w-full"

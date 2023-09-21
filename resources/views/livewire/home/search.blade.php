@@ -53,7 +53,7 @@
                             <a href="{{ route('watch', ['slug' => $post->slug]) }}">
                                 <div
                                     class="w-full md:h-44 lg:h-32 xl:h-44 h-28 rounded-sm overflow-hidden cursor-pointer hover:opacity-90 ease-in duration-300 relative">
-                                    <img src="{{ $post->poster_path }}" alt="" srcset=""
+                                    <img src="{{ asset('storage/'.$post->poster_path) }}" alt="" srcset=""
                                         class="w-full h-full object-cover object-center" loading="lazy">
                                     @if ($post->isVip)
                                         <div
@@ -67,9 +67,8 @@
                             </a>
                         </article>
                     @empty
-                        <div class="col-span-4">
-                            <h3>No jav found</h3>
-                        </div>
+                    <div class="text-xl font-semibold text-gray-300 p-16 sm:col-span-3 lg:col-span-4 col-span-2 text-center">
+                        No Jav found</div>
                     @endforelse
                 @endempty
                 <div class="lg:col-span-4 sm:col-span-3 col-span-2 mx-auto" wire:loading.delay>
