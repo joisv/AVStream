@@ -18,11 +18,12 @@ use App\Http\Livewire\Category\Index as CategorIndex;
 use App\Http\Livewire\Download\Index as DownloadIndex;
 use App\Http\Livewire\Genre\Index as GenreIndex;
 use App\Http\Livewire\Movie\Index as MovieIndex;
+use App\Http\Livewire\Payment\Index;
 use App\Http\Livewire\Plan\Index as PlanIndex;
 use App\Http\Livewire\Post\Create as PostCreate;
 use App\Http\Livewire\Post\Edit as PostEdit;
 use App\Http\Livewire\Post\Index as PostIndex;
-use App\Http\Livewire\Report\Index;
+use App\Http\Livewire\Report\Index as ReportIndex;
 use App\Http\Livewire\Role\Index as RoleIndex;
 use App\Http\Livewire\Studio\Index as StudioIndex;
 use App\Http\Livewire\Subscription\SubscriptionLog;
@@ -133,7 +134,9 @@ Route::middleware(['auth', 'role:admin|super-admin|writer'])->prefix('admin')->g
         Route::get('/subscription/log', SubscriptionLog::class)->name('subscription.log');
     });
 
-    Route::get('/reports', Index::class)->name('reports');
+    Route::get('/reports', ReportIndex::class)->name('reports');
+
+    Route::get('payments', Index::class)->name('payments');
 });
 
 require __DIR__ . '/auth.php';

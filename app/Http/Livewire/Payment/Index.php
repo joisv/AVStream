@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Livewire\Genre;
+namespace App\Http\Livewire\Payment;
 
-use App\Models\Genre;
+use App\Models\Payment;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -17,26 +17,26 @@ class Index extends Component
     public $search = '',
         $sortField = 'created_at',
         $isPaginate = 10,
-        $genreUpdate,
-        $genreCount,
-        $sortDirection = 'desc';
+        $paymentUpdate,
+        $paymentCount,
+        $sortDirection = 'desc';   
     
     public function render()
     {
-        return view('livewire.genre.index', [
-            'genres' => Genre::search('name', $this->search)->orderBy($this->sortField, $this->sortDirection)->paginate($this->isPaginate)
+        return view('livewire.payment.index', [
+            'payments' => Payment::search('name', $this->search)->orderBy($this->sortField, $this->sortDirection)->paginate($this->isPaginate)
         ]);
     }
 
     public function getPostCount()
     {
-        $postInfo = Genre::selectRaw('COUNT(*) as postCount, MAX(name) as postLatestUpdated')
+        $postInfo = Payment::selectRaw('COUNT(*) as postCount, MAX(name) as postLatestUpdated')
             ->first();
 
-        $this->genreCount = $postInfo->postCount;
-        $this->genreUpdate = $postInfo->postLatestUpdated;
+        $this->paymentCount = $postInfo->postCount;
+        $this->paymentUpdate = $postInfo->postLatestUpdated;
     }
-    
+
     public function sortBy($field)
     {
 
@@ -56,9 +56,9 @@ class Index extends Component
         
     }
 
-    public function toggleModal($genre)
+    public function toggleModal($payment)
     {
-        $this->emit('editId', $genre);
+        $this->emit('editId', $payment);
     }
 
     public function createModal()
@@ -66,9 +66,9 @@ class Index extends Component
         $this->emit('openModal');
     }
 
-    public function destroyAlert($genre)
+    public function destroyAlert($payment)
     {
-        $this->alert('warning', 'delete this genre ?', [
+        $this->alert('warning', 'delete this payment ?', [
             'position' => 'top-end',
             'timer' => '',
             'toast' => true,
@@ -77,17 +77,17 @@ class Index extends Component
             'showCancelButton' => true,
             'onDismissed' => '',
             'data' => [
-                'genre' => $genre
+                'payment' => $payment
             ]
         ]);
     }
 
     public function destroy($data)
     {
-        $id = $data['data']['genre'];
+        $id = $data['data']['payment'];
         try {
-            $genre = Genre::find($id);
-            $genre->delete();
+            $payment = Payment::find($id);
+            $payment->delete();
             $this->emitSelf('closeModal');
             $this->alert('success', 'Deleted successfully', [
                 'position' => 'top-end',
@@ -95,7 +95,7 @@ class Index extends Component
                 'toast' => true,
             ]);
         } catch (\Throwable $th) {
-            $this->alert('error', 'Genre not found', [
+            $this->alert('error', 'Payment not found', [
                 'position' => 'top-end',
                 'timer' => 5000,
                 'toast' => true,
