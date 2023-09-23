@@ -1,10 +1,10 @@
 <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg relative">
     <header class="flex space-x-4 items-center">
         <div>
-            <h1 class="text-2xl font-semibold">Contact Info</h1>
+            <h1 class="text-2xl font-semibold">Payment method</h1>
         </div>
         <div>
-            <x-primary-button wire:click="addContact" type="button"
+            <x-primary-button wire:click="addPayment" type="button"
                 custom="bg-gray-700 hover:bg-gray-600 focus:ring-gray-300 ">
                 <x-slot name="child">
                     add
@@ -13,26 +13,26 @@
         </div>
     </header>
     <form wire:submit.prevent="save">
-        @foreach ($contacts as $index => $contact)
-            <div class="flex items-end space-x-2 w-[65%] mt-3" wire:key="contact-{{ $index }}">
+        @foreach ($payments as $index => $payment)
+            <div class="flex items-end space-x-2 w-[65%] mt-3" wire:key="payment-{{ $index }}">
                 <div class=" w-full">
                     <x-inputs.label-input for="name_{{ $index }}" class="text-gray-500">Name</x-input.lable-input>
                         <x-inputs.text-input type="text" id="name_{{ $index }}"
-                            wire:model.defer="contacts.{{ $index }}.name" placeholder="Facebook" />
-                        @error("contacts.{$index}.name")
+                            wire:model.defer="payments.{{ $index }}.name" placeholder="Direct transfer" />
+                        @error("payments.{$index}.name")
                             <span class="error">{{ $message }}</span>
                         @enderror
                 </div>
                 <div class=" w-full">
-                    <x-inputs.label-input for="link_{{ $index }}" class="text-gray-500">Contact link</x-input.lable-input>
+                    <x-inputs.label-input for="link_{{ $index }}" class="text-gray-500">Description</x-input.lable-input>
                         <x-inputs.text-input type="text" id="link_{{ $index }}"
-                            wire:model.defer="contacts.{{ $index }}.contact_url" placeholder="Contact link" />
-                        @error("contacts.{$index}.contact_url")
+                            wire:model.defer="payments.{{ $index }}.description" placeholder="Description" />
+                        @error("payments.{$index}.description")
                             <span class="error">{{ $message }}</span>
                         @enderror
                 </div>
                 <div>
-                    <x-primary-button :disabled="$index === 0" wire:click="deleteContact({{ $index }})" x-data
+                    <x-primary-button :disabled="$index === 0" wire:click="deletePayment({{ $index }})" x-data
                         type="button" custom="bg-yellow-500 hover:bg-yellow-600 focus:ring-yellow-300 h-fit">
                         <x-slot name="icon">
                             <x-icons.delete />

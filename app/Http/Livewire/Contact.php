@@ -3,10 +3,12 @@
 namespace App\Http\Livewire;
 
 use App\Models\Contact as ModelsContact;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class Contact extends Component
-{
+{   
+    use LivewireAlert;
     public ModelsContact $contact;
 
     public $contacts = [
@@ -41,7 +43,7 @@ class Contact extends Component
                 'contact_url' => $item['contact_url']
             ]);
         }
-        $this->emit('showAlert', 'contact saved');
+        $this->alert('success', 'contact saved');
     }
 
     public function addContact()

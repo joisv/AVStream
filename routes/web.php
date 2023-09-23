@@ -135,8 +135,6 @@ Route::middleware(['auth', 'role:admin|super-admin|writer'])->prefix('admin')->g
     });
 
     Route::get('/reports', ReportIndex::class)->name('reports');
-
-    Route::get('payments', Index::class)->name('payments');
 });
 
 require __DIR__ . '/auth.php';

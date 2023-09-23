@@ -3,5 +3,6 @@
         <livewire:maintenance-toggle />
         <livewire:seo-setting />
         <livewire:contact />
+        <livewire:payment />
     </div>
 </x-app-layout>

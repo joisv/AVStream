@@ -6,7 +6,7 @@
             @json(request()->routeIs('actress.index')) ||
             @json(request()->routeIs('studio.index')),
         openStream: @json(request()->routeIs('download')) || @json(request()->routeIs('movie')),
-        openSub: @json(request()->routeIs('subscription.plan')) || @json(request()->routeIs('payments'))
+        openSub: @json(request()->routeIs('subscription.plan'))
     }" x-cloak
         :class="openMenu ? '-translate-x-[150%]' : screenWidth <= 430 ? 'w-[80%]' : 'w-[50vw]'">
         <button class="ring focus:ring-rose-500 p-2 rounded-md absolute -right-11 lg:hidden flex" @click="toggleMenu()">
@@ -163,10 +163,6 @@
                                 <x-nav-link href="{{ route('subscription.log') }}" :active="request()->routeIs('subscription.log')">
                                     <x-icons.movie />
                                     {{ __('Subscription') }}
-                                </x-nav-link>
-                                <x-nav-link href="{{ route('payments') }}" :active="request()->routeIs('payments')">
-                                    <x-icons.movie />
-                                    {{ __('Payment method') }}
                                 </x-nav-link>
                             </div>
                         </div>
