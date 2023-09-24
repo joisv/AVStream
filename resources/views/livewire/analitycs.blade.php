@@ -51,17 +51,21 @@
                 </x-slot>
             </x-analitycs-card>
         </button>
-        <x-analitycs-card>
-            <x-slot name="icon">
-                <x-icons.percentage width="45px" height="45px" />
-            </x-slot>
-            <x-slot name="title">
-                Conversion rate
-            </x-slot>
-            <x-slot name="value">
-                472.334
-            </x-slot>
-        </x-analitycs-card>
+        <button type="button" @click.prevent="setActiveTab('conversion')"
+            :class="{ 'ring-4 ring-gray-800': activeTab === 'conversion' }"
+            class="inline-block rounded-sm text-sm font-medium w-full">
+            <x-analitycs-card>
+                <x-slot name="icon">
+                    <x-icons.percentage width="45px" height="45px" />
+                </x-slot>
+                <x-slot name="title">
+                    Conversion rate
+                </x-slot>
+                <x-slot name="value">
+                    {{ $todayConversion }} %
+                </x-slot>
+            </x-analitycs-card>
+        </button>
     </div>
     <div class="w-full lg:flex lg:space-x-2 space-y-3 lg:space-y-0">
         <div class="lg:w-[70%] w-full bg-white p-2">
@@ -74,6 +78,10 @@
                 </div>
                 <div x-cloak x-show="activeTab === 'revenue'">
                     <livewire:analitycs.revenue />
+                </div>
+                <div x-cloak x-show="activeTab === 'conversion'">
+                    {{-- <livewire:analitycs.revenue /> --}}
+                    halo conversion
                 </div>
             </div>
 
