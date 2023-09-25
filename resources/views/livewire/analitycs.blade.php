@@ -80,8 +80,8 @@
                     <livewire:analitycs.revenue />
                 </div>
                 <div x-cloak x-show="activeTab === 'conversion'">
-                    {{-- <livewire:analitycs.revenue /> --}}
-                    halo conversion
+                    <livewire:analitycs.conversion />
+                    {{-- halo conversion --}}
                 </div>
             </div>
 
