@@ -52,13 +52,11 @@ class Download extends Component
 
             if ($download->isVip == 1) {
                 if (auth()->check() && auth()->user()->can('can premium content')) {
-                    $script = "window.open('$download->url_download', '_blank');";
-                    $this->dispatchBrowserEvent('open-new-tab', ['script' => $script]);
+                    $this->dispatchBrowserEvent('open-new-tab', ['open' => $download->url_download]);
                 } else {
                     $this->alert('error', 'You need to login or upgrade youre account');
                 }
             } else {
-                // $script = "window.open('$download->url_download', '_blank');";
                 $this->dispatchBrowserEvent('open-new-tab', ['open' => $download->url_download]);
             }
         } else {

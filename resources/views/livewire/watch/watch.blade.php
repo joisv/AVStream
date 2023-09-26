@@ -80,7 +80,9 @@
                     @endif
                 @endif
             @else
-                <div class="text-white">tidak selected</div>
+                <div class="absolute top-0 left-0 w-full h-full flex justify-center items-center">
+                        <h1 class="text-rose-500 text-2xl font-semibold">404 <span class="underline text-gray-500">Embed not found...</span></h1>
+                </div>
             @endif
 
         </div>
@@ -121,8 +123,9 @@
                                                         <label for="created_at_{{ $index }}"
                                                             class="relative flex justify-between w-full px-4 py-2 text-left text-sm font-semibold leading-5 text-gray-700 dark:text-gray-300 hover:bg-slate-300 transition duration-150 ease-in-out">
                                                             <input type="radio" name=""
-                                                                id="created_at_{{ $index }}" value="{{ $embed }}"
-                                                                class="absolute opacity-0" wire:model.lazy="selectedEmbeds">
+                                                                id="created_at_{{ $index }}"
+                                                                value="{{ $embed }}" class="absolute opacity-0"
+                                                                wire:model.lazy="selectedEmbeds">
                                                             {{ $embed->name }}
                                                             <div>
                                                                 <x-icons.crown isVip="{{ $embed->isVip }}" />

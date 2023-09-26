@@ -7,7 +7,8 @@
             @forelse ($regularDownloads as $index => $regular)
                 <div class="flex items-center mb-4">
                     <input id="default-radio-1" type="radio" value="{{ $regular['id'] }}" wire:model="selectedDownload"
-                        name="default-radio" class="w-3 h-3 text-rose-600 bg-gray-200 focus:ring-rose-500 ">
+                        wire:loading.attr="disabled" name="default-radio"
+                        class="w-3 h-3 text-rose-600 bg-gray-200 focus:ring-rose-500 ">
                     <label for="default-radio-1" class="ml-2 font-medium ">{{ $regular['name'] }}</label>
                 </div>
                 {{-- {{ $regular['name'] }} --}}
@@ -37,7 +38,7 @@
                 @forelse ($vipDownloads as $index => $vip)
                     <div class="flex items-center mb-4">
                         <input id="vip-radio-{{ $index }}" type="radio" value="{{ $vip['id'] }}"
-                            wire:model="selectedDownload" name="vip-radio"
+                            wire:model="selectedDownload" wire:loading.attr="disabled" name="vip-radio"
                             class="w-3 h-3 text-rose-600 bg-gray-200 focus:ring-rose-500 ">
                         <label for="vip-radio-{{ $index }}" class="ml-2 font-medium">{{ $vip['name'] }}</label>
                     </div>
@@ -47,12 +48,16 @@
                     </div>
                 @endforelse
             </div>
-            <div class="grid grid-cols-2 gap-2 mt-16">
-                <button type="button"
-                    class="rounded-md p-1 bg-transparent text-white hover:border hover:border-rose-500 outline-none"
-                    @click="$wire.modal = false">Cancle</button>
-                <button type="button" wire:click="download"
-                    class="rounded-md p-1 text-center bg-rose-500 text-white">Download</a>
+            <div class="mt-14 space-y-2">
+                <h1 class="font-medium text-yellow-500 text-sm">Alert⚠ : If the popup doesn't appear, allow the
+                    browser to open popups from this website</h1>
+                <div class="grid grid-cols-2 gap-2">
+                    <button type="button" wire:loading.attr="disabled"
+                        class="rounded-md p-1 h-10 bg-transparent text-white hover:border hover:border-rose-500 outline-none"
+                        @click="$wire.modal = false">Cancle</button>
+                    <button type="button" wire:loading.attr="disabled" wire:click="download"
+                        class="rounded-md p-1 h-10 text-center bg-rose-500 text-white">Download</a>
+                </div>
             </div>
         </div>
         <div class="fixed w-full left-0 -top-2 opacity-70 h-full" wire:loading.flex>

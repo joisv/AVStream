@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Livewire\Genre;
+namespace App\Http\Livewire\Report;
 
-use App\Models\Genre;
+use App\Models\Report;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -11,32 +11,14 @@ class Index extends Component
 {
     use WithPagination;
     use LivewireAlert;
-    
-    public $listeners = ['closeModal' => 'refreshData', 'destroy' => 'destroy'];
 
     public $search = '',
         $sortField = 'created_at',
         $isPaginate = 10,
-        $genreUpdate,
-        $genreCount,
         $sortDirection = 'desc';
-    
-    public function render()
-    {
-        return view('livewire.genre.index', [
-            'genres' => Genre::search('name', $this->search)->orderBy($this->sortField, $this->sortDirection)->paginate($this->isPaginate)
-        ]);
-    }
 
-    public function getPostCount()
-    {
-        $postInfo = Genre::selectRaw('COUNT(*) as postCount, MAX(name) as postLatestUpdated')
-            ->first();
+    public $listeners = ['destroy' => 'destroy'];
 
-        $this->genreCount = $postInfo->postCount;
-        $this->genreUpdate = $postInfo->postLatestUpdated;
-    }
-    
     public function sortBy($field)
     {
 
@@ -51,24 +33,32 @@ class Index extends Component
         $this->sortField = $field;
     }
 
-    public function refreshData()
+    public function mount()
     {
-        
+        $this->getReportCount();
+    }
+    
+    public function render()
+    {
+        return view('livewire.report.index', [
+            'reports' => Report::with(['post', 'user'])->search('title', $this->search)->orderBy($this->sortField, $this->sortDirection)->paginate($this->isPaginate),
+        ]);
     }
 
-    public function toggleModal($genre)
+    public function getReportCount()
     {
-        $this->emit('editId', $genre);
-    }
+        $reports = Report::where('is_new', true)->get();
 
-    public function createModal()
-    {
-        $this->emit('openModal');
+        foreach ($reports as $report) {
+            $report->update([
+                'is_new' => false
+            ]);
+        }
     }
-
-    public function destroyAlert($genre)
+    
+    public function destroyAlert($report)
     {
-        $this->alert('warning', 'delete this genre ?', [
+        $this->alert('warning', 'delete this report ?', [
             'position' => 'top-end',
             'timer' => '',
             'toast' => true,
@@ -77,30 +67,29 @@ class Index extends Component
             'showCancelButton' => true,
             'onDismissed' => '',
             'data' => [
-                'genre' => $genre
+                'report' => $report
             ]
         ]);
     }
 
     public function destroy($data)
     {
-        $id = $data['data']['genre'];
+        $id = $data['data']['report'];
         try {
-            $genre = Genre::find($id);
-            $genre->delete();
-            $this->emitSelf('closeModal');
+
+            $report = Report::find($id);
+            $report->delete();
             $this->alert('success', 'Deleted successfully', [
                 'position' => 'top-end',
                 'timer' => 5000,
                 'toast' => true,
             ]);
         } catch (\Throwable $th) {
-            $this->alert('error', 'Genre not found', [
+            $this->alert('error', 'Post not found', [
                 'position' => 'top-end',
                 'timer' => 5000,
                 'toast' => true,
             ]);
         }
-        
     }
 }

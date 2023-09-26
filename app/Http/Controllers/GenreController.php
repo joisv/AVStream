@@ -21,7 +21,7 @@ class GenreController extends Controller
 
     public function index()
     {
-        SEOTools::setTitle('Genres  - Daftar genre jav terlengkap', false);
+        SEOTools::setTitle('Genres - Daftar genre jav terlengkap', false);
         SEOTools::setDescription($this->description);
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());

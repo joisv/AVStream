@@ -10,7 +10,7 @@
     @push('script')
         <script>
             document.addEventListener('livewire:load', function() {
-                console.log(@js($postByName));
+                
                 var options = {
                     series: [{
                         name: 'Views per days',

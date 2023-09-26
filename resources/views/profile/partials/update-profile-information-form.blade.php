@@ -9,9 +9,9 @@
         </p>
     </header>
 
-    <form id="send-verification" method="post" action="{{ route('verification.send') }}">
+    {{-- <form id="send-verification" method="post" action="{{ route('verification.send') }}">
         @csrf
-    </form>
+    </form> --}}
 
     <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
         @csrf
@@ -48,7 +48,12 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+            <x-primary-button wire:loading.attr="disabled" type="submit"
+                custom="disabled:opacity-50 bg-gray-800 hover:bg-gray-600 focus:ring-gray-300">
+                <x-slot name="child">
+                    save
+                </x-slot>
+            </x-primary-button>
 
             @if (session('status') === 'profile-updated')
                 <p

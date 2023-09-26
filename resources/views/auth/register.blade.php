@@ -5,7 +5,7 @@
         </header>
         <a href="{{ route('login') }}" class="w-[85%]">
             <div class="bg-rose-500 p-2 text-accent w-full flex justify-center text-xl font-medium">
-                login
+                Login
             </div>
         </a>
     </div>
@@ -110,17 +110,11 @@
                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <x-primary-button class="ml-4">
-                    <x-slot name="child">
-                        {{ __('Register') }}
-                    </x-slot>
-                </x-primary-button>
+            <div class="flex items-center md:justify-end justify-start mt-4">
+                <button type="submit"
+                    class="bg-rose-500 p-2 text-accent w-[85%] flex justify-center text-xl font-medium focus:ring-4 focus:ring-gray-500">
+                    Register
+                </button>
             </div>
         </form>
     </div>

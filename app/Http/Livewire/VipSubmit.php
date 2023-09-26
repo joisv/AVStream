@@ -25,75 +25,35 @@ class VipSubmit extends Component
         return view('livewire.vip-submit');
     }
 
-    // public function save()
-    // {
-    //     $duration = $this->duration;
-    //     $start_date = now();
-    //     $end_date = $start_date->copy();
-
-    //     switch ($this->billing_cycle) {
-    //         case 'year':
-    //             $end_date->addYear($duration);
-    //             break;
-    //         default:
-    //             $end_date->addMonth($duration);
-    //             break;
-    //     }
-
-    //     if (auth()->check()) {
-
-    //         Subscription::create([
-    //             'user_id' => auth()->user()->id,
-    //             'plan_id' => $this->plan_id,
-    //             'payment_code' => $this->generatePaymentCode(auth()->user()->name),
-    //             'start_date' => $start_date,
-    //             'end_date' => $end_date,
-    //             'status' => 'pending',
-    //             'billing_amount' => $this->price,
-    //             'payment_method' => 'Direct Transfer',
-    //         ]);
-
-    //         Notification::create([
-    //             'user_id' => auth()->user()->id,
-    //             'title' => 'Successfully subscribed ',
-    //             'message' => 'Congratulations! You have successfully subscribed. Please copy youre payment code and confirm your payment on the Contact page. Thank you!',
-    //             'is_read' => true
-    //         ]);
-
-    //         $this->modal = false;
-    //         $this->emit('sendNotif');
-    //         $this->alert('success', 'Succes created subscription check your notification');
-    //     } else {
-    //         $this->modal = false;
-    //         redirect()->route('login');
-    //     }
-    // }
-
     public function save()
     {
-        // Pengecekan apakah pengguna memiliki berlangganan "pending"
         if (auth()->check() && $this->hasPendingSubscription()) {
-            // Tampilkan sweetAlert untuk konfirmasi
-            $this->alert('warning', 'You already have a pending subscription. Do you want to continue?', [
+            $this->alert('error', 'You already have a subscription.', [
                 'position' => 'top-end',
-                'timer' => '',
+                'timer' => 5000,
                 'toast' => true,
-                'showConfirmButton' => true,
-                'onConfirmed' => 'createSubscription',
-                'showCancelButton' => true,
-                'onDismissed' => '',
+                // 'showConfirmButton' => true,
+                // 'onConfirmed' => 'createSubscription',
+                // 'showCancelButton' => true,
+                // 'onDismissed' => '',
             ]);
         } else {
-           $this->modal = false;
+        //    $this->modal = false;
+           $this->createSubscription();
         }
     }
 
     public function hasPendingSubscription()
     {
         $user = auth()->user();
-        return $user->subscriptions()->where('status', 'pending')->exists();
+    
+        if ($user->can('can premium content') || $user->subscriptions()->where('status', 'pending')->exists()) {
+            return true;
+        }
+    
+        return false;
     }
-
+    
     public function createSubscription()
     {
         $duration = $this->duration;
