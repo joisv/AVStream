@@ -20,9 +20,16 @@ export default {
                 secondary: "#0879B9",
                 background: "#0B0A0A",
                 accent: "#FFFFFF"
-            }
+            },
+            typography: (theme) => ({
+                DEFAULT: {
+                    css: {
+                        color: theme('colors.gray.300'),
+                    },
+                },
+            }),
         },
     },
 
-    plugins: [forms],
+    plugins: [forms, require('@tailwindcss/typography'),],
 };

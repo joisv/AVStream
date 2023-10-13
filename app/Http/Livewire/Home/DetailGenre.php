@@ -4,9 +4,12 @@ namespace App\Http\Livewire\Home;
 
 use App\Models\Genre;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class DetailGenre extends Component
 {
+    use WithPagination;
+    
     public Genre $genre;
 
     public $sort = 'created_at';

@@ -72,11 +72,9 @@
                             No Jav found</div>
                     @endforelse
                 @endempty
-                <div class="lg:col-span-4 sm:col-span-3 col-span-2 mx-auto" wire:loading.delay>
-                    <div class="flex items-center justify-center md:h-44 lg:h-32 xl:h-44 h-28 ">
-                        <div role="status">
-                            <x-icons.loading-circle />
-                        </div>
+                <div class="lg:col-span-4 sm:col-span-3 col-span-2 mx-auto min-h-[50vh] items-center justify-center" wire:loading.flex>
+                    <div class="flex items-center justify-center md:h-44 lg:h-32 xl:h-44 h-28 max-w-sm">
+                        <x-icons.loading-circle />
                     </div>
                 </div>
             </div>

@@ -96,7 +96,7 @@
     <div class="mb-10 sm:mx-14 mx-2 space-y-10">
         <div class="grid sm:grid-cols-3 lg:grid-cols-4 grid-cols-2 text-gray-400 gap-2">
             @forelse ($actresses as $post)
-                <article>
+                <article wire:loading.remove>
                     <a href="{{ route('watch', ['slug' => $post->slug]) }}">
                         <div
                             class="w-full md:h-44 lg:h-32 xl:h-44 h-28 rounded-sm overflow-hidden cursor-pointer hover:opacity-90 ease-in duration-300 relative">
@@ -118,8 +118,8 @@
                     class="text-xl font-semibold text-gray-300 p-16 sm:col-span-3 lg:col-span-4 col-span-2 text-center">
                     No Jav found</div>
             @endforelse
-            <div class="fixed w-full left-0 -top-2 opacity-70 h-full" wire:loading.flex>
-                <div class="w-full flex justify-center h-full items-center">
+            <div class="lg:col-span-4 sm:col-span-3 col-span-2 mx-auto min-h-[50vh] items-center justify-center" wire:loading.flex>
+                <div class="flex items-center justify-center md:h-44 lg:h-32 xl:h-44 h-28 max-w-sm">
                     <x-icons.loading-circle />
                 </div>
             </div>

@@ -39,7 +39,6 @@
                     </div>
                 </div>
             </div> --}}
-
             {{-- Logo --}}
             <div class="col-span-full">
                 <div class="mt-2 flex items-center gap-x-3">
@@ -105,9 +104,11 @@
                         @endif
                 </div>
                 <div @click="expanded = ! expanded"
-                    class="w-full cursor-pointer p-2 border rounded-sm select-none border-gray-300" x-show="expanded"
+                    class="w-full cursor-pointer p-2 border rounded-sm select-none border-gray-300 " x-show="expanded"
                     x-collapse.min.70px>
-                    {!! $seoSetting->terms !!}
+                    <article class="prose prose-base lg:prose-lg prose-code:text-rose-500 prose-a:text-blue-600 prose-p:text-gray-900">
+                        {!! $seoSetting->terms !!}
+                    </article>
                 </div>
             </div>
             <div x-data="{ expander: false }">
@@ -118,9 +119,11 @@
                         @endif
                 </div>
                 <div @click="expander = ! expander"
-                    class="w-full cursor-pointer p-2 border rounded-sm select-none border-gray-300" x-show="expander"
+                    class="w-full cursor-pointer p-2 border rounded-sm select-none border-gray-300 " x-show="expander"
                     x-collapse.min.70px>
-                    {!! $seoSetting->about !!}
+                    <article class="prose prose-base lg:prose-lg prose-code:text-rose-500 prose-a:text-blue-600 prose-p:text-gray-900">
+                        {!! $seoSetting->about !!}
+                    </article>
                 </div>
             </div>
         </div>

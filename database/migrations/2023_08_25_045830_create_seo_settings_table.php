@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('favicon')->nullable();
             $table->string('logo')->nullable();
             $table->text('description')->nullable();
-            $table->text('terms')->nullable();
-            $table->text('about')->nullable();
+            $table->longText('terms')->nullable();
+            $table->longText('about')->nullable();
             $table->text('keywords')->nullable();
             $table->timestamps();
         });

@@ -18,7 +18,6 @@ use App\Http\Livewire\Category\Index as CategorIndex;
 use App\Http\Livewire\Download\Index as DownloadIndex;
 use App\Http\Livewire\Genre\Index as GenreIndex;
 use App\Http\Livewire\Movie\Index as MovieIndex;
-use App\Http\Livewire\Payment\Index;
 use App\Http\Livewire\Plan\Index as PlanIndex;
 use App\Http\Livewire\Post\Create as PostCreate;
 use App\Http\Livewire\Post\Edit as PostEdit;

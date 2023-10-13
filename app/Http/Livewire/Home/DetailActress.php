@@ -6,10 +6,13 @@ use App\Models\Actress;
 use Illuminate\Support\Facades\Auth;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class DetailActress extends Component
 {
+    use WithPagination;
     use LivewireAlert;
+    
     public Actress $actress;
     public $user;
     public $hasActress;
@@ -35,7 +38,7 @@ class DetailActress extends Component
         $actresses = $this->actress;
         
         return view('livewire.home.detail-actress', [
-            'actresses' => $actresses->posts()->orderBy($this->sortBy, 'desc')->paginate(12)
+            'actresses' => $actresses->posts()->orderBy($this->sortBy, 'desc')->paginate(2)
         ]);
     }
 

@@ -15,7 +15,7 @@ class Terms extends Component
     public $terms;
 
     public $rules = [
-        'terms' => 'required|min:5|max:2000|string'
+        'terms' => 'required|min:5|string'
     ];
 
     public function mount()
@@ -30,6 +30,7 @@ class Terms extends Component
 
     public function save()
     {   
+        // dd($this->terms);
         Gate::authorize('create', Post::class);
         
         $this->validate();

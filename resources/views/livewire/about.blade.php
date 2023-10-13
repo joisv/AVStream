@@ -4,8 +4,8 @@
             <h1 class="text-2xl font-semibold mb-4">About</h1>
         </header>
         <form wire:submit.prevent="save">
-            <div wire:ignore>
-                <div id="summernote_about" name="editordata" wire:model.defer="about"></div>
+            <div wire:ignore class="prose prose-base lg:prose-lg prose-code:text-rose-500 prose-a:text-blue-600">
+                <div id="summernote_about" name="editordata" ></div>
             </div>
             <div class="w-full flex justify-end mt-4">
                 @can('create')
@@ -40,7 +40,7 @@
                 ],
                 callbacks: {
                     onInit: function() {
-                        $('#summernote_about').summernote('pasteHTML', @json($about));
+                        $('#summernote_about').summernote('code', @json($about));
                         $('.note-group-select-from-files').first().remove();
                     },
                     onChange: function(contents, $editable) {
