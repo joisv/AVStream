@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use App\Models\SeoSetting;
-use Artesaos\SEOTools\Facades\SEOMeta;
-use Artesaos\SEOTools\Facades\SEOTools;
-use Illuminate\Http\Request;
+use RalphJSmit\Laravel\SEO\Support\SEOData;
 
 class ContactController extends Controller
 {
@@ -16,50 +14,46 @@ class ContactController extends Controller
     public function __construct()
     {
         $this->site = SeoSetting::first();
-        $this->description = 'If you have any questions, comments, or feedback, please feel free to reach out to us using the contact form below.';
     }
 
     public function index()
     {
-        SEOTools::setTitle('Contact Us | ' . ($this->site->site_name ?? '') . '', false);
-        SEOTools::setDescription($this->description);
-        SEOTools::opengraph()->setUrl(url()->current());
-        SEOTools::setCanonical(url()->current());
-        SEOTools::opengraph()->addProperty('type', 'article');
-        SEOTools::opengraph()->setTitle('Contact Us');
-        SEOTools::opengraph()->setDescription($this->description);
-        SEOTools::twitter()->setTitle('Contact Us');
-        SEOTools::twitter()->setDescription($this->description);
-        SEOMeta::setKeywords('Kontak kami,
-        Hubungi kami,
-        Informasi kontak,
-        Cara menghubungi kami,
-        Lokasi kantor,
-        Kirim pesan,
-        Feedback,
-        Beri saran,
-        Support,
-        Customer service,
-        Pertanyaan,
-        Konsultasi,
-        Layanan pelanggan');
-        SEOMeta::setRobots('index, follow');
-
         $contacts = Contact::all();
-        return view('contact', compact('contacts'));
+        $SEOData =  new SEOData(
+            title: 'Contact Webmaster | '.$this->site->site_name,
+            description: $this->site->description,
+            robots: 'noindex, nofollow',
+            tags: ['jav guru', 'jav', 'jav sub indo', 'jav most', 'jav streaming', 'free jav', 'jav stream', 'jav online', 
+           'streaming jav', 'jav subtitle', 'jav subindo', 'jav subtitle indo', 'jav uncesored leak', 'jav hd', 'jav cosplay']
+        );
+        return view('contact', compact(['contacts', 'SEOData']));
     }
 
     public function terms()
     {
         return view('terms', [
-            'terms' => $this->site->terms ?? []
+            'terms' => $this->site->terms ?? [],
+            'SEOData' => new SEOData(
+                title: 'Terms of Use | '.$this->site->site_name,
+                description: $this->site->description,
+                robots: 'noindex, nofollow',
+                tags: ['jav guru', 'jav', 'jav sub indo', 'jav most', 'jav streaming', 'free jav', 'jav stream', 'jav online', 
+               'streaming jav', 'jav subtitle', 'jav subindo', 'jav subtitle indo', 'jav uncesored leak', 'jav hd', 'jav cosplay']
+            )
         ]);
     }
 
     public function about()
     {
         return view('about', [
-            'about' => $this->site->about ?? []
+            'about' => $this->site->about ?? [],
+            'SEOData' => new SEOData(
+                title: 'About this site | '.$this->site->site_name,
+                description: $this->site->description,
+                robots: 'noindex, nofollow',
+                tags: ['jav guru', 'jav', 'jav sub indo', 'jav most', 'jav streaming', 'free jav', 'jav stream', 'jav online', 
+               'streaming jav', 'jav subtitle', 'jav subindo', 'jav subtitle indo', 'jav uncesored leak', 'jav hd', 'jav cosplay']
+            )
         ]);
     }
 }

@@ -111,7 +111,7 @@
                     </div>
                 </div>
             @empty
-                <div class="min-h-[50vh] flex justify-center items-center font-bold text-3xl text-gray-300">No Log to display</div>
+                <div class="min-h-[50vh] flex justify-center items-center font-bold text-3xl text-gray-300">No subscriptions to display</div>
             @endforelse
         @endempty
         <div class="w-full justify-center"  wire:loading.flex>

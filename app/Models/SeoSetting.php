@@ -16,6 +16,8 @@ class SeoSetting extends Model
         'keywords',
         'logo',
         'terms',
-        'about'
+        'about',
+        'payments'
     ];
+
 }

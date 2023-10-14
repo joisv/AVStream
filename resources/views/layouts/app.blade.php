@@ -14,9 +14,7 @@
     @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
-        [x-cloak] {
-            display: none;
-        }
+      [x-cloak] { display: none !important; }
     </style>
 </head>
 
@@ -108,12 +106,12 @@
             @stack('modal')
         </div>
     </div>
-    <footer class="w-full flex justify-end">
+    {{-- <footer class="w-full flex justify-end">
         <div class=" bottom-0 text-rose-500 right-16 p-2 font-semibold mr-10">
             <h1>{{ $version }}</h1>
             <h2 class="text-gray-600 text-sm italic">{{ $made }}</h2>
         </div>
-    </footer>
+    </footer> --}}
     @livewireScripts
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <x-livewire-alert::scripts />

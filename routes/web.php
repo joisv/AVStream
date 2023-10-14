@@ -73,24 +73,15 @@ Route::get('/vip', [VipController::class, 'index'])->name('vip');
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('notifications', function () {
-        SEOTools::setTitle('Notification - ' . auth()->user()->name, false);
-        return view('notifications');
-    })->name('notifications');
+    Route::get('notifications', [UserProfileController::class, 'userNotifications'])->name('notifications');
 
-    Route::get('/subscripton/log', function () {
-        SEOTools::setTitle('Subscription Log - ' . auth()->user()->name, false);
-        return view('user-subscription-log');
-    })->name('usersubscription.log');
+    Route::get('/subscriptions', [UserProfileController::class, 'userSubscription'])->name('usersubscription.log');
 
     Route::get('/profile', [UserProfileController::class, 'index'])->name('user.profile');
 
     Route::get('/actress-collection', [ActressController::class, 'actressCollection'])->name('actress.collection');
 
-    Route::get('/save', function(){
-        SEOTools::setTitle('Jav Collection: ' . auth()->user()->name, false);
-        return view('save');
-    })->name('save');
+    Route::get('/save', [ActressController::class, 'javCollection'])->name('save');
 });
 // 
 Route::middleware(['auth', 'role:admin|super-admin|writer'])->prefix('admin')->group(function () {

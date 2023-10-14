@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->longText('terms')->nullable();
             $table->longText('about')->nullable();
+            $table->longText('payments')->nullable();
             $table->text('keywords')->nullable();
             $table->timestamps();
         });

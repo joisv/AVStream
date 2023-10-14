@@ -11,9 +11,7 @@
                 </div>
             </button>
             @empty
-                <div class="w-full h-[70vh] text-white font-bold text-xl flex justify-center items-center">
-                    No notification
-                </div>
+            <div class="min-h-[50vh] flex justify-center items-center font-bold text-3xl text-gray-300">No notifications to display</div>
             @endforelse
         @endempty
         <div class="absolute w-full left-0 -top-2 opacity-70 h-full" wire:loading.flex>

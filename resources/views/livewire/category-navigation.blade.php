@@ -1,5 +1,5 @@
 <div>
-    <div class="hidden sm:flex">
+    <div class="hidden md:flex">
         <x-dropdown-navigation align="right" width="48">
             <x-slot name="trigger">
                 <button
@@ -30,7 +30,7 @@
             </x-slot>
         </x-dropdown-navigation>
     </div>
-    <div class="sm:hidden flex">
+    <div class="md:hidden flex">
         <div class="w-full">
             <button @click="category = ! category" class="flex justify-between w-full items-center px-2 font-medium">
                 <span class="text-sm font-semibold">Category</span>

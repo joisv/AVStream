@@ -4,8 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {{ $title ?? '' }}
-    {!! SEO::generate(true) !!}
+    {{ $seo ?? '' }}
 
     {{-- icons --}}
     <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ asset('images/icon/apple-touch-icon-57x57.png') }}" />

@@ -41,20 +41,6 @@ class Watch extends Component
 
     public function render()
     {
-        SEOTools::setTitle(''.( $this->post->code ?? '') .' | ' . $this->post->title . '', false);
-        SEOTools::setDescription($this->post->overview);
-        SEOTools::opengraph()->setUrl(url()->current());
-        SEOTools::setCanonical(url()->current() . '?slug=' . $this->post->slug);
-        SEOTools::opengraph()->addProperty('type', 'video.movie');
-        SEOTools::opengraph()->setTitle($this->post->title);
-        SEOTools::opengraph()->setDescription($this->post->overview);
-        SEOTools::opengraph()->addImage($this->post->poster_path);
-        SEOTools::twitter()->setTitle($this->post->title);
-        SEOTools::twitter()->setDescription($this->post->overview);
-        SEOTools::twitter()->setImage($this->post->poster_path);
-        SEOMeta::setRobots('index, follow');
-        // SEOMeta::setKeywords('')
-
         return view('livewire.watch.watch');
     }
 

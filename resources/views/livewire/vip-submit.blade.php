@@ -10,7 +10,7 @@
         </div>
         <h1 class="font-medium text-yellow-500 text-sm mt-2">Alert⚠ : After continue purchase check youre subscription log and notification</h1>
         <form wire:submit.prevent="save">
-            <button type="submit" class="p-2 mt-4 bg-rose-500 ring-0 focus:ring-0 border-0 focus:border-0 outline-none text-lg font-medium text-white rounded-md">confirm</button>
+            <button type="submit" class="p-2 mt-4 bg-rose-500 ring-0 focus:ring-0 border-0 focus:border-0 outline-none text-lg font-medium text-white rounded-md">Continue purchase?</button>
         </form>
         <div class="absolute w-full left-0 -top-2 bg-gray-400 opacity-70 h-full"  wire:loading.flex>
             <div class="w-full flex justify-center h-full items-center">

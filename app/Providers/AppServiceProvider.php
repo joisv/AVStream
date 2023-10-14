@@ -34,14 +34,14 @@ class AppServiceProvider extends ServiceProvider
             }) : $this;
         });
 
-        $site = SeoSetting::select('logo', 'description', 'site_name')->first();
+        // $site = SeoSetting::select('logo', 'description', 'site_name')->first();
         
-        View::share([
-            'site_name' => $site->site_name,
-            'logo' => $site->logo,
-            'description' => $site->description,
-            'version' => 'AV Stream v 0.1',
-            'made' => 'made with 🤷‍♂️'
-        ]);
+        // View::share([
+        //     'site_name' => $site->site_name,
+        //     'logo' => $site->logo,
+        //     'description' => $site->description,
+        //     'version' => 'AV Stream v 0.1',
+        //     'made' => 'made with 🤷‍♂️'
+        // ]);
     }
 }

@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use RalphJSmit\Laravel\SEO\SchemaCollection;
+use RalphJSmit\Laravel\SEO\Support\HasSEO;
+use RalphJSmit\Laravel\SEO\Support\SEOData;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSEO;
 
     protected $keyType = 'string';
 
@@ -23,6 +26,18 @@ class Post extends Model
         'isVip'
     ];
 
+    public function getDynamicSEOData(): SEOData
+    {
+        return new SEOData(
+            title: "$this->code | $this->title",
+            description: $this->overview,
+            author: $this->user->name ?? 'joisvvv',
+            robots: 'follow, index',
+            image: "storage/$this->poster_path",
+            schema: SchemaCollection::initialize()->addArticle()
+        );
+    }
+    
     public function actresses()
     {
         return $this->belongsToMany(Actress::class);

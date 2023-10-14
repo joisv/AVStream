@@ -1,6 +1,6 @@
 <x-home-layout>
-    <x-slot name="title">
-       <title>404 not found | {{ $site_name }}</title>
+    <x-slot name="seo">
+       <title>404 not found </title>
     </x-slot>
 
     <div class="min-h-[50vh] mt-20 flex justify-center items-center">

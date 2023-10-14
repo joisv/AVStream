@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Home;
 
 use App\Models\Post;
-use Artesaos\SEOTools\Facades\SEOTools;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;

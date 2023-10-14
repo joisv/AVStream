@@ -3,16 +3,16 @@
         <div class="max-w-7xl mx-auto">
             <div class="lg:flex space-y-8 lg:space-y-0 lg:space-x-32">
                 <div class="lg:w-1/3 w-full ">
-                    @if ($logo)
+                    @if ($setting->logo)
                     <div class="w-1/2">
-                        <img src="{{ asset('storage/' . $logo) }}" alt="" srcset="" class="object-containt">
+                        <img src="{{ asset('storage/' . $setting->logo) }}" alt="" srcset="" class="object-containt">
                     </div>
                     @else
                         <h1 class="text-rose-400 font-semibold text-3xl uppercase">AV<span
                                 class="text-gray-200">STREAM</span>
                             </h1>
                     @endif
-                    <p class="text-gray-600 font-semibold lg:text-base text-base mt-5">{{ $description }}</p>
+                    <p class="text-gray-600 font-semibold lg:text-base text-base mt-5">{{ $setting->description ?? '' }}</p>
                 </div>
                 <div class="grid grid-cols-2 gap-4 lg:flex lg:space-x-10">
                     <div>
@@ -86,10 +86,10 @@
                     </div>
                 </div>
             </div>
-            <div class="absolute bottom-0 text-rose-500 right-16 p-2 font-semibold">
+            {{-- <div class="absolute bottom-0 text-rose-500 right-16 p-2 font-semibold">
                 <h1>{{ $version }}</h1>
                 <h2 class="text-gray-600 text-sm italic">{{ $made }}</h2>
-            </div>
+            </div> --}}
         </div>
     </div>
 </footer>

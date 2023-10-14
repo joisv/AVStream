@@ -1,4 +1,7 @@
 <x-home-layout>
+    <x-slot name="seo">
+        {!! seo($SEOData) !!}
+    </x-slot>
     <div class="min-h-screen mb-[35vh]">
         <section class="w-full sm:h-[35vh] h-[20vh] p-3 flex justify-center items-end mt-20 sm:mt-10">
             <header class="md:w-[50%] sm:w-[40%] w-[80%] text-center ">

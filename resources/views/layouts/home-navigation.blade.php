@@ -13,9 +13,9 @@
         <div class="w-full py-3 px-8 fixed z-50 flex justify-between backdrop-brightness-90 backdrop-blur-sm">
             <div>
                 <a href="/">
-                    @if ($logo)
+                    @if ($setting->logo)
                         <div class="w-36">
-                            <img src="{{ asset('storage/' . $logo) }}" alt="" srcset=""
+                            <img src="{{ asset('storage/' . $setting->logo) }}" alt="" srcset=""
                                 class="object-containt">
                         </div>
                     @else
@@ -127,7 +127,7 @@
                                     </x-dropdown-link>
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
-                                        
+
                                         <x-dropdown-link href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                             this.closest('form').submit();">
@@ -171,14 +171,13 @@
             class="w-full py-3 px-4 fixed z-50 flex justify-between backdrop-brightness-90 backdrop-blur-sm items-center">
             <div>
                 <a href="/">
-                    @if ($logo)
+                    @if ($setting->logo)
                         <div class="w-24">
-                            <img src="{{ asset('storage/' . $logo) }}" alt="" srcset=""
+                            <img src="{{ asset('storage/' . $setting->logo) }}" alt="" srcset=""
                                 class="object-containt">
                         </div>
                     @else
-                        <h1 class="text-rose-400 font-semibold text-3xl">AV<span
-                                class="text-gray-200">Stream</span>
+                        <h1 class="text-rose-400 font-semibold text-3xl">AV<span class="text-gray-200">Stream</span>
                         </h1>
                     @endif
                 </a>
