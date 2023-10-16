@@ -28,7 +28,6 @@ use App\Http\Livewire\Studio\Index as StudioIndex;
 use App\Http\Livewire\Subscription\SubscriptionLog;
 use App\Http\Livewire\Terms;
 use App\Http\Livewire\User\Index as UserIndex;
-use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Support\Facades\Route;
 
 /*

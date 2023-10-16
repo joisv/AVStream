@@ -24,15 +24,20 @@ class SubscriptionLog extends Component
 
     public function render()
     {
+        $subscriptions = $this->getSubscriptions()->paginate($this->isPaginate);
         return view('livewire.subscription.subscription-log', [
-            'subscriptions' => $this->getSubcriptionLog()->paginate($this->isPaginate)
+            'subscriptions' => $subscriptions
         ]);
     }
-
-    public function getSubcriptionLog()
+    
+    public function getSubscriptions()
     {
-        $query = Subscription::search('name', $this->search)->with('user');
-
+        $query = Subscription::with('user');
+    
+        if ($this->search) {
+            $query->search(['status', 'payment_code'], $this->search);
+        }
+    
         if ($this->sortField === 'active') {
             $query->where('status', 'active');
         } elseif ($this->sortField === 'pending') {
@@ -42,8 +47,9 @@ class SubscriptionLog extends Component
         } else {
             $query->orderBy($this->sortField, $this->sortDirection);
         }
-
-        return $query->orderBy('created_at', 'desc');
+    
+        // Jangan panggil get() di sini, biarkan query builder tetap sebagai objek query
+        return $query;
     }
 
     public function editSubscription($subscription)

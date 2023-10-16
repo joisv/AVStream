@@ -26,22 +26,23 @@ class AppServiceProvider extends ServiceProvider
             if (!is_array($fields)) {
                 $fields = [$fields];
             }
-
+        
             return $string ? $this->where(function ($query) use ($fields, $string) {
                 foreach ($fields as $field) {
-                    $query->orWhere($field, 'like', '%'.$string.'%');
+                    // Jika nama kolom mengandung titik (.), itu menandakan relasi
+                    if (strpos($field, '.') !== false) {
+                        list($relation, $column) = explode('.', $field);
+                        $query->orWhere(function ($query) use ($relation, $column, $string) {
+                            $query->whereHas($relation, function ($query) use ($column, $string) {
+                                $query->where($column, 'like', '%'.$string.'%');
+                            });
+                        });
+                    } else {
+                        // Jika tidak ada titik (.), itu adalah kolom langsung pada tabel saat ini
+                        $query->orWhere($field, 'like', '%'.$string.'%');
+                    }
                 }
             }) : $this;
         });
-
-        // $site = SeoSetting::select('logo', 'description', 'site_name')->first();
-        
-        // View::share([
-        //     'site_name' => $site->site_name,
-        //     'logo' => $site->logo,
-        //     'description' => $site->description,
-        //     'version' => 'AV Stream v 0.1',
-        //     'made' => 'made with 🤷‍♂️'
-        // ]);
     }
 }

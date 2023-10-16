@@ -32,13 +32,8 @@ class VipSubmit extends Component
                 'position' => 'top-end',
                 'timer' => 5000,
                 'toast' => true,
-                // 'showConfirmButton' => true,
-                // 'onConfirmed' => 'createSubscription',
-                // 'showCancelButton' => true,
-                // 'onDismissed' => '',
             ]);
         } else {
-        //    $this->modal = false;
            $this->createSubscription();
         }
     }
@@ -90,6 +85,7 @@ class VipSubmit extends Component
         $this->modal = false;
         $this->emit('sendNotif');
         $this->alert('success', 'Succes created subscription check your notification');
+        return redirect()->route('usersubscription.log');
     }
 
     public function openModal($plan)
