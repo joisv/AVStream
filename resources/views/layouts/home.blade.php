@@ -44,6 +44,10 @@
         [x-cloak] { display: none !important; }
     </style>
     @livewireStyles
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
+    />
 </head>
 
 <body class="antialiased bg-background">

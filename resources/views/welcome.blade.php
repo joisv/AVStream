@@ -31,8 +31,9 @@
             </header>
         </section>
         <main class="space-y-8 p-2 sm:p-0">
+            <livewire:home.popular-genres />
             <livewire:home.recomended />
-            <livewire:home.random-genre />
+            {{-- <livewire:home.random-genre /> --}}
             <livewire:home.new-release />
             <livewire:home.recent-update />
         </main>

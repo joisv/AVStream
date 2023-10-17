@@ -29,49 +29,6 @@
             @endif
         </div>
     </div>
-    {{-- @empty(!$subscriptions)
-        @forelse ($subscriptions as $subscribe)
-            <div class="bg-gray-800 w-full py-2 px-4" >
-                <button wire:click="editSubscription('{{ $subscribe->id }}')" class="w-full">
-                    <div class="flex justify-between items-center">
-                        <div class="flex space-x-2">
-                            <h1 class="sm:text-2xl text-xl font-semibold text-gray-200">{{ $subscribe->payment_code }}</h1>
-                            <h3
-                                class='{{ $subscribe->status === 'active' ? 'bg-rose-500 text-white' : ($subscribe->status === 'pending' ? 'bg-yellow-500 text-white' : ($subscribe->status === 'expired' ? 'bg-white text-black' : '')) }} px-1 text-sm text-center h-fit '>
-                                {{ $subscribe->status }}</h3>
-                        </div>
-                        <div>
-                            <h2 class="text-gray-300 font-medium text-lg">{{ $subscribe->user->name ?? '' }}</h2>
-                        </div>
-                    </div>
-                    <div class="space-y-1 mt-3 sm:grid sm:grid-cols-2">
-                        <div class="flex space-x-1 h-fit col-span-2 text-start sm:text-center">
-                            <h1 class="font-medium text-gray-200">User Id:</h1>
-                            <h2 class="text-rose-400 font-medium">{{ $subscribe->user_id }}</h2>
-                        </div>
-                        <div class="flex space-x-1 h-fit">
-                            <h1 class="font-medium text-gray-200">Start Date:</h1>
-                            <h2 class="text-rose-400 font-medium">{{ $subscribe->start_date }}</h2>
-                        </div>
-                        <div class="flex space-x-1 h-fit">
-                            <h1 class="font-medium text-gray-200">End Date:</h1>
-                            <h2 class="text-rose-400 font-medium">{{ $subscribe->end_date }}</h2>
-                        </div>
-                        <div class="flex space-x-1 h-fit">
-                            <h1 class="font-medium text-gray-200">Blling Amount:</h1>
-                            <h2 class="text-rose-400 font-medium">{{ $subscribe->billing_amount }} $</h2>
-                        </div>
-                        <div class="flex space-x-1 h-fit">
-                            <h1 class="font-medium text-gray-200">Payment Method:</h1>
-                            <h2 class="text-rose-400 font-medium">{{ $subscribe->payment_method }}</h2>
-                        </div>
-                    </div>
-                </button>
-            </div>
-        @empty
-            <div class="min-h-[50vh] flex justify-center items-center font-bold text-3xl">No Log to display</div>
-        @endforelse
-    @endempty --}}
     <div>
         <x-tables.table wire:loading.class.delay="opacity-75">
             <x-slot name="head">

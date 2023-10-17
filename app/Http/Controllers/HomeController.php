@@ -32,7 +32,6 @@ class HomeController extends Controller
      */
     public function show(Request $request)
     {
-
         $post = Post::where('slug', $request->slug)->with(['actresses', 'genres', 'studios', 'category'])->firstOrFail();
         $post->increment('views');
         return view('watch', [
