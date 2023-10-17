@@ -9,7 +9,7 @@ class Recomended extends Component
 {
     public $posts,
         $isLoading = true,
-        $take = 4;
+        $take = 8;
 
     public function render()
     {
@@ -25,7 +25,7 @@ class Recomended extends Component
     public function loadMore()
     {
         $this->isLoading = true;
-        $this->take *= 2;
+        $this->take += 4;
         $this->getPosts();
     }
 }

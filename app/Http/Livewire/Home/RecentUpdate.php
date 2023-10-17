@@ -9,7 +9,7 @@ class RecentUpdate extends Component
 {
     public $posts,
         $isLoading = true,
-        $take = 4;
+        $take = 8;
 
     public function render()
     {

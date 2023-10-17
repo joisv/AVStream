@@ -49,7 +49,7 @@ Route::get('/actress/{actress:slug}', [ ActressController::class, 'show' ])->nam
 
 Route::get('/genres', [GenreController::class, 'index'])->name('genres');
 
-Route::get('/detail/genre/{genre:slug}', [GenreController::class, 'show'])->name('genre.show');
+Route::get('/genre/{genre:slug}', [GenreController::class, 'show'])->name('genre.show');
 
 Route::get('/studios', [StudioController::class, 'index'])->name('studios');
 

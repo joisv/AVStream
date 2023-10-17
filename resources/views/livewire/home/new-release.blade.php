@@ -48,17 +48,20 @@
     </div>
 @empty(!$posts)
     <div class="w-full mt-4 p-4">
-        <button wire:click="loadMore" type="button" class="flex justify-center space-x-4 items-center mx-auto">
+        <button wire:click="loadMore" type="button" class="flex justify-center space-x-4 items-center mx-auto group" wire:loading.remove wire:target="loadMore">
             <div>
-                <h3 class="text-gray-300 font-semibold text-xl">Load more</h3>
+                <h3 class="text-gray-300 font-semibold text-xl sm:text-xl group-hover:text-rose-500 ease-in duration-100">Load more</h3>
             </div>
-            <svg class="fill-gray-300 h-7 w-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+            <svg class="fill-gray-300 h-7 w-7 group-hover:fill-rose-500 ease-in duration-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                 <path fill-rule="evenodd"
                     d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                     clip-rule="evenodd" />
             </svg>
 
         </button>
+        <div class="w-full justify-center" wire:loading.flex wire:target="loadMore">
+            <x-icons.loading-circle default="24px"/>
+        </div>
     </div>
 @endempty
 <script>

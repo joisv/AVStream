@@ -1,4 +1,4 @@
-<div class="min-h-screen md:mb-[20vh] mb-[7vh] p-2 lg:p-0">
+<div class="min-h-screen md:mb-[20vh] mb-[7vh] p-2 lg:p-0" wire:init="incrementGenre">
     <section class="w-full h-44 p-3 flex justify-center items-end">
         <header class="w-[40%] text-center ">
             <h1

@@ -30,7 +30,7 @@
     
             </header>
         </section>
-        <main class="space-y-8 p-2 sm:p-0">
+        <main class="space-y-8 p-2 sm:p-0 mt-3">
             <livewire:home.popular-genres />
             <livewire:home.recomended />
             {{-- <livewire:home.random-genre /> --}}

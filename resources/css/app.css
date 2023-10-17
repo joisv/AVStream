@@ -10,12 +10,4 @@
         font-size: small;
         color: rgb(255, 54, 19);
     }
-
-    .swiper-button-prev {
-        background-color: #fff;
-     }
-    .swiper-button-next {
-        width: 10px;
-        background-color: #fff;
-     }
 }

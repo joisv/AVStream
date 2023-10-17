@@ -1,12 +1,28 @@
-<div>
-    <div class="relative h-fit">
+<div >
+    <div class="relative h-fit" wire:loading.remove>
         <div #swiperRef="" class="swiper mySwiper absolute">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide p-1 rounded-md border border-rose-500 w-fit text-center">
-                    <h1 class="font-bold  sm:text-xl text-base text-gray-200">
-                        Incest
-                    </h1>
-                    <p class="sm:text-base font-medium text-gray-300 text-sm">2093</p>
+            <div class="swiper-wrapper flex items-center">
+                @forelse ($genres as $genre)
+                    <div class="swiper-slide py-1 px-2 rounded-md border border-rose-400 hover:border-gray-400 w-fit text-start group">
+                        <a href="{{ route('genre.show', $genre->slug) }}">
+                            <h1 class="font-bold  sm:text-xl text-base text-gray-200 group-hover:text-rose-400 ease-in duration-100">
+                                {{ Str::limit($genre->name, 10, '...') }}
+                            </h1>
+                            <p class="sm:text-base font-semibold text-gray-400 text-sm">{{ $genre->posts->count() }}</p>
+                        </a>
+                    </div>
+                @empty
+                    <div class="w-full p-4 font-bold text-xl text-gray-200">
+                        no genre
+                    </div>
+                @endforelse
+                <div class="swiper-slide py-1 px-2 w-fit text-start group">
+                    <a href="{{ route('genres') }}">
+                        <h1 class="font-bold  sm:text-xl text-base text-gray-200 group-hover:text-rose-400 ease-in duration-100">
+                            More..
+                        </h1>
+                        {{-- <p class="sm:text-base font-semibold text-gray-400 text-sm">{{ $genre->posts->count() }}</p> --}}
+                    </a>
                 </div>
             </div>
             {{-- <div class="swiper-pagination"></div> --}}
@@ -57,15 +73,16 @@
 
         function updateSwiper() {
             const screenWidth = window.innerWidth;
-            var slidePerView = 2;
+            var slidePerView = 9;
 
-            if(screenWidth < 480) {
+            if (screenWidth < 480) {
                 slidePerView = 2
-            }
-            else if (screenWidth < 720) {
+            } else if (screenWidth < 720) {
                 slidePerView = 5;
             } else if (screenWidth < 1024) {
                 slidePerView = 6;
+            } else if (screenWidth < 1536) {
+                slidePerView = 9
             }
 
             if (swiper) {
@@ -85,38 +102,21 @@
                 }
             });
 
-            // if (swiper && swiper.activeIndex === 0) {
-            //     prevButton.classList.toggle("stroke-gray-400");
-            // } else {
-            //     prevButton.classList.toggle("stroke-gray-200");
-            // }
-
-            // if (swiper && swiper.activeIndex >= swiper.slides.length - slidePerView) {
-            //     nextButton.classList.add("stroke-gray-400");
-            //     nextButton.classList.remove("stroke-gray-200");
-            // } else {
-            //     nextButton.classList.add("stroke-gray-200");
-            //     nextButton.classList.remove("stroke-gray-400");
-            // }
-           
 
         }
 
-        // Mengatur fungsi untuk tombol custom previous
         prevButton.addEventListener("click", function() {
             if (swiper) {
                 swiper.slidePrev();
             }
         });
 
-        // Mengatur fungsi untuk tombol custom next
         nextButton.addEventListener("click", function() {
             if (swiper) {
                 swiper.slideNext();
             }
         });
 
-        // Panggil fungsi saat halaman dimuat dan saat ukuran layar berubah
         window.addEventListener('DOMContentLoaded', updateSwiper);
         window.addEventListener('resize', updateSwiper);
     </script>
