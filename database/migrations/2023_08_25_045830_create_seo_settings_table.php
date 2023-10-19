@@ -19,7 +19,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->longText('terms')->nullable();
             $table->longText('about')->nullable();
-            $table->longText('payments')->nullable();
+            $table->string('confirm_payment_url')->nullable();
+            $table->string('banner_video_url')->nullable();
             $table->text('keywords')->nullable();
             $table->timestamps();
         });

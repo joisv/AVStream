@@ -6,7 +6,7 @@
                     <div class="swiper-slide py-1 px-2 rounded-md border border-rose-400 hover:border-gray-400 w-fit text-start group">
                         <a href="{{ route('genre.show', $genre->slug) }}">
                             <h1 class="font-bold  sm:text-xl text-base text-gray-200 group-hover:text-rose-400 ease-in duration-100">
-                                {{ Str::limit($genre->name, 10, '...') }}
+                                {{ Str::limit($genre->name, 9, '...') }}
                             </h1>
                             <p class="sm:text-base font-semibold text-gray-400 text-sm">{{ $genre->posts->count() }}</p>
                         </a>
@@ -21,11 +21,9 @@
                         <h1 class="font-bold  sm:text-xl text-base text-gray-200 group-hover:text-rose-400 ease-in duration-100">
                             More..
                         </h1>
-                        {{-- <p class="sm:text-base font-semibold text-gray-400 text-sm">{{ $genre->posts->count() }}</p> --}}
                     </a>
                 </div>
             </div>
-            {{-- <div class="swiper-pagination"></div> --}}
         </div>
         <div class="absolute text-white top-2/3 right-2 shadow-2xl flex space-x-2 bg-gray-800 p-2 z-50">
             <button id="custom-prev-button">

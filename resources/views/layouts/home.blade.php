@@ -41,13 +41,12 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
-        [x-cloak] { display: none !important; }
+        [x-cloak] {
+            display: none !important;
+        }
     </style>
     @livewireStyles
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 </head>
 
 <body class="antialiased bg-background">
@@ -71,6 +70,7 @@
         });
     }">
         @include('layouts.home-navigation')
+       
         <div class="xl:max-w-7xl lg:max-w-4xl md:max-w-3xl mx-auto space-y-7">
             {{ $slot }}
         </div>

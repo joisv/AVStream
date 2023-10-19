@@ -12,7 +12,7 @@
         case 'expired':
             $key = 'Expired';
             break;
-        
+
         default:
             $key = 'Latest';
             break;
@@ -21,12 +21,22 @@
 <div class="min-h-screen sm:mb-[25vh] mb-[50vh]">
     <div class="max-w-2xl h-32 mx-auto p-3 space-y-2 mt-20">
         <div class="flex justify-end items-center my-4">
+            @empty(!$usersSubscription)
+                <a href="https://web.whatsapp.com/send?phone=6285334354676&text=*Confirm payment*
+            %0AInvoice Number: {{ $usersSubscription->payment_code }}
+            %0AUse name: {{ $usersSubscription->user->name }}
+            %0AAmount: {{ $usersSubscription->billing_amount }}
+            %0AThank you!"
+                    class="focus:ring-4 focus:ring-rose-500 rounded-sm p-2 text-sm ease-in duration-100 text-gray-200 font-semibold bg-gray-900 hover:ring-2 hover:ring-rose-400">
+                    Confirm payment
+                </a>
+            @endempty
             <x-dropdown-navigation align="right" width="48">
                 <x-slot name="trigger">
                     <button
                         class="inline-flex items-center px-3 py-2 border border-transparent text-base leading-4 dark:text-gray-400 bg-transparent text-gray-200 font-bold focus:outline-none transition ease-in-out duration-150">
                         <div class="hover:text-rose-400 ease-in duration-150 text-lg">Sort by: {{ $key }}</div>
-    
+
                         <div class="ml-1">
                             <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
@@ -36,7 +46,7 @@
                         </div>
                     </button>
                 </x-slot>
-    
+
                 <x-slot name="content">
                     <div class="space-y-1">
                         <label for="created_at"
@@ -47,27 +57,27 @@
                         </label>
                         <label for="active"
                             class="relative block w-full px-4 py-2 text-left text-sm font-semibold leading-5 text-gray-700 dark:text-gray-300 hover:bg-slate-300 transition duration-150 ease-in-out">
-                            <input type="radio" name="" id="active" value="active" class="absolute opacity-0"
-                                wire:model.lazy="sort">
-                           Active
+                            <input type="radio" name="" id="active" value="active"
+                                class="absolute opacity-0" wire:model.lazy="sort">
+                            Active
                         </label>
                         <label for="pending"
                             class="relative block w-full px-4 py-2 text-left text-sm font-semibold leading-5 text-gray-700 dark:text-gray-300 hover:bg-slate-300 transition duration-150 ease-in-out">
-                            <input type="radio" name="" id="pending" value="pending" class="absolute opacity-0"
-                                wire:model.lazy="sort">
-                           Pending
+                            <input type="radio" name="" id="pending" value="pending"
+                                class="absolute opacity-0" wire:model.lazy="sort">
+                            Pending
                         </label>
                         <label for="expired"
                             class="relative block w-full px-4 py-2 text-left text-sm font-semibold leading-5 text-gray-700 dark:text-gray-300 hover:bg-slate-300 transition duration-150 ease-in-out">
-                            <input type="radio" name="" id="expired" value="expired" class="absolute opacity-0"
-                                wire:model.lazy="sort">
-                           Expired
+                            <input type="radio" name="" id="expired" value="expired"
+                                class="absolute opacity-0" wire:model.lazy="sort">
+                            Expired
                         </label>
                         <label for="cancelled"
                             class="relative block w-full px-4 py-2 text-left text-sm font-semibold leading-5 text-gray-700 dark:text-gray-300 hover:bg-slate-300 transition duration-150 ease-in-out">
-                            <input type="radio" name="" id="cancelled" value="cancelled" class="absolute opacity-0"
-                                wire:model.lazy="sort">
-                           Cancelled
+                            <input type="radio" name="" id="cancelled" value="cancelled"
+                                class="absolute opacity-0" wire:model.lazy="sort">
+                            Cancelled
                         </label>
                     </div>
                 </x-slot>
@@ -111,10 +121,11 @@
                     </div>
                 </div>
             @empty
-                <div class="min-h-[50vh] flex justify-center items-center font-bold text-3xl text-gray-300">No subscriptions to display</div>
+                <div class="min-h-[50vh] flex justify-center items-center font-bold text-3xl text-gray-300">No subscriptions
+                    to display</div>
             @endforelse
         @endempty
-        <div class="w-full justify-center"  wire:loading.flex>
+        <div class="w-full justify-center" wire:loading.flex>
             <div
                 class="flex items-center justify-center min-h-[50vh]  max-w-sm rounded-lg w-full animate-pulse dark:bg-gray-700">
                 <svg class="w-10 h-10 text-gray-600 dark:text-gray-600" aria-hidden="true"

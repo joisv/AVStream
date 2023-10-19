@@ -2,8 +2,21 @@
     <x-slot name="seo">
         {!! seo($SEOData) !!}
     </x-slot>
+    <div
+        class="md:h-[50vh] relative bg-red-500 flex items-center justify-start overflow-hidden mt-[10vh] max-w-screen-2xl w-full">
+        <video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" autoplay
+            muted="muted" preload="auto" loop="loop" class="w-full object-top"></video>
+        <div class="absolute text-gray-200 px-5 md:px-10 sm:w-3/4 md:w-1/2 ">
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-semibold">Elevate Your Experience with VIP
+                Membership!</h1>
+            <a href="{{ route('vip') }}">
+                <p class="bg-rose-500 rounded-md p-2 text-base sm:text-lg md:text-xl font-semibold w-fit mt-3">
+                    Get full acceess</p>
+            </a>
+        </div>
+    </div>
     <div class="min-h-screen mb-[35vh]">
-        <section class="w-full sm:h-[35vh] h-[20vh] p-3 flex justify-center items-end mt-20 sm:mt-10">
+        {{-- <section class="w-full h-[10vh] p-3 flex justify-center items-end mt-20 sm:mt-10">
             <header class="md:w-[50%] sm:w-[40%] w-[80%] text-center ">
                 <h1 class="text-rose-400 font-semibold text-2xl mb-3">
                     Search any <span class="text-gray-200">Japan AV</span>
@@ -29,7 +42,7 @@
                 </form>
     
             </header>
-        </section>
+        </section> --}}
         <main class="space-y-8 p-2 sm:p-0 mt-3">
             <livewire:home.popular-genres />
             <livewire:home.recomended />

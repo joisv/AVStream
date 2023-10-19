@@ -101,7 +101,7 @@
                                             clip-rule="evenodd" />
                                     </svg>
                                 </div>
-                                <div x-cloak x-show="$store.count > 0 || $store.subscriptionCount > 0"
+                                <div x-cloak x-show="$store.count > 0 || $store.isSubscriptionExist > 0"
                                     class="w-3 h-3 bg-rose-400 absolute rounded-full text-center font-medium text-white top-0 left-2">
 
                                 </div>
@@ -351,8 +351,8 @@
                 Livewire.on('sendNotifiCount', count => {
                     Alpine.store('count', count);
                 });
-                Livewire.on('subscriptionCount', count => {
-                    Alpine.store('subscriptionCount', count);
+                Livewire.on('isSubscriptionExist', count => {
+                    Alpine.store('isSubscriptionExist', count);
                 });
             });
         </script>
