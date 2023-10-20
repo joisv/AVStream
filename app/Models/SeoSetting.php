@@ -17,7 +17,9 @@ class SeoSetting extends Model
         'logo',
         'terms',
         'about',
-        'payments'
+        'payments',
+        'banner_video_url',
+        'whatsapp_number'
     ];
 
 }

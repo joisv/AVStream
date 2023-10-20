@@ -97,22 +97,22 @@ Route::middleware(['auth', 'role:admin|super-admin|writer'])->prefix('admin')->g
     Route::get('/post/create',  PostCreate::class)->name('post.create');
     Route::get('/post/{post}/edit',  PostEdit::class)->name('post.edit');
 
-    Route::get('/actress',  ActressIndex::class)->name('actress.index');
+    Route::get('/actresses',  ActressIndex::class)->name('actress.index');
 
-    Route::get('/sutdio', StudioIndex::class)->name('studio.index');
+    Route::get('/sutdios', StudioIndex::class)->name('studio.index');
 
     Route::get('/category', CategorIndex::class)->name('category.index');
 
-    Route::get('/genre', GenreIndex::class)->name('genre');
+    Route::get('/genres', GenreIndex::class)->name('genre');
 
-    Route::get('/role', RoleIndex::class)->name('role');
+    Route::get('/roles', RoleIndex::class)->name('role');
 
-    Route::get('/download', DownloadIndex::class)->name('download');
-    Route::get('/movie', MovieIndex::class)->name('movie');
+    Route::get('/downloads', DownloadIndex::class)->name('download');
+    Route::get('/movies', MovieIndex::class)->name('movie');
 
-    Route::get('/user', UserIndex::class)->name('user.index');
+    Route::get('/users', UserIndex::class)->name('user.index');
 
-    Route::get('/setting', [SettingController::class, 'index'])->name('setting');
+    Route::get('/settings', [SettingController::class, 'index'])->name('setting');
 
     Route::get('/terms', Terms::class)->name('terms.edit');
     Route::get('/about', About::class)->name('about.edit');

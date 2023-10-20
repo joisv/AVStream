@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->longText('terms')->nullable();
             $table->longText('about')->nullable();
-            $table->string('confirm_payment_url')->nullable();
+            $table->string('whatsapp_number')->nullable();
             $table->string('banner_video_url')->nullable();
             $table->text('keywords')->nullable();
             $table->timestamps();

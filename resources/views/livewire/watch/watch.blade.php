@@ -195,7 +195,7 @@
                 <nav class="text-gray-400 w-full flex justify-center mt-7">
                     <ul class="flex space-x-3">
                         <li>
-                            <button type="button" class="flex space-x-1 items-center" wire:click="savePost">
+                            <button type="button" class="flex space-x-1 items-center" wire:click="savePost" wire:loading.attr="disabled">
                                 <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg" wire:loading.remove wire:target="savePost">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>

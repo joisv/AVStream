@@ -22,7 +22,7 @@
     <div class="max-w-2xl h-32 mx-auto p-3 space-y-2 mt-20">
         <div class="flex justify-end items-center my-4">
             @empty(!$usersSubscription)
-                <a href="https://web.whatsapp.com/send?phone=6285334354676&text=*Confirm payment*
+                <a href="https://web.whatsapp.com/send?phone={{ $whatsapp }}&text=*Confirm payment*
             %0AInvoice Number: {{ $usersSubscription->payment_code }}
             %0AUse name: {{ $usersSubscription->user->name }}
             %0AAmount: {{ $usersSubscription->billing_amount }}

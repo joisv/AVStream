@@ -126,6 +126,20 @@
                     </article>
                 </div>
             </div>
+            <div class="w-full ">
+                <x-inputs.label-input for="whatsapp_number" class="text-gray-500">WhatsApp number</x-inputs.label-input>
+                <x-inputs.text-input wire:model.defer="whatsapp_number" id="whatsapp_number" placeholder="WhatsApp number for confirmation payment" />
+                @error('whatsapp_number')
+                    <span class="error">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="w-full ">
+                <x-inputs.label-input for="banner_video_url" class="text-gray-500">Banner video <span class="text-sm font-semibold text-gray-500">.mp4</span></x-inputs.label-input>
+                <x-inputs.text-input wire:model.defer="banner_video_url" id="banner_video_url" placeholder="Banner video url (mp4)" />
+                @error('banner_video_url')
+                    <span class="error">{{ $message }}</span>
+                @enderror
+            </div>
         </div>
         <div class="w-full flex justify-end mt-4 md:mt-0">
             <x-primary-button wire:loading.attr="disabled" type="submit"

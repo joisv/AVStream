@@ -13,7 +13,8 @@ class UserSubscriptionLog extends Component
         $isPaginate = 10,
         $modal = false,
         $sortDirection = 'desc',
-        $usersSubscription;
+        $usersSubscription,
+        $whatsapp;
 
     public function render()
     {

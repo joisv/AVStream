@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>
-        <div class="absolute text-white top-2/3 right-2 shadow-2xl flex space-x-2 bg-gray-800 p-2 z-50">
+        <div class="absolute text-white top-2/3 right-2 shadow-2xl flex space-x-2 bg-gray-800 p-2 z-30">
             <button id="custom-prev-button">
                 <svg fill="#000000" width="24px" height="24px" viewBox="0 0 24 24" id="left-arrow"
                     data-name="Flat Line" xmlns="http://www.w3.org/2000/svg" class="icon flat-line">

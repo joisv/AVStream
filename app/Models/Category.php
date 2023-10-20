@@ -26,7 +26,7 @@ class Category extends Model
     public function getDynamicSEOData(): SEOData
     {
         return new SEOData(
-            title: 'Category - '.$this->name ,
+            title: 'Category | '.$this->name ,
             description: "Sumber utama untuk menonton film dewasa berkualitas tinggi secara online. Temukan koleksi film terbaru dan terpanas dalam berbagai genre. Nikmati hiburan eksklusif dan konten dewasa yang memuaskan hasrat Anda",
             robots: 'follow, index',
             schema: SchemaCollection::initialize()->addArticle()
