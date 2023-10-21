@@ -18,27 +18,18 @@ class DetailActress extends Component
     public $hasActress;
     public $sortBy = 'created_at';
 
-    protected $queryString = ['sortBy'];
-
     public $listeners = [ 'reRender' => 'reRender' ];
 
     public function reRender(){
 
     }
-    
-    // public function updated($propertyName)
-    // {
-    //     $this->actress = $this->actress->load(['posts' => function ($query) {
-    //         $query->orderBy($this->sortBy, 'desc');
-    //     }]);
-    // }
 
     public function render()
     {
         $actresses = $this->actress;
         
         return view('livewire.home.detail-actress', [
-            'actresses' => $actresses->posts()->orderBy($this->sortBy, 'desc')->paginate(2)
+            'actresses' => $actresses->posts()->orderBy($this->sortBy, 'desc')->paginate(16)
         ]);
     }
 
