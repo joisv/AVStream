@@ -7,7 +7,6 @@
             </h1>
             <x-inputs.text wire:model.debounce.500ms="search" placeholder="Search actress name..." />
         </header>
-        {{-- <div class="text-white">{{ $age }}</div> --}}
     </section>
     @if ($actresses->currentPage() === 1)
         <div class="md:flex md:justify-between grid grid-cols-2 gap-3 md:gap-0 py-4 md:space-x-5">

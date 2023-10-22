@@ -49,76 +49,10 @@ class Edit extends Component
         'category_id' => 'required'
     ];
 
-    public function postViewByDays()
-    {
-        $today = Carbon::today();
-        $sixDaysAgo = Carbon::today()->subDays(6);
-
-        $dates = [];
-        $viewsData = [];
-        for ($date = $sixDaysAgo->copy(); $date <= $today; $date->addDay()) {
-            $startOfDay = $date->copy()->startOfDay();
-            $endOfDay = $date->copy()->endOfDay();
-            $views = Post::where('id', $this->post->id)->whereBetween('updated_at', [$startOfDay, $endOfDay])
-                ->sum('views');
-            $dates[] = $date->format('l');
-            $viewsData[] = $views;
-        }
-        return [
-
-            'date' => $dates,
-            'data' => $viewsData
-        ];
-    }
-
-    public function postViewByWeeks()
-    {
-        $fourWeeksAgo = Carbon::today()->subWeeks(8);
-
-        $dates = [];
-        $viewsData = [];
-
-        for ($i = 0; $i < 8; $i++) {
-            $startOfWeek = $fourWeeksAgo->copy()->addWeeks($i)->startOfWeek();
-            $endOfWeek = $fourWeeksAgo->copy()->addWeeks($i)->endOfWeek();
-            $views = Post::where('id', $this->post->id)->whereBetween('updated_at', [$startOfWeek, $endOfWeek])
-                ->sum('views');
-            $dates[] = 'Week ' . ($i + 1);
-            $viewsData[] = $views;
-        }
-
-        return [
-            'date' => $dates,
-            'data' => $viewsData
-        ];
-    }
-
-    public function postViewByMonth()
-    {
-        $oneMonthAgo = Carbon::today()->subMonth();
-
-        $dates = [];
-        $viewsData = [];
-
-        for ($i = 0; $i < 12; $i++) {
-            $startOfMonth = $oneMonthAgo->copy()->addMonths($i)->startOfMonth();
-            $endOfMonth = $oneMonthAgo->copy()->addMonths($i)->endOfMonth();
-            $views = Post::where('id', $this->post->id)->whereBetween('updated_at', [$startOfMonth, $endOfMonth])
-                ->sum('views');
-            $dates[] = $startOfMonth->format('F Y');
-            $viewsData[] = $views;
-        }
-
-        return [
-            'date' => $dates,
-            'data' => $viewsData
-        ];
-    }
-    
     protected function rules()
     {
         $poster_path = is_object($this->poster_path)
-            ? 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            ? 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
             : '';
 
         return array_merge($this->rules, ['poster_path' => $poster_path]);
@@ -140,19 +74,12 @@ class Edit extends Component
 
     public function render()
     {
-        $postName =  $this->postBy === 'days' ? $this->postViewByDays() : (
-            $this->postBy === 'weeks' ? $this->postViewByWeeks() : 
-                $this->postViewByMonth()
-        );
-
-        $this->emitSelf("refreshChartData", $postName);
         
         return view('livewire.post.edit', [
             'actresses' => Actress::search('name', $this->search)->get(),
             'categories' => Category::all(),
             'genres' => Genre::search('name', $this->searchGenre)->get(),
             'studios' => Studio::search('name', $this->searchStudio)->get(),
-            'postByName' => $this->postViewByDays()
         ]);
     }
 
@@ -167,10 +94,9 @@ class Edit extends Component
                 'poster_path' => '',
             ]);
             Storage::delete($this->post->poster_path);
-            // $this->poster_path = '';
             $this->alert('success', 'Poster path has been deleted successfully.');
         } else {
-            $this->alret('error', 'No poster found');
+            $this->alert('error', 'No poster found');
         }
     }
 
@@ -184,6 +110,7 @@ class Edit extends Component
         Gate::authorize('update', $this->post);
 
         $this->validate();
+        $poster = is_object($this->poster_path) ? $this->deletePosterPath() : $this->poster_path;
 
         if ($this->post) {
             $this->post->update([
@@ -193,7 +120,7 @@ class Edit extends Component
                 'isVip' => $this->isVip,
                 'category_id' => $this->category_id,
                 'slug' => $this->setSlugAttribute($this->title),
-                'poster_path' =>  is_object($this->poster_path) ? $this->deletePosterPath() : $this->poster_path
+                'poster_path' =>  $poster
             ]);
             if ($this->selectedActresses) {
                 $this->post->actresses()->sync($this->selectedActresses);
@@ -227,7 +154,6 @@ class Edit extends Component
     {
         $prof = $this->poster_path->store('poster_path');
         Storage::delete($this->post->poster_path);
-
         return $prof;
     }
 
