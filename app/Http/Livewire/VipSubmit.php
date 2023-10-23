@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Notification;
+use App\Models\Payment;
 use App\Models\Plan;
 use App\Models\Subscription;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -14,7 +15,7 @@ class VipSubmit extends Component
     use LivewireAlert;
 
     public $modal = false;
-    public $price, $duration, $billing_cycle, $plan_id;
+    public $price, $duration, $billing_cycle, $plan_id, $payment_option = [], $payment_method;
     public $listeners = [
         'openModal' => 'openModal',
         'createSubscription' => 'createSubscription'
@@ -32,13 +33,8 @@ class VipSubmit extends Component
                 'position' => 'top-end',
                 'timer' => 5000,
                 'toast' => true,
-                // 'showConfirmButton' => true,
-                // 'onConfirmed' => 'createSubscription',
-                // 'showCancelButton' => true,
-                // 'onDismissed' => '',
             ]);
         } else {
-        //    $this->modal = false;
            $this->createSubscription();
         }
     }
@@ -77,7 +73,7 @@ class VipSubmit extends Component
             'end_date' => $end_date,
             'status' => 'pending',
             'billing_amount' => $this->price,
-            'payment_method' => 'Direct Transfer',
+            'payment_method' => $this->payment_method,
         ]);
 
         Notification::create([
@@ -90,10 +86,12 @@ class VipSubmit extends Component
         $this->modal = false;
         $this->emit('sendNotif');
         $this->alert('success', 'Succes created subscription check your notification');
+        return redirect()->route('usersubscription.log');
     }
 
     public function openModal($plan)
     {
+        $this->payment_option = Payment::all();
         $this->duration = $plan['duration'];
         $this->billing_cycle = $plan['billing_cycle'];
         $this->duration = $plan['duration'];

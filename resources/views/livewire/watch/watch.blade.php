@@ -4,8 +4,7 @@
 @endphp
 <div class="lg:flex sm:space-x-4 overflow-hidden min-h-[200vh] md:mt-[10vh] mt-[8vh]">
     <div class="max-w-screen-lg w-full lg:w-[70%] p-3 lg:p-0 top-0 relative text-text h-fit">
-        @js($post->isVip)
-        <div class="w-full relative pb-[56.25%] ">
+        <div class="w-full relative pb-[56.25%] " wire:loading.remove wire:target="selectedEmbeds">
             @if ($selected)
                 @if ($post->isVip == 1)
                     @auth
@@ -84,7 +83,12 @@
                         <h1 class="text-rose-500 text-2xl font-semibold">404 <span class="underline text-gray-500">Embed not found...</span></h1>
                 </div>
             @endif
+        </div>
+        <div class="pb-[24%] flex flex-col items-center" wire:loading.flex wire:target="selectedEmbeds">
+            <div class="mt-[24%]">
 
+                <x-icons.loading-circle default="34px" />
+            </div>
         </div>
         <section class="py-4 space-y-7">
             <div>
@@ -195,7 +199,7 @@
                 <nav class="text-gray-400 w-full flex justify-center mt-7">
                     <ul class="flex space-x-3">
                         <li>
-                            <button type="button" class="flex space-x-1 items-center" wire:click="savePost">
+                            <button type="button" class="flex space-x-1 items-center" wire:click="savePost" wire:loading.attr="disabled">
                                 <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg" wire:loading.remove wire:target="savePost">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>

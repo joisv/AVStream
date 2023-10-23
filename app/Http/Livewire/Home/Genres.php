@@ -4,9 +4,12 @@ namespace App\Http\Livewire\Home;
 
 use App\Models\Genre;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Genres extends Component
 {
+    use WithPagination;
+    
     public $search;
     
     public function updated()
@@ -17,7 +20,7 @@ class Genres extends Component
     public function render()
     {
         return view('livewire.home.genres', [
-            'genres' => $this->getGenres()->paginate(16)
+            'genres' => $this->getGenres()->paginate(12)
         ]);
     }
 

@@ -4,9 +4,12 @@ namespace App\Http\Livewire\Home;
 
 use App\Models\Category as ModelsCategory;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Category extends Component
 {
+    use WithPagination;
+    
     public ModelsCategory $category;
     public $sort = 'created_at';
 

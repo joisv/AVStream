@@ -1,9 +1,8 @@
-<div wire:init="getSubscriptionCount" class="relative">
+<div wire:init="getSubscriptions" class="relative">
     <x-dropdown-link :href="route('usersubscription.log')">
-        @if ($subscriptionCount > 0)
-            <div class="w-5 h-5 text-sm bg-rose-500 absolute rounded-full text-center font-medium text-white -top-1 right-2">
-                {{ $subscriptionCount }}</div>
+        @if ($isSubscriptionExist > 0)
+            <div class="w-4 h-4 text-sm bg-yellow-500 absolute rounded-full text-center font-medium text-white -top-1 right-2"></div>
         @endif
-        <p class="font-semibold text-gray-200 sm:text-gray-800">Subscription Log</p>
+        <p class="font-semibold text-gray-200 md:text-gray-800">Subscriptions</p>
     </x-dropdown-link>
 </div>

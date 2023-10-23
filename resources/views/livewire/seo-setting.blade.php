@@ -39,7 +39,6 @@
                     </div>
                 </div>
             </div> --}}
-
             {{-- Logo --}}
             <div class="col-span-full">
                 <div class="mt-2 flex items-center gap-x-3">
@@ -105,9 +104,11 @@
                         @endif
                 </div>
                 <div @click="expanded = ! expanded"
-                    class="w-full cursor-pointer p-2 border rounded-sm select-none border-gray-300" x-show="expanded"
+                    class="w-full cursor-pointer p-2 border rounded-sm select-none border-gray-300 " x-show="expanded"
                     x-collapse.min.70px>
-                    {!! $seoSetting->terms !!}
+                    <article class="prose prose-base lg:prose-lg prose-code:text-rose-500 prose-a:text-blue-600 prose-p:text-gray-900">
+                        {!! $seoSetting->terms !!}
+                    </article>
                 </div>
             </div>
             <div x-data="{ expander: false }">
@@ -118,10 +119,26 @@
                         @endif
                 </div>
                 <div @click="expander = ! expander"
-                    class="w-full cursor-pointer p-2 border rounded-sm select-none border-gray-300" x-show="expander"
+                    class="w-full cursor-pointer p-2 border rounded-sm select-none border-gray-300 " x-show="expander"
                     x-collapse.min.70px>
-                    {!! $seoSetting->about !!}
+                    <article class="prose prose-base lg:prose-lg prose-code:text-rose-500 prose-a:text-blue-600 prose-p:text-gray-900">
+                        {!! $seoSetting->about !!}
+                    </article>
                 </div>
+            </div>
+            <div class="w-full ">
+                <x-inputs.label-input for="whatsapp_number" class="text-gray-500">WhatsApp number</x-inputs.label-input>
+                <x-inputs.text-input wire:model.defer="whatsapp_number" id="whatsapp_number" placeholder="WhatsApp number for confirmation payment" />
+                @error('whatsapp_number')
+                    <span class="error">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="w-full ">
+                <x-inputs.label-input for="banner_video_url" class="text-gray-500">Banner video <span class="text-sm font-semibold text-gray-500">.mp4</span></x-inputs.label-input>
+                <x-inputs.text-input wire:model.defer="banner_video_url" id="banner_video_url" placeholder="Banner video url (mp4)" />
+                @error('banner_video_url')
+                    <span class="error">{{ $message }}</span>
+                @enderror
             </div>
         </div>
         <div class="w-full flex justify-end mt-4 md:mt-0">

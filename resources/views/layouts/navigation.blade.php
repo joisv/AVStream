@@ -16,9 +16,9 @@
 
             <div>
                 <a href="/">
-                    @if ($logo)
+                    @if ($setting->logo)
                         <div class="w-24">
-                            <img src="{{ asset('storage/' . $logo) }}" alt="" srcset=""
+                            <img src="{{ asset('storage/' . $setting->logo) }}" alt="" srcset=""
                                 class="object-containt">
                         </div>
                     @else

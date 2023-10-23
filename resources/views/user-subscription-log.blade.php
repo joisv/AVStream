@@ -1,3 +1,6 @@
 <x-home-layout>
-    <livewire:user-subscription-log />
+    <x-slot name="seo">
+        {!! seo($SEOData) !!}
+    </x-slot>
+    <livewire:user-subscription-log :whatsapp="$setting->whatsapp_number ?? ''"/>
 </x-home-layout>

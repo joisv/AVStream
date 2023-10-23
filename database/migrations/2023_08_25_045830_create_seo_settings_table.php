@@ -17,8 +17,10 @@ return new class extends Migration
             $table->string('favicon')->nullable();
             $table->string('logo')->nullable();
             $table->text('description')->nullable();
-            $table->text('terms')->nullable();
-            $table->text('about')->nullable();
+            $table->longText('terms')->nullable();
+            $table->longText('about')->nullable();
+            $table->string('whatsapp_number')->nullable();
+            $table->string('banner_video_url')->nullable();
             $table->text('keywords')->nullable();
             $table->timestamps();
         });

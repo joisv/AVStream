@@ -1,5 +1,7 @@
 <x-guest-layout>
-
+    <x-slot name="seo">
+        {!! seo($SEOData) !!}
+    </x-slot>
     <div class="w-full flex flex-col items-end space-y-2 ">
         <header class="w-full flex justify-end">
             <h1 class="text-gray-400 font-drukMedium text-6xl w-[80%] text-end">Dont have account</h1>

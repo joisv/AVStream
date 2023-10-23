@@ -2,13 +2,12 @@
 
 namespace App\Http\Livewire\Navigation;
 
-use App\Models\Subscription;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class SubscriptionLog extends Component
 {
-    public $subscriptionCount;
+    public $isSubscriptionExist;
     public $listeners = [ 'sendNotif' => 'reRender' ];
     
     
@@ -17,15 +16,15 @@ class SubscriptionLog extends Component
         return view('livewire.navigation.subscription-log');
     }
 
-    public function getSubscriptionCount()
+    public function getSubscriptions()
     {
-        $this->subscriptionCount = Auth::user()->subscriptions->where('status', 'pending')->count();
-        $this->emit('subscriptionCount', $this->subscriptionCount);
+        $this->isSubscriptionExist = Auth::user()->subscriptions->where('status', 'pending')->isNotEmpty();
+        $this->emit('isSubscriptionExist', $this->isSubscriptionExist);
     }
 
     public function reRender()
     {
-        $this->getSubscriptionCount();
+        $this->getSubscriptions();
     }
    
 }

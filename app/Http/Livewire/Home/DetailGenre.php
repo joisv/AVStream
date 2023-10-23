@@ -4,9 +4,12 @@ namespace App\Http\Livewire\Home;
 
 use App\Models\Genre;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class DetailGenre extends Component
 {
+    use WithPagination;
+    
     public Genre $genre;
 
     public $sort = 'created_at';
@@ -19,5 +22,15 @@ class DetailGenre extends Component
         return view('livewire.home.detail-genre', [
             'genres' => $genre->posts()->orderBy($this->sort, 'desc')->paginate(12)
         ]);
+    }
+
+    // public function mount()
+    // {
+    //     $this->incrementGenre();
+    // }
+    
+    public function incrementGenre()
+    {
+        $this->genre->increment('views');
     }
 }

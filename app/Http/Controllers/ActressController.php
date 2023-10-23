@@ -3,72 +3,70 @@
 namespace App\Http\Controllers;
 
 use App\Models\Actress;
+use App\Models\SeoSetting;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
+use RalphJSmit\Laravel\SEO\Support\SEOData;
 
 class ActressController extends Controller
 {
-    public $description;
-    
+    public $setting;
+
     public function __construct()
     {
-        $this->description = 'Daftar aktris jav yang terkenal dan populer dalam aplikasi streaming jav kami.';
+        $this->setting = SeoSetting::first();
     }
-    
+
     public function index()
     {
-        SEOTools::setTitle('Actress | Daftar actrees jav', false);
-        SEOTools::setDescription($this->description);
-        SEOTools::opengraph()->setUrl(url()->current());
-        SEOTools::setCanonical(url()->current());
-        SEOTools::opengraph()->addProperty('type', 'article');
-        SEOTools::opengraph()->setTitle('Daftar actrees jav');
-        SEOTools::opengraph()->setDescription($this->description);
-        SEOTools::twitter()->setTitle('Daftar actrees jav');
-        SEOTools::twitter()->setDescription($this->description);
-        SEOMeta::setKeywords('daftar aktris jav, aktris jav terkenal, aktris jav populer, aplikasi streaming jav');
-        SEOMeta::setRobots('index, follow');
-        
-        return view('actresses');
+        return view('actresses', [
+            'SEOData' => new SEOData(
+                title: 'Actress JAV Terlengkap Hanya di Sini!',
+                description: $this->setting->description,
+                robots: 'noindex, nofollow',
+                tags: [
+                    'jav guru', 'jav', 'jav sub indo', 'jav most', 'jav streaming', 'free jav', 'jav stream', 'jav online',
+                    'streaming jav', 'jav subtitle', 'jav subindo', 'jav subtitle indo', 'jav uncesored leak', 'jav hd', 'jav cosplay'
+                ]
+            )
+        ]);
     }
 
     public function show(Actress $actress)
     {
-        SEOTools::setTitle('Detail Aktris: '.$actress->name.'', false);
-        SEOTools::setDescription('Temukan berbagai actress jav dalam '.$actress->name.'. Jelajahi actress jav-jav '.$actress->name.' yang menarik untuk memenuhi selera jav Anda.');
-        SEOTools::opengraph()->setUrl(url()->current());
-        SEOTools::setCanonical(url()->current() . '/' . $actress->slug);
-        SEOTools::opengraph()->addProperty('type', 'video.movie');
-        SEOTools::opengraph()->setTitle('Daftar lengkap genre Jav');
-        SEOTools::opengraph()->addImage(asset('storage/'.$actress->profile));
-        SEOTools::opengraph()->setDescription('Temukan berbagai actress jav dalam '.$actress->name.'. Jelajahi actress jav-jav '.$actress->name.' yang menarik untuk memenuhi selera jav Anda.');
-        SEOTools::jsonLd()->addImage(asset('storage/'.$actress->profile));
-        SEOTools::twitter()->setTitle('Daftar lengkap genre Jav');
-        SEOTools::twitter()->addImage(asset('storage/'.$actress->profile));
-        SEOTools::twitter()->setDescription('Temukan berbagai actress jav dalam '.$actress->name.'. Jelajahi actress jav-jav '.$actress->name.' yang menarik untuk memenuhi selera film Anda.');
-        SEOMeta::setKeywords('Actress jav, '.$actress->name.', jav '.$actress->name.', koleksi '.$actress->name.', daftar jav '.$actress->name.'');
-        SEOMeta::setRobots('index, follow');
-        
         return view('actress', [
             'actress' => $actress
-        ]);    
+        ]);
     }
 
     public function actressCollection()
     {
-        SEOTools::setTitle('Daftar Aktris JAV | ' . auth()->user()->name, false);
-        SEOTools::setDescription('Daftar aktris JAV terkenal dan populer dalam aplikasi streaming JAV kami.');
-        SEOTools::opengraph()->setUrl(url()->current());
-        SEOTools::setCanonical(url()->current());
-        SEOTools::opengraph()->addProperty('type', 'article');
-        SEOTools::opengraph()->setTitle('Daftar Aktris JAV');
-        SEOTools::opengraph()->setDescription('Daftar aktris JAV terkenal dan populer dalam aplikasi streaming JAV kami.');
-        SEOTools::twitter()->setTitle('Daftar Aktris JAV');
-        SEOTools::twitter()->setDescription('Daftar aktris JAV terkenal dan populer dalam aplikasi streaming JAV kami.');
-        SEOMeta::setKeywords('daftar aktris JAV, aktris JAV terkenal, aktris JAV populer, aplikasi streaming JAV');
-        SEOMeta::setRobots('index, follow');
-        
-        return view('actress-collection');
+        return view('actress-collection', [
+            'SEOData' => new SEOData(
+                title: 'Actresses Collection | ' . auth()->user()->name,
+                description: $this->setting->description,
+                robots: 'noindex, nofollow',
+                tags: [
+                    'jav guru', 'jav', 'jav sub indo', 'jav most', 'jav streaming', 'free jav', 'jav stream', 'jav online',
+                    'streaming jav', 'jav subtitle', 'jav subindo', 'jav subtitle indo', 'jav uncesored leak', 'jav hd', 'jav cosplay'
+                ]
+            )
+        ]);
+    }
+
+    public function javCollection()
+    {
+        return view('save', [
+            'SEOData' => new SEOData(
+                title: 'JAV Collection | ' . auth()->user()->name,
+                description: $this->setting->description,
+                robots: 'noindex, nofollow',
+                tags: [
+                    'jav guru', 'jav', 'jav sub indo', 'jav most', 'jav streaming', 'free jav', 'jav stream', 'jav online',
+                    'streaming jav', 'jav subtitle', 'jav subindo', 'jav subtitle indo', 'jav uncesored leak', 'jav hd', 'jav cosplay'
+                ]
+            )
+        ]);
     }
 }

@@ -16,6 +16,10 @@ class SeoSetting extends Model
         'keywords',
         'logo',
         'terms',
-        'about'
+        'about',
+        'payments',
+        'banner_video_url',
+        'whatsapp_number'
     ];
+
 }

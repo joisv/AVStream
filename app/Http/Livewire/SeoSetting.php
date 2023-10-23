@@ -20,12 +20,16 @@ class SeoSetting extends Component
         $description,
         $favicon,
         $keywords,
-        $logo;
+        $logo,
+        $whatsapp_number,
+        $banner_video_url;
 
     protected $rules = [
         'site_name' => 'required|string|max:255',
         'description' => 'nullable|string|max:500',
         'keywords' => 'nullable|string|max:500',
+        'whatsapp_number' => 'string|required|min:5',
+        'banner_video_url' => 'required|url'
     ];
 
     protected function rules()
@@ -56,6 +60,8 @@ class SeoSetting extends Component
             $this->favicon = $setting->favicon;
             $this->logo = $setting->logo;
             $this->keywords = $setting->keywords;
+            $this->whatsapp_number = $setting->whatsapp_number;
+            $this->banner_video_url = $setting->banner_video_url;
         }
     }
 
@@ -68,7 +74,9 @@ class SeoSetting extends Component
             'description' => $this->description,
             'favicon' => is_object($this->favicon) ? $this->deleteFavicon() : $this->favicon,
             'logo' => is_object($this->logo) ? $this->deleteLogo() : $this->logo,
-            'keywords' => $this->keywords
+            'keywords' => $this->keywords,
+            'whatsapp_number' => $this->whatsapp_number,
+            'banner_video_url' => $this->banner_video_url,
         ]);
 
         $this->alert('success', 'Setting saved');

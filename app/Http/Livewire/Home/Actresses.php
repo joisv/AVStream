@@ -40,11 +40,6 @@ class Actresses extends Component
         ]);
     }
 
-    public function updated($propertyName)
-    {
-        $this->getActresses();
-    }
-
     public function getActresses()
     {
         $query = Actress::search(['name'], $this->search)
@@ -86,7 +81,7 @@ class Actresses extends Component
             }
         }
 
-        return $query->paginate(18);
+        return $query->paginate(16);
         $this->isLoading = false;
     }
 

@@ -13,10 +13,10 @@
         <div class="w-full py-3 px-8 fixed z-50 flex justify-between backdrop-brightness-90 backdrop-blur-sm">
             <div>
                 <a href="/">
-                    @if ($logo)
-                        <div class="w-36">
-                            <img src="{{ asset('storage/' . $logo) }}" alt="" srcset=""
-                                class="object-containt">
+                    @if ($setting->logo)
+                        <div class="md:w-20 ">
+                            <img src="{{ asset('storage/' . $setting->logo) }}" alt="" srcset=""
+                                class="object-contain">
                         </div>
                     @else
                         <h1 class="text-rose-400 font-semibold text-3xl uppercase">AV<span
@@ -101,8 +101,8 @@
                                             clip-rule="evenodd" />
                                     </svg>
                                 </div>
-                                <div x-cloak x-show="$store.count > 0 || $store.subscriptionCount > 0"
-                                    class="w-3 h-3 bg-rose-400 absolute rounded-full text-center font-medium text-white top-0 left-2">
+                                <div x-cloak x-show="$store.count > 0 || $store.isSubscriptionExist > 0"
+                                    class="w-3 h-3 absolute rounded-full text-center font-medium text-white top-0 left-2" x-bind:class="$store.count > 0 && $store.isSubscriptionExist > 0 ? 'bg-gray-200' : ($store.count > 0 ? 'bg-rose-400' : ($store.isSubscriptionExist > 0 ? 'bg-yellow-500' : ''))">
 
                                 </div>
                             </button>
@@ -127,7 +127,7 @@
                                     </x-dropdown-link>
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
-                                        
+
                                         <x-dropdown-link href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                             this.closest('form').submit();">
@@ -171,14 +171,13 @@
             class="w-full py-3 px-4 fixed z-50 flex justify-between backdrop-brightness-90 backdrop-blur-sm items-center">
             <div>
                 <a href="/">
-                    @if ($logo)
-                        <div class="w-24">
-                            <img src="{{ asset('storage/' . $logo) }}" alt="" srcset=""
+                    @if ($setting->logo)
+                        <div class="w-16">
+                            <img src="{{ asset('storage/' . $setting->logo) }}" alt="" srcset=""
                                 class="object-containt">
                         </div>
                     @else
-                        <h1 class="text-rose-400 font-semibold text-3xl">AV<span
-                                class="text-gray-200">Stream</span>
+                        <h1 class="text-rose-400 font-semibold text-3xl">AV<span class="text-gray-200">Stream</span>
                         </h1>
                     @endif
                 </a>
@@ -352,8 +351,8 @@
                 Livewire.on('sendNotifiCount', count => {
                     Alpine.store('count', count);
                 });
-                Livewire.on('subscriptionCount', count => {
-                    Alpine.store('subscriptionCount', count);
+                Livewire.on('isSubscriptionExist', count => {
+                    Alpine.store('isSubscriptionExist', count);
                 });
             });
         </script>

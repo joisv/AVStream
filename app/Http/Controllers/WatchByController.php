@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Artesaos\SEOTools\Facades\SEOMeta;
-use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
+use RalphJSmit\Laravel\SEO\Support\SEOData;
 
 class WatchByController extends Controller
 {
@@ -18,20 +17,15 @@ class WatchByController extends Controller
     }
     
     public function index()
-    {
-        SEOTools::setTitle('Watch JAV - '.$this->condition($this->keyword) .'', false);
-        SEOTools::setDescription($this->description);
-        SEOTools::opengraph()->setUrl(url()->current());
-        SEOTools::setCanonical(url()->current() . '?keyword=' . $this->keyword);
-        SEOTools::opengraph()->addProperty('type', 'video.movie');
-        SEOTools::opengraph()->setTitle($this->condition($this->keyword));
-        SEOTools::opengraph()->setDescription($this->description);
-        SEOTools::twitter()->setTitle($this->condition($this->keyword));
-        SEOTools::twitter()->setDescription($this->description);
-        SEOMeta::setKeywords('jav terbaru, jav baru, jav rilis, tontonan terbaru, jav paling baru');
-        
+    {   
         return view('watch-by', [
-            'keyword' => $this->keyword
+            'keyword' => $this->keyword,
+            'SEOData' => new SEOData(
+                title: 'Watch JAV - '.$this->condition($this->keyword),
+                description: $this->description,
+                tags: ['jav terbaru', 'jav baru', 'jav rilis', 'tontonan terbaru', 'jav paling baru'],
+                robots: 'index, follow'
+            )
         ]);
     }
 

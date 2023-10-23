@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Subscription;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class UserSubscriptionLog extends Component
@@ -11,8 +12,10 @@ class UserSubscriptionLog extends Component
         $sort = 'created_at',
         $isPaginate = 10,
         $modal = false,
-        $sortDirection = 'desc';
-    
+        $sortDirection = 'desc',
+        $usersSubscription,
+        $whatsapp;
+
     public function render()
     {
         return view('livewire.user-subscription-log', [
@@ -22,21 +25,17 @@ class UserSubscriptionLog extends Component
 
     public function getSubcriptionLog()
     {
-        $query = Subscription::search('name', $this->search)->with('user')->where('user_id', auth()->user()->id);
+        $this->usersSubscription = Auth::user()->subscriptions->where('status', 'pending')->first();
 
-        if ($this->sort === 'active') {
-            $query->where('status', 'active');
-        } elseif ($this->sort === 'pending') {
-            $query->where('status', 'pending');
-        } elseif ($this->sort === 'expired') {
-            $query->where('status', 'expired');
-        } elseif ($this->sort === 'cancelled') {
-            $query->where('status', 'cancelled');
-        }    
-        else {
-            $query->orderBy($this->sort, $this->sortDirection);
-        }
+        $query = Subscription::search('name', $this->search)
+            ->with('user')
+            ->where('user_id', auth()->user()->id)
+            ->when(in_array($this->sort, ['active', 'pending', 'expired', 'cancelled']), function ($query) {
+                return $query->where('status', $this->sort);
+            }, function ($query) {
+                return $query->orderBy($this->sort, $this->sortDirection);
+            });
 
-        return $query->orderBy('created_at', 'desc');
+        return $query->orderByDesc('created_at');
     }
 }

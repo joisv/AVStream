@@ -18,7 +18,6 @@ use App\Http\Livewire\Category\Index as CategorIndex;
 use App\Http\Livewire\Download\Index as DownloadIndex;
 use App\Http\Livewire\Genre\Index as GenreIndex;
 use App\Http\Livewire\Movie\Index as MovieIndex;
-use App\Http\Livewire\Payment\Index;
 use App\Http\Livewire\Plan\Index as PlanIndex;
 use App\Http\Livewire\Post\Create as PostCreate;
 use App\Http\Livewire\Post\Edit as PostEdit;
@@ -29,7 +28,6 @@ use App\Http\Livewire\Studio\Index as StudioIndex;
 use App\Http\Livewire\Subscription\SubscriptionLog;
 use App\Http\Livewire\Terms;
 use App\Http\Livewire\User\Index as UserIndex;
-use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,7 +41,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/actresses', [ ActressController::class, 'index' ])->name('actresses');
 
@@ -51,7 +49,7 @@ Route::get('/actress/{actress:slug}', [ ActressController::class, 'show' ])->nam
 
 Route::get('/genres', [GenreController::class, 'index'])->name('genres');
 
-Route::get('/detail/genre/{genre:slug}', [GenreController::class, 'show'])->name('genre.show');
+Route::get('/genre/{genre:slug}', [GenreController::class, 'show'])->name('genre.show');
 
 Route::get('/studios', [StudioController::class, 'index'])->name('studios');
 
@@ -74,24 +72,15 @@ Route::get('/vip', [VipController::class, 'index'])->name('vip');
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('notifications', function () {
-        SEOTools::setTitle('Notification - ' . auth()->user()->name, false);
-        return view('notifications');
-    })->name('notifications');
+    Route::get('notifications', [UserProfileController::class, 'userNotifications'])->name('notifications');
 
-    Route::get('/subscripton/log', function () {
-        SEOTools::setTitle('Subscription Log - ' . auth()->user()->name, false);
-        return view('user-subscription-log');
-    })->name('usersubscription.log');
+    Route::get('/subscriptions', [UserProfileController::class, 'userSubscription'])->name('usersubscription.log');
 
     Route::get('/profile', [UserProfileController::class, 'index'])->name('user.profile');
 
     Route::get('/actress-collection', [ActressController::class, 'actressCollection'])->name('actress.collection');
 
-    Route::get('/save', function(){
-        SEOTools::setTitle('Jav Collection: ' . auth()->user()->name, false);
-        return view('save');
-    })->name('save');
+    Route::get('/save', [ActressController::class, 'javCollection'])->name('save');
 });
 // 
 Route::middleware(['auth', 'role:admin|super-admin|writer'])->prefix('admin')->group(function () {
@@ -108,22 +97,22 @@ Route::middleware(['auth', 'role:admin|super-admin|writer'])->prefix('admin')->g
     Route::get('/post/create',  PostCreate::class)->name('post.create');
     Route::get('/post/{post}/edit',  PostEdit::class)->name('post.edit');
 
-    Route::get('/actress',  ActressIndex::class)->name('actress.index');
+    Route::get('/actresses',  ActressIndex::class)->name('actress.index');
 
-    Route::get('/sutdio', StudioIndex::class)->name('studio.index');
+    Route::get('/sutdios', StudioIndex::class)->name('studio.index');
 
     Route::get('/category', CategorIndex::class)->name('category.index');
 
-    Route::get('/genre', GenreIndex::class)->name('genre');
+    Route::get('/genres', GenreIndex::class)->name('genre');
 
-    Route::get('/role', RoleIndex::class)->name('role');
+    Route::get('/roles', RoleIndex::class)->name('role');
 
-    Route::get('/download', DownloadIndex::class)->name('download');
-    Route::get('/movie', MovieIndex::class)->name('movie');
+    Route::get('/downloads', DownloadIndex::class)->name('download');
+    Route::get('/movies', MovieIndex::class)->name('movie');
 
-    Route::get('/user', UserIndex::class)->name('user.index');
+    Route::get('/users', UserIndex::class)->name('user.index');
 
-    Route::get('/setting', [SettingController::class, 'index'])->name('setting');
+    Route::get('/settings', [SettingController::class, 'index'])->name('setting');
 
     Route::get('/terms', Terms::class)->name('terms.edit');
     Route::get('/about', About::class)->name('about.edit');

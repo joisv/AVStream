@@ -1,6 +1,6 @@
 <x-home-layout>
-    <x-slot name="title">
-       <title>403 forbidden | {{ $site_name }}</title>
+    <x-slot name="seo">
+       <title>403 forbidden</title>
     </x-slot>
 
     <div class="min-h-[50vh] mt-20 flex justify-center items-center">

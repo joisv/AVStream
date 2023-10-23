@@ -4,8 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {{ $title ?? '' }}
-    {!! SEO::generate(true) !!}
+    {{ $seo ?? '' }}
 
     {{-- icons --}}
     <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ asset('images/icon/apple-touch-icon-57x57.png') }}" />
@@ -43,10 +42,11 @@
 
     <style>
         [x-cloak] {
-            display: none;
+            display: none !important;
         }
     </style>
     @livewireStyles
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 </head>
 
 <body class="antialiased bg-background">
@@ -70,6 +70,7 @@
         });
     }">
         @include('layouts.home-navigation')
+       
         <div class="xl:max-w-7xl lg:max-w-4xl md:max-w-3xl mx-auto space-y-7">
             {{ $slot }}
         </div>
