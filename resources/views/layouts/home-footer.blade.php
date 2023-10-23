@@ -1,4 +1,4 @@
-<footer class="relative">
+<footer class="relative mt-52">
     <div class="w-full bg-background md:py-12 py-0 lg:px-16 md:px-8 px-4 ">
         <div class="max-w-7xl mx-auto">
             <div class="lg:flex space-y-8 lg:space-y-0 lg:space-x-32">

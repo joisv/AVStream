@@ -10,7 +10,7 @@
     </section>
     @if ($actresses->currentPage() === 1)
         <div class="md:flex md:justify-between grid grid-cols-2 gap-3 md:gap-0 py-4 md:space-x-5">
-            <div class="w-full"  wire:loading.remove>
+            <div class="w-full" wire:loading.remove>
                 <select id="height"
                     class="bg-gray-800 border-2 border-gray-500 text-sm rounded-md focus:ring-rose-500 focus:border-rose-500 block w-full p-2.5 text-white font-medium"
                     wire:model.lazy="selectedHeightRange">
@@ -71,7 +71,7 @@
                 <a href="{{ route('actress', $actress->slug) }}">
                     <div class="text-white flex flex-col items-center" wire:loading.remove>
                         <div class="md:w-24 md:h-24 w-20 h-20 rounded-full overflow-hidden">
-                            <img src="{{ asset('storage/'.$actress->profile) }}" alt="" srcset=""
+                            <img src="{{ asset('storage/' . $actress->profile) }}" alt="" srcset=""
                                 class="w-full h-full object-cover object-center">
                         </div>
                         <div class="text-center">
@@ -87,16 +87,13 @@
                     </div>
                 </a>
             @empty
-                <div wire:loading.remove
-                    class="text-xl font-semibold text-gray-300 p-16 sm:col-span-3 lg:col-span-4 col-span-2 text-center">
+                <div wire:loading.remove class="text-xl font-semibold text-gray-300 p-16 col-span-6 text-center">
                     No Jav found</div>
             @endforelse
 
         @endempty
-        <div class="col-span-6 mx-auto" wire:loading.delay>
-            <div class="flex items-center justify-center md:h-44 lg:h-32 xl:h-44 h-28 max-w-sm bg-gray-800 rounded-lg animate-pulse dark:bg-gray-700">
-                <x-icons.loading-circle />
-            </div>
+        <div class="col-span-6 mx-auto min-h-[25vh]" wire:loading.flex>
+            <x-icons.loading-circle />
         </div>
     </div>
 </div>

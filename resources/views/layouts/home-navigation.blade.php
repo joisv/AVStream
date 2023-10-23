@@ -14,9 +14,9 @@
             <div>
                 <a href="/">
                     @if ($setting->logo)
-                        <div class="w-36">
+                        <div class="md:w-20 ">
                             <img src="{{ asset('storage/' . $setting->logo) }}" alt="" srcset=""
-                                class="object-containt">
+                                class="object-contain">
                         </div>
                     @else
                         <h1 class="text-rose-400 font-semibold text-3xl uppercase">AV<span
@@ -172,7 +172,7 @@
             <div>
                 <a href="/">
                     @if ($setting->logo)
-                        <div class="w-24">
+                        <div class="w-16">
                             <img src="{{ asset('storage/' . $setting->logo) }}" alt="" srcset=""
                                 class="object-containt">
                         </div>
