@@ -20,6 +20,15 @@ class Create extends Component
         $debut,
         $height;
 
+    // public bool $modal = false;
+
+    // public $listeners = ['create' => 'toggleModal'];
+
+    // public function toggleModal()
+    // {
+    //     $this->modal = true;
+    // }
+
     public $rules = [
         'name' => 'unique:actresses,name|required|min:3|string',
         'cup_size' => 'required|regex:/^[A-Z]$/',
@@ -46,11 +55,13 @@ class Create extends Component
             'debut' => $this->debut,
             'profile' => $this->profile->store('profile'),
         ]);
+
+        $this->dispatchBrowserEvent('mdd');
         $this->emit('closeModal');
         $this->alert('success', 'Actress succes created');
         $this->reset(['name', 'cup_size', 'age', 'profile', 'debut', 'height']);
     }
-
+    
     public function setSlugAttribute($value)
     {
         $slug = Str::slug($value);

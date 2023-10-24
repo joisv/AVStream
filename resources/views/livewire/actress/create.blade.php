@@ -1,4 +1,4 @@
-<div class="p-3 bg-gray-100 relative">
+<div class="p-3 bg-gray-100 relative" @mdd.window="$store.modal.on = false">
     <header class="my-4">
         <h1 class="text-gray-800 font-semibold text-xl opa">Actress Profile</h1>
         <p class="text-gray-400 font-medium">create actress informations</p>

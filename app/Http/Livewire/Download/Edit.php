@@ -67,7 +67,7 @@ class Edit extends Component
 
         $this->modal = false;
         $this->emit('closeModal');
-        $this->alert('success', 'Donwload updated');
+        $this->alert('success', 'Download updated');
         $this->reset(['title', 'post_id']);
         $this->resetDownloads();
     }
