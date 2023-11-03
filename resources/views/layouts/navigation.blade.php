@@ -22,8 +22,7 @@
                                 class="object-containt">
                         </div>
                     @else
-                        <h1 class="text-rose-400 font-semibold text-3xl ">AV<span
-                                class="text-gray-200">Stream</span>
+                        <h1 class="text-rose-400 font-semibold text-3xl ">AV<span class="text-gray-200">Stream</span>
                         </h1>
                     @endif
                 </a>
@@ -74,17 +73,14 @@
                             <x-nav-link href="{{ route('post') }}" :active="request()->routeIs('post') ||
                                 request()->routeIs('post.create') ||
                                 request()->routeIs('post.edit')">
-                                <x-icons.movie :active="request()->routeIs('post')" />
                                 {{ __('Post series') }}
                             </x-nav-link>
                             <x-nav-link href="{{ route('actress.index') }}" :active="request()->routeIs('actress.index') ||
                                 request()->routeIs('actress.create') ||
                                 request()->routeIs('actress.edit')">
-                                <x-icons.movie :active="request()->routeIs('actress.index')" />
                                 {{ __('Actress') }}
                             </x-nav-link>
                             <x-nav-link href="{{ route('studio.index') }}" :active="request()->routeIs('studio.index')">
-                                <x-icons.movie :active="request()->routeIs('actress.index')" />
                                 {{ __('Studio') }}
                             </x-nav-link>
                         </div>
@@ -118,11 +114,9 @@
                         x-transition:leave-end="opacity-0 -translate-y-10" class="mt-3 flex flex-col items-end">
                         <div x-cloak class="w-[90%] bg-rose-500 space-y-2 p-3 shadow-2xl">
                             <x-nav-link href="{{ route('movie') }}" :active="request()->routeIs('movie')">
-                                <x-icons.movie :active="request()->routeIs('movie')" />
                                 {{ __('Embed') }}
                             </x-nav-link>
                             <x-nav-link href="{{ route('download') }}" :active="request()->routeIs('download')">
-                                <x-icons.movie :active="request()->routeIs('download')" />
                                 {{ __('Download') }}
                             </x-nav-link>
                         </div>
@@ -134,7 +128,17 @@
                             class="focus:outline-none text-white focus:ring-4 focus:border-0 focus:bg-gray-700 border border-gray-200 font-medium items-center text-sm p-3 flex w-full"
                             @click="openSub = ! openSub">
                             <div class="flex gap-3 items-center w-full">
-                                <x-icons.movie />
+                                <svg fill="#d1d5db" width="29px" height="29px" viewBox="-2 -5 24 24"
+                                    xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin"
+                                    class="jam jam-newsletter" stroke="#d1d5db" stroke-width="0.00024000000000000003">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path
+                                            d="M2 0h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm0 2v10h16V2H2zm3 6h6a1 1 0 0 1 0 2H5a1 1 0 1 1 0-2zm10-5h2v2h-2V3z">
+                                        </path>
+                                    </g>
+                                </svg>
                                 Subscription & Plan
                             </div>
                             <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
@@ -157,11 +161,9 @@
                             x-transition:leave-end="opacity-0 -translate-y-10" class="mt-3 flex flex-col items-end">
                             <div x-cloak class="w-[90%] bg-rose-500 space-y-2 p-3 shadow-2xl">
                                 <x-nav-link href="{{ route('subscription.plan') }}" :active="request()->routeIs('subscription.plan')">
-                                    <x-icons.movie />
                                     {{ __('Plan') }}
                                 </x-nav-link>
                                 <x-nav-link href="{{ route('subscription.log') }}" :active="request()->routeIs('subscription.log')">
-                                    <x-icons.movie />
                                     {{ __('Subscription') }}
                                 </x-nav-link>
                             </div>

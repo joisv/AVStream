@@ -44,12 +44,22 @@ class Index extends Component
         ]);
     }
 
+    public function mount()
+    {
+        
+    }
+    
     public function getActressCount()
     {
         $actressInfo = Actress::selectRaw('COUNT(*) as postCount, MAX(name) as postLatestUpdated')
         ->first();
         $this->actressCount = $actressInfo->postCount;
         $this->latesActressUpdated = $actressInfo->postLatestUpdated;
+
+    }
+    
+    public function mdll() {
+        $this->dispatchBrowserEvent('modall');
     }
     
     public function destroyAlert($actress)
@@ -93,19 +103,6 @@ class Index extends Component
 
         
     }
-    
-    // public function destroy($param)
-    // {
-    //     $actress = Actress::findOrFail($param);
-
-    //     $actress->delete();
-
-    //     if ($actress->profile) {
-    //         Storage::delete($actress->profile);
-    //     }
-
-    //     return redirect()->route('actress.index')->with('message', 'deleted successfully');
-    // }
 
     public function refreshData()
     {

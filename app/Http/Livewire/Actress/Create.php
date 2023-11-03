@@ -40,17 +40,19 @@ class Create extends Component
         Actress::create([
             'name' => $this->name,
             'age' => $this->age,
-            'cup_size' => $this->cup_size,
+            'cup_size' => Str::upper($this->cup_size),
             'height' => $this->height,
             'slug' => $this->setSlugAttribute($this->name),
             'debut' => $this->debut,
             'profile' => $this->profile->store('profile'),
         ]);
+
+        $this->dispatchBrowserEvent('mdd');
         $this->emit('closeModal');
         $this->alert('success', 'Actress succes created');
         $this->reset(['name', 'cup_size', 'age', 'profile', 'debut', 'height']);
     }
-
+    
     public function setSlugAttribute($value)
     {
         $slug = Str::slug($value);

@@ -11,12 +11,9 @@ use App\Models\Download;
 use App\Models\Genre;
 use App\Models\Movie;
 use App\Models\Plan;
-use App\Models\PlanSubscription;
 use App\Models\Post;
 use App\Models\SeoSetting;
 use App\Models\Studio;
-use App\Models\Subscription;
-use Database\Factories\PostGenreFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -28,7 +25,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         \App\Models\User::factory(10)->create();
-        Post::factory(20)->create();
+        Post::factory(1)->create();
         Genre::factory(10)->create();
         Actress::factory(20)->create();
         Category::factory(10)->create();
@@ -38,7 +35,6 @@ class DatabaseSeeder extends Seeder
         Studio::factory(10)->create();
         SeoSetting::factory(1)->create();
         Plan::factory(3)->create();
-        // Subscription::factory(10)->create();
 
         $count = 50;
 

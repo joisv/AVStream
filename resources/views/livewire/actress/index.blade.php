@@ -1,4 +1,4 @@
-<div wire:init="getActressCount">
+<div wire:init="getActressCount" >
     <div class="space-y-4">
         <div class="sm:flex sm:justify-between sm:items-center space-y-2 sm:space-y-0">
             <div class="sm:w-[40%] w-full">

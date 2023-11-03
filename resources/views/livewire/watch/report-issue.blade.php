@@ -12,7 +12,7 @@
                 <div class="flex items-center">
                     <input id="default-radio-1-{{ $index }}" type="radio" value="{{ $report }}"
                         wire:model.defer="content" name="default-radio"
-                        class="w-4 h-4 bg-gray-100 border-gray-300 focus:ring-blue-500  ">
+                        class="w-3 h-3 text-rose-600 bg-gray-200 focus:ring-rose-500 ">
                     <label for="default-radio-1-{{ $index }}"
                         class="ml-2 text-sm font-medium ">{{ $report }}</label>
                 </div>
