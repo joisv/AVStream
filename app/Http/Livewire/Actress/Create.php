@@ -20,15 +20,6 @@ class Create extends Component
         $debut,
         $height;
 
-    // public bool $modal = false;
-
-    // public $listeners = ['create' => 'toggleModal'];
-
-    // public function toggleModal()
-    // {
-    //     $this->modal = true;
-    // }
-
     public $rules = [
         'name' => 'unique:actresses,name|required|min:3|string',
         'cup_size' => 'required|regex:/^[A-Z]$/',
@@ -49,7 +40,7 @@ class Create extends Component
         Actress::create([
             'name' => $this->name,
             'age' => $this->age,
-            'cup_size' => $this->cup_size,
+            'cup_size' => Str::upper($this->cup_size),
             'height' => $this->height,
             'slug' => $this->setSlugAttribute($this->name),
             'debut' => $this->debut,

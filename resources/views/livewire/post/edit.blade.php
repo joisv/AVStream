@@ -21,7 +21,7 @@ $watch('searchStudio', (value, oldValue) => {
             dreams. If you have the opportunity to play.</p>
     </div>
     <form wire:submit.prevent="save">
-        <div class="w-full h-fit flex justify-end px-10 mb-4 space-x-2">
+        <div class="w-full h-fit flex justify-end md:px-10 mb-4 space-x-2">
             <label for="isVip" class="h-fit p-2 relative cursor-pointer rounded-sm {{ $isVip ? 'bg-rose-500' : 'bg-gray-400 ' }}">
                 <input id="isVip" wire:model="isVip" type="checkbox" name="" class="absolute opacity-0">
                 <x-icons.crown />
@@ -309,8 +309,8 @@ $watch('searchStudio', (value, oldValue) => {
             <div
                 class="h-fit lg:absolute lg:w-[55%] w-full lg:right-14 lg:top-0 space-y-4 ">
                 <div class="bg-white w-full p-2">
-                    <div class="flex space-x-2 ">
-                        <div class="w-[70%] space-y-2">
+                    <div class="sm:flex sm:space-x-2 space-y-2 sm:space-y-0">
+                        <div class="sm:w-[70%] w-full space-y-2">
                             <x-inputs.label-input for="title">Title</x-input.lable-input>
                                 <x-inputs.text-input ype="text" id="title" placeholder="ex: Halo dunia"
                                     wire:model.defer="title" />
@@ -318,7 +318,7 @@ $watch('searchStudio', (value, oldValue) => {
                                     <span class="error">{{ $message }}</span>
                                 @enderror
                         </div>
-                        <div class="w-[30%] space-y-2">
+                        <div class="sm:w-[30%] w-full sm:space-y-2 space-y-1">
                             <x-inputs.label-input for="category_id">Category</x-input.lable-input>
                                 <select id="category"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

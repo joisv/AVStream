@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Str;
 
 class Edit extends Component
 {
@@ -52,7 +53,7 @@ class Edit extends Component
             $this->actress->update([
                 'name' => $this->name,
                 'age' => $this->age,
-                'cup_size' => $this->cup_size,
+                'cup_size' => Str::upper($this->cup_size),
                 'height' => $this->height,
                 'debut' => $this->debut,
                 'profile' =>  is_object($this->profile) ? $this->deleteProfile() : $this->profile

@@ -20,6 +20,6 @@ class ShareDataServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        view()->composer(['layouts.home-navigation', 'layouts.home-footer','layouts.navigation', 'welcome', 'user-subscription-log'], SiteDataComposer::class);
+        view()->composer(['layouts.home-navigation', 'layouts.home-footer','layouts.navigation', 'welcome', 'user-subscription-log', 'layouts.home'], SiteDataComposer::class);
     }
 }

@@ -70,7 +70,42 @@
         });
     }">
         @include('layouts.home-navigation')
-       
+        @if (request()->is('/'))
+            <div
+                class="md:h-[50vh] relative bg-transparent flex items-center justify-start overflow-hidden mt-[10vh] max-w-screen-2xl w-full">
+                <video src="{{ $setting->banner_video_url }}" autoplay muted="muted" preload="auto" loop="loop"
+                    class="w-full object-top blur-xl opacity-50"></video>
+                <div class="absolute text-gray-200 px-5 md:px-10 sm:w-3/4 md:w-1/2 ">
+                    @auth
+                        @if (auth()->user()->can('can premium content'))
+                            <h1 class="text-2xl sm:text-3xl md:text-4xl font-semibold">Treat yourself to the ultimate
+                                cinematic
+                                experience with our VIP account!</h1>
+                            <div
+                                class="bg-rose-500 flex items-center justify-center rounded-md p-2 text-base sm:text-lg md:text-xl font-semibold space-x-1 w-fit mt-3">
+                                <p>VIP</p>
+                                <x-icons.crown />
+                            </div>
+                        @else
+                            <h1 class="text-2xl sm:text-3xl md:text-4xl font-semibold">Elevate Your Experience with VIP
+                                Membership!</h1>
+                            <a href="{{ route('vip') }}">
+                                <p
+                                    class="bg-rose-500 rounded-md p-2 text-base sm:text-lg md:text-xl font-semibold w-fit mt-3">
+                                    Get full acceess</p>
+                            </a>
+                        @endif
+                    @else
+                        <h1 class="text-2xl sm:text-3xl md:text-4xl font-semibold">Elevate Your Experience with VIP
+                            Membership!</h1>
+                        <a href="{{ route('vip') }}">
+                            <p class="bg-rose-500 rounded-md p-2 text-base sm:text-lg md:text-xl font-semibold w-fit mt-3">
+                                Get full acceess</p>
+                        </a>
+                    @endauth
+                </div>
+            </div>
+        @endif
         <div class="xl:max-w-7xl lg:max-w-4xl md:max-w-3xl mx-auto space-y-7">
             {{ $slot }}
         </div>
