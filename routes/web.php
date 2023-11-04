@@ -80,7 +80,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/actress-collection', [ActressController::class, 'actressCollection'])->name('actress.collection');
 
-    Route::get('/save', [ActressController::class, 'javCollection'])->name('save');
+    Route::get('/jav/collection', [ActressController::class, 'javCollection'])->name('save');
 });
 // 
 Route::middleware(['auth', 'role:admin|super-admin|writer'])->prefix('admin')->group(function () {

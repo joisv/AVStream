@@ -3,7 +3,7 @@
 @endphp
 <x-modals maxWidth="md">
     <form wire:submit.prevent="save">
-        <div class="space-y-2 w-full p-3 bg-background rounded-md border border-rose-500 text-white">
+        <div class="space-y-2 w-full p-3 bg-background border border-rose-500 text-white">
             <header>
                 <h1 class="text-rose-500 font-medium text-xl py-3">Report this post</h1>
             </header>

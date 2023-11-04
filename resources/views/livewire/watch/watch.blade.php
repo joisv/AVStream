@@ -2,7 +2,7 @@
     $selected = json_decode($selectedEmbeds, true);
     $selectedName = $selected ? Str::limit($selected['name'], 10, '...') : '';
 @endphp
-<div class="lg:flex sm:space-x-4 overflow-hidden min-h-[200vh] md:mt-[10vh] mt-[8vh]">
+<div class="lg:flex sm:space-x-4 overflow-hidden min-h-[200vh] md:mt-[10vh] mt-[8vh] ">
     <div class="max-w-screen-lg w-full lg:w-[70%] p-3 lg:p-0 top-0 relative text-text h-fit">
         <div class="w-full relative pb-[56.25%] " wire:loading.remove wire:target="selectedEmbeds">
             @if ($selected)
@@ -223,7 +223,7 @@
                                         fill="currentFill" />
                                 </svg>
                                 <span class="sr-only">Loading...</span>
-                                <div class="text-md font-semibold hidden sm:flex">Save</div>
+                                <div class="text-sm sm:text-base font-semibold">Save</div>
                             </button>
                         </li>
                         <li>
@@ -244,7 +244,7 @@
                                             stroke-linejoin="round"></path>
                                     </g>
                                 </svg>
-                                <div class="text-md font-semibold hidden sm:flex">Download</div>
+                                <div class="text-sm sm:text-base font-semibold">Download</div>
                             </button>
                         </li>
                         <li>
@@ -261,7 +261,7 @@
                                             fill="#9ca3af"></path>
                                     </g>
                                 </svg>
-                                <div class="text-md font-semibold hidden sm:flex">Report issue</div>
+                                <div class="text-sm sm:text-base font-semibold">Report issue</div>
                             </button>
                         </li>
                     </ul>

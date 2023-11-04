@@ -74,12 +74,14 @@
             var slidePerView = 9;
 
             if (screenWidth < 480) {
-                slidePerView = 2
+                slidePerView = 3
             } else if (screenWidth < 720) {
-                slidePerView = 5;
+                slidePerView = 4;
             } else if (screenWidth < 1024) {
+                slidePerView = 5;
+            } else if (screenWidth < 1248) {
                 slidePerView = 6;
-            } else if (screenWidth < 1536) {
+            } else if (screenWidth < 1282) {
                 slidePerView = 9
             }
 
