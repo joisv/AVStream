@@ -52,13 +52,13 @@ class WatchBy extends Component
     
     public function getPost()
     {
-        return Post::select(['id', 'slug', 'title', 'poster_path', 'isVip'])->orderBy($this->keyword, 'desc')->paginate(12);
+        return Post::select(['id', 'slug', 'title', 'poster_path', 'isVip', 'code'])->orderBy($this->keyword, 'desc')->paginate(12);
     }
 
     function getMostViewedPosts($startDate = null, $endDate = null, $orderBy = 'views')
     {
         return DB::table('posts')
-            ->select(['id', 'slug', 'title', 'poster_path', 'isVip'])
+            ->select(['id', 'slug', 'title', 'poster_path', 'isVip', 'code'])
             ->whereBetween('updated_at', [$startDate, $endDate])
             ->orderByDesc($orderBy)
             ->paginate(12);

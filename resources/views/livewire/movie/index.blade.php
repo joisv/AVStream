@@ -76,7 +76,7 @@
                                 {{ $movie->user->name ?? '' }}
                             </x-tables.cell>
                             <x-tables.cell>
-                                {{ Str::limit($movie->post->title, 35, '...') }}
+                                {{ Str::limit($movie->post?->title, 35, '...') }}
                             </x-tables.cell>
                             <x-tables.cell class="whitespace-nowrap">
                                 {{ $movie->created_at->format('M, d Y') }}

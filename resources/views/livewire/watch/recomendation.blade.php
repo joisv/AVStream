@@ -2,11 +2,11 @@
     <header>
         <h1 class="text-rose-500 font-bold sm:text-2xl text-xl">Recomendation</h1>
     </header>
-    <div class="grid sm:grid-cols-3 lg:grid-cols-4 grid-cols-2 text-gray-400 gap-2 relative">
+    <div class="grid sm:grid-cols-3 grid-cols-2 text-gray-400 gap-2 relative"> 
         @empty(!$recomendations)
             @forelse ($recomendations as $post)
                 <article>
-                    <a href="{{ route('watch', ['slug' => $post->slug]) }}">
+                    <a href="{{ route('watch', ['c' => $post->code]) }}">
                         <div
                             class="w-full md:h-44 lg:h-32 xl:h-44 h-28 rounded-sm overflow-hidden cursor-pointer hover:opacity-90 ease-in duration-300 relative">
                             <img src="{{ asset('storage/' . $post->poster_path) }}" alt="" srcset=""

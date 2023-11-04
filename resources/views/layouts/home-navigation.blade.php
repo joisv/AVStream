@@ -207,8 +207,10 @@
                                         stroke-linecap="round" stroke-linejoin="round"></path>
                                 </g>
                             </svg>
-                            <div x-cloak x-show="$store.count > 0 || $store.subscriptionCount > 0"
-                                class="w-3 h-3 rounded-full bg-red-500 absolute top-0 right-4"></div>
+                            <div x-cloak x-show="$store.count > 0 || $store.isSubscriptionExist > 0"
+                                class="w-3 h-3 absolute rounded-full text-center font-medium text-white top-0 left-2" x-bind:class="$store.count > 0 && $store.isSubscriptionExist > 0 ? 'bg-rose-500' : ($store.count > 0 ? 'bg-rose-400' : ($store.isSubscriptionExist > 0 ? 'bg-yellow-500' : ''))">
+
+                            </div>
                         </button>
                     </x-slot>
                     <x-slot name="content">
@@ -266,7 +268,7 @@
                             {{-- my collection --}}
                             <li>
                                 <button @click="myCollection = ! myCollection"
-                                    class="flex justify-between w-full items-center px-2 font-medium">
+                                    class="flex justify-between w-full items-center px-2 font-medium relative">
                                     <span class="text-sm font-semibold">My Collection: @auth
                                             {{ $userName }}
                                         @endauth
@@ -278,6 +280,10 @@
                                                 d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                                                 clip-rule="evenodd" />
                                         </svg>
+                                    </div>
+                                    <div x-cloak x-show="$store.count > 0 || $store.isSubscriptionExist > 0"
+                                        class="w-3 h-3 absolute rounded-full text-center font-medium text-white top-0 left-2" x-bind:class="$store.count > 0 && $store.isSubscriptionExist > 0 ? 'bg-rose-500' : ($store.count > 0 ? 'bg-rose-400' : ($store.isSubscriptionExist > 0 ? 'bg-yellow-500' : ''))">
+    
                                     </div>
                                 </button>
                                 <div x-show="myCollection" class="bg-gray-600 py-1">
@@ -331,8 +337,8 @@
             <div class="flex w-full max-w-3xl">
                 <div class="relative w-full">
                     <input type="search" id="search-dropdown"
-                        class="block p-2.5 w-full z-20 text-sm text-gray-200 bg-gray-800 rounded-md focus:border-rose-500 "
-                        placeholder="Search here" required name="keyword">
+                        class="block p-2.5 w-full z-20 text-sm text-gray-200 bg-gray-800 rounded-md focus:border-rose-500 focus:ring-0"
+                        placeholder="Search by title or code" required name="keyword">
                     <button type="submit"
                         class="absolute top-0 right-0 py-2.5 px-5 text-sm font-medium h-full text-white bg-gray-700 rounded-r-md hover:bg-rose-500 focus:ring-4 focus:outline-none focus:ring-rose-300">
                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"

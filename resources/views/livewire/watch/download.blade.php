@@ -1,5 +1,5 @@
 <x-modals maxWidth="sm">
-    <div class="bg-background border-rose-500 rounded-md p-3 text-white overflow-hidden space-y-3"
+    <div class="bg-background border-rose-500 p-3 text-white overflow-hidden space-y-3"
         wire:init="getDownloads">
         <h1 class="font-semibold text-lg text-start text-rose-500">Download Quality</h1>
         {{-- regular download --}}
@@ -10,7 +10,7 @@
                         <input id="default-radio-1" type="radio" value="{{ $regular['id'] }}"
                             wire:model="selectedDownload" wire:loading.attr="disabled" name="default-radio"
                             class="w-3 h-3 text-rose-600 bg-gray-200 focus:ring-rose-500 ">
-                        <label for="default-radio-1" class="ml-2 font-semibold ">{{ $regular['name'] }}</label>
+                        <label for="default-radio-1" class="ml-2 font-medium ">{{ $regular['name'] }}</label>
                     </div>
                     {{-- {{ $regular['name'] }} --}}
                 @empty
@@ -24,7 +24,7 @@
                     <x-icons.crown isVip="true" default="34px" />
                     <h1 class="text-rose-500 text-lg font-bold">VIP</h1>
                 </div>
-                <p class="text-gray-400 font-medium">mengunduh konten dengan kualitas lebih tinggi dan kecepatan super
+                <p class="text-gray-400 text-sm sm:text-base font-semibold">mengunduh konten dengan kualitas lebih tinggi dan kecepatan super
                     cepat. </p>
                 <div class="space-y-3 mt-3">
                     @forelse ($vipDownloads as $index => $vip)
@@ -33,7 +33,7 @@
                                 wire:model="selectedDownload" wire:loading.attr="disabled" name="vip-radio"
                                 class="w-3 h-3 text-rose-600 bg-gray-200 focus:ring-rose-500 ">
                             <label for="vip-radio-{{ $index }}"
-                                class="ml-2 font-semibold">{{ $vip['name'] }}</label>
+                                class="ml-2 font-medium">{{ $vip['name'] }}</label>
                         </div>
                     @empty
                         <div class="flex items-center mb-4">
