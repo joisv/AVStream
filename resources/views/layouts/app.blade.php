@@ -26,7 +26,7 @@
     
         init() {
             this.screenWidth = window.innerWidth;
-            if (this.screenWidth <= 1024) {
+            if (this.screenWidth <= 1280) {
                 this.openMenu = true;
             }
         },
@@ -38,7 +38,7 @@
             window.addEventListener('resize', () => {
         
                 screenWidth = window.innerWidth;
-                if (screenWidth <= 1024) {
+                if (screenWidth <= 1280) {
                     openMenu = true;
                 } else {
                     openMenu = false;
@@ -47,14 +47,14 @@
             });
         }">
         @include('layouts.navigation')
-        <main class="relative p-5 " x-cloak
-            :class="openMenu ? 'w-full flex justify-center' : 'w-full flex justify-end lg:justify-center lg:w-[79vw]'">
+        <main class="relative p-5 w-full flex" x-cloak
+            :class="openMenu ? ' justify-center' : 'xl:justify-end justify-center xl:w-[79vw]'">
             <div class="w-full max-w-5xl">
                 <div class="w-full py-2 flex items-center justify-between ">
                     <button class="ring focus:ring-rose-500 p-2 rounded-md" x-data x-on:click="toggleMenu()">
                         <x-icons.menu />
                     </button>
-                    <div class="hidden sm:flex sm:items-center sm:ml-6">
+                    <div class="flex sm:items-center sm:ml-6">
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
                                 <button
@@ -106,12 +106,6 @@
             @stack('modal')
         </div>
     </div>
-    {{-- <footer class="w-full flex justify-end">
-        <div class=" bottom-0 text-rose-500 right-16 p-2 font-semibold mr-10">
-            <h1>{{ $version }}</h1>
-            <h2 class="text-gray-600 text-sm italic">{{ $made }}</h2>
-        </div>
-    </footer> --}}
     @livewireScripts
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <x-livewire-alert::scripts />

@@ -1,5 +1,5 @@
 <nav x-cloak class="ease-in duration-100 absolute sm:relative">
-    <div class="p-4 lg:w-[20%] md:w-[27%] z-50 fixed ease-in duration-200" x-data="{
+    <div class="p-4 lg:w-[23%] md:w-[32%] sm:w-[35%] max-w-[80vw] z-50 fixed ease-in duration-200" x-data="{
         open: @json(request()->routeIs('post')) ||
             @json(request()->routeIs('post.create')) ||
             @json(request()->routeIs('post.edit')) ||
@@ -8,8 +8,8 @@
         openStream: @json(request()->routeIs('download')) || @json(request()->routeIs('movie')),
         openSub: @json(request()->routeIs('subscription.plan'))
     }" x-cloak
-        :class="openMenu ? '-translate-x-[150%]' : screenWidth <= 430 ? 'w-[80%]' : 'w-[50vw]'">
-        <button class="ring focus:ring-rose-500 p-2 rounded-md absolute -right-11 lg:hidden flex" @click="toggleMenu()">
+        :class="openMenu ? '-translate-x-[150%]' : ''">
+        <button class="ring focus:ring-rose-500 p-2 rounded-md absolute -right-11 xl:hidden flex" @click="toggleMenu()">
             <x-icons.menu />
         </button>
         <div class="bg-gray-800 space-y-5 min-h-[95vh] p-3 relative shadow-2xl overflow-y-auto">
