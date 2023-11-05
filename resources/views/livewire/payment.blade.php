@@ -14,7 +14,7 @@
     </header>
     <form wire:submit.prevent="save">
         @foreach ($payments as $index => $payment)
-            <div class="flex items-end space-x-2 w-[65%] mt-3" wire:key="payment-{{ $index }}">
+            <div class="flex items-end space-x-2 md:w-[65%] w-full mt-3" wire:key="payment-{{ $index }}">
                 <div class=" w-full">
                     <x-inputs.label-input for="name_{{ $index }}" class="text-gray-500">Name</x-input.lable-input>
                         <x-inputs.text-input type="text" id="name_{{ $index }}"
