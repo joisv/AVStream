@@ -13,8 +13,15 @@ class Edit extends Component
     use LivewireAlert;
     public Movie $movie;
 
+    public $players = [
+        ['player' => 'youtube', 'name' => 'Youtube'],
+        ['player' => 'hls', 'name' => 'Hls (.m3u8)'],
+        ['player' => 'embed', 'name' => 'Embed'],
+        ['player' => 'direct', 'name' => 'Direct (.mp4, .mkv etc..)'],
+    ];
+    
     public $movies = [
-        ['name' => '', 'url_movie' => '' , 'isVip' => false, 'user_id' => '']
+        ['name' => '', 'url_movie' => '' , 'isVip' => false, 'user_id' => '', 'player' => '']
     ];
 
     public $modal = false,
@@ -50,7 +57,8 @@ class Edit extends Component
         $this->validate([
             'movies.*.name' => 'required|string|max:255',
             'movies.*.url_movie' => 'required|url|max:255',
-            'post_id' => 'required'
+            'post_id' => 'required',
+            'players.*.player' => 'required'
         ]);
 
         $this->movie->delete();
@@ -61,7 +69,8 @@ class Edit extends Component
                 'url_movie' => $item['url_movie'],
                 'isVip' => $item['isVip'],
                 'user_id' => $item['user_id'],
-                'post_id' => $this->post_id
+                'post_id' => $this->post_id,
+                'player' => $item['player']
             ]);
         }
 
@@ -79,16 +88,17 @@ class Edit extends Component
             $this->movies[$index]['url_movie'] = $editedMovie->url_movie;
             $this->movies[$index]['isVip'] = $editedMovie->isVip;
             $this->movies[$index]['user_id'] = $editedMovie->user_id;
+            $this->movies[$index]['player'] = $editedMovie->player;
         }
         $this->movie = $editedMovie;
         $this->post_id = $editedMovie->post_id;
-        $this->title = $editedMovie->post->title;
+        $this->title = $editedMovie->post?->title;
         $this->modal = true;
     }
 
     public function addMovie()
     {
-        $this->movies[] = ['name' => '', 'url_movie' => '' , 'isVip' => false, 'user_id' => ''];
+        $this->movies[] = ['name' => '', 'url_movie' => '' , 'isVip' => false, 'user_id' => '', 'player' => 'embed'];
     }
 
     public function deleteMovie($index)
@@ -104,7 +114,7 @@ class Edit extends Component
     public function resetMovies()
     {
         $this->movies = [
-            ['name' => '', 'url_movie' => '' , 'isVip' => false, 'user_id' => '']
+            ['name' => '', 'url_movie' => '' , 'isVip' => false, 'user_id' => '', 'player' => '']
         ];
     }
 }

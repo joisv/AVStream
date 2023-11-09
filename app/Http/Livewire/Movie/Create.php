@@ -13,12 +13,20 @@ class Create extends Component
     use LivewireAlert;
     public Post $post;
     
+    public $players = [
+        ['player' => 'youtube', 'name' => 'Youtube'],
+        ['player' => 'hls', 'name' => 'Hls (.m3u8)'],
+        ['player' => 'embed', 'name' => 'Embed'],
+        ['player' => 'direct', 'name' => 'Direct (.mp4, .mkv etc..)'],
+    ];
+
     public $movies = [
         [
             'name' => '', 
             'url_movie' => '',
             'isVip' => false,
-            'user_id' => ''
+            'user_id' => '',
+            'player' => 'embed'
         ]
     ];
 
@@ -52,7 +60,8 @@ class Create extends Component
         $this->validate([
             'movies.*.name' => 'required|string|max:255',
             'movies.*.url_movie' => 'required|url|max:255',
-            'post_id' => 'required'
+            'post_id' => 'required',
+            'players.*.player' => 'required'
         ]);
 
         foreach ($this->movies as $item) {
@@ -61,7 +70,8 @@ class Create extends Component
                 'url_movie' => $item['url_movie'],
                 'isVip' => $item['isVip'],
                 'user_id' => auth()->user()->id,
-                'post_id' => $this->post_id
+                'post_id' => $this->post_id,
+                'player' => $item['player']
             ]);
         }
 
@@ -79,7 +89,7 @@ class Create extends Component
 
     public function addMovie()
     {
-        $this->movies[] = ['name' => '', 'url_movie' => '', 'isVip' => false, 'user_id' => ''];
+        $this->movies[] = ['name' => '', 'url_movie' => '', 'isVip' => false, 'user_id' => '', 'player' => 'embed'];
     }
 
     public function deleteMovie($index)
@@ -95,7 +105,7 @@ class Create extends Component
     public function resetMovies()
     {
         $this->movies = [
-            ['name' => '', 'url_movie' => '', 'isVip' => false, 'user_id' => '']
+            ['name' => '', 'url_movie' => '', 'isVip' => false, 'user_id' => '', 'player' => '']
         ];
     }
 

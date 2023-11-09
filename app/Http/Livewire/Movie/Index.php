@@ -109,14 +109,6 @@ class Index extends Component
 
         
     }
-    
-    // public function destroy($param)
-    // {
-    //     $embed = Movie::findOrFail($param);
-    //     Gate::authorize('delete', $embed);
-    //     $embed->delete();
-    //     $this->emit('showAlert');
-    // }
 
     public function createModal()
     {

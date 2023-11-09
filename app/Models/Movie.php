@@ -17,7 +17,8 @@ class Movie extends Model
         'url_movie',
         'post_id',
         'isVip',
-        'user_id'
+        'user_id',
+        'player'
     ];
 
     public function post():BelongsTo

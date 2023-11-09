@@ -114,5 +114,10 @@
         </div>
         <livewire:movie.create />
         <livewire:movie.edit />
+        <div class="absolute w-full left-0 top-0 h-full" wire:loading.flex wire:target="editModal">
+            <div class="w-full flex justify-center h-full items-center">
+                <x-icons.loading-circle />
+            </div>
+        </div>
     </div>
 </div>
