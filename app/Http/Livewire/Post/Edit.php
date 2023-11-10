@@ -7,7 +7,6 @@ use App\Models\Category;
 use App\Models\Genre;
 use App\Models\Post;
 use App\Models\Studio;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;

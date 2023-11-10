@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         Genre::factory(10)->create();
         Actress::factory(20)->create();
         Category::factory(10)->create();
-        Movie::factory(10)->create();
+        // Movie::factory(10)->create();
         Download::factory(10)->create();
         Contact::factory(3)->create();
         Studio::factory(10)->create();

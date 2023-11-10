@@ -68,7 +68,7 @@
                             </x-tables.cell>
                             <x-tables.cell>
                                 <div
-                                    class="{{ $movie->isVip ? 'bg-rose-500' : 'bg-gray-400' }} h-fit p-2 cursor-pointer rounded-sm">
+                                    class="{{ $movie->isVip ? 'bg-rose-500' : 'bg-gray-400' }} h-fit w-fit p-2 cursor-pointer rounded-sm">
                                     <x-icons.crown />
                                 </div>
                             </x-tables.cell>

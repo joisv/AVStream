@@ -1,5 +1,4 @@
 @php
-    $selected = json_decode($selectedEmbeds, true);
     $selectedName = $selected ? Str::limit($selected['name'], 10, '...') : '';
 @endphp
 <div class="lg:flex sm:space-x-4 overflow-hidden min-h-[200vh] md:mt-[10vh] mt-[8vh] ">
@@ -9,11 +8,31 @@
                 @if ($post->isVip == 1)
                     @auth
                         @can('can premium content')
-                            <iframe class="absolute top-0 left-0 w-full h-full" src="{{ $selected['url_movie'] ?? '' }}"
-                                title="Jav Player" frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen>
-                            </iframe>
+                            @if ($selected['player'] == 'hls')
+                                <video controls crossorigin playsinline id="hls" poster="{{ $selected['poster'] }}"></video>
+                            @elseif($selected['player'] == 'direct')
+                                <video controls crossorigin playsinline poster="{{ $selected['poster'] }}" id="player"
+                                    class="w-full h-full">
+                                    <!-- Video files -->
+                                    <source src="{{ $selected['url_movie'] }}" type="video/mp4" size="576">
+
+                                    <!-- Caption files -->
+                                    {{-- <track kind="captions" label="English" srclang="en"
+                                        src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt" default>
+                                    <track kind="captions" label="Français" srclang="fr"
+                                        src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt"> --}}
+
+                                    <!-- Fallback for browsers that don't support the <video> element -->
+                                    {{-- <a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4"
+                                        download>Download</a> --}}
+                                </video>
+                            @else
+                                <iframe class="absolute top-0 left-0 w-full h-full" src="{{ $selected['url_movie'] ?? '' }}"
+                                    title="Jav Player" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen>
+                                </iframe>
+                            @endif
                         @else
                             <div class="absolute top-0 left-0 w-full h-full flex justify-center items-center">
                                 <x-icons.crown isVip="true" default="60px" />
@@ -80,9 +99,33 @@
                 @endif
             @else
                 <div class="absolute top-0 left-0 w-full h-full flex justify-center items-center">
-                        <h1 class="text-rose-500 text-2xl font-semibold">404 <span class="underline text-gray-500">Embed not found...</span></h1>
+                    <h1 class="text-rose-500 text-2xl font-semibold">404 <span class="underline text-gray-500">Embed not
+                            found...</span></h1>
                 </div>
             @endif
+            {{-- <video controls crossorigin playsinline
+                poster="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.jpg" id="player" class="w-full h-full">
+                <!-- Video files -->
+                <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" type="video/mp4"
+                    size="576">
+                <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4" type="video/mp4"
+                    size="720">
+                <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4" type="video/mp4"
+                    size="1080">
+                <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1440p.mp4" type="video/mp4"
+                    size="1440">
+
+                <!-- Caption files -->
+                <track kind="captions" label="English" srclang="en"
+                    src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt" default>
+                <track kind="captions" label="Français" srclang="fr"
+                    src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt">
+
+                <!-- Fallback for browsers that don't support the <video> element -->
+                <a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" download>Download</a>
+            </video> --}}
+            {{-- <video controls crossorigin playsinline
+                poster="https://bitdash-a.akamaihd.net/content/sintel/poster.png"></video> --}}
         </div>
         <div class="pb-[24%] flex flex-col items-center" wire:loading.flex wire:target="selectedEmbeds">
             <div class="mt-[24%]">
@@ -199,7 +242,8 @@
                 <nav class="text-gray-400 w-full flex justify-center mt-7">
                     <ul class="flex space-x-3">
                         <li>
-                            <button type="button" class="flex space-x-1 items-center" wire:click="savePost" wire:loading.attr="disabled">
+                            <button type="button" class="flex space-x-1 items-center" wire:click="savePost"
+                                wire:loading.attr="disabled">
                                 <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg" wire:loading.remove wire:target="savePost">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -352,4 +396,86 @@
 
     <livewire:watch.download :postId="$post->id" />
     <livewire:watch.report-issue :post_id="$post->id" />
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const source = @js($selected['url_movie']);
+            const video = document.getElementById('hls');
+            const defaultOptions = {};
+
+            function initializePlyr(playerSelector, options) {
+                const player = new Plyr(playerSelector, options);
+                window.player = player;
+            }
+
+            function initializeHls(video, source, defaultOptions) {
+                const hls = new Hls();
+                hls.loadSource(source);
+
+                hls.on(Hls.Events.MANIFEST_PARSED, function(event, data) {
+                    const availableQualities = hls.levels.map((l) => l.height)
+                    availableQualities.unshift(0);
+
+                    defaultOptions.quality = {
+                        default: 0,
+                        options: availableQualities,
+                        forced: true,
+                        onChange: (e) => updateQuality(e),
+                    }
+
+                    defaultOptions.i18n = {
+                        qualityLabel: {
+                            0: 'Auto',
+                        },
+                    }
+
+                    hls.on(Hls.Events.LEVEL_SWITCHED, function(event, data) {
+                        const span = document.querySelector(
+                            ".plyr__menu__container [data-plyr='quality'][value='0'] span")
+                        if (hls.autoLevelEnabled) {
+                            span.innerHTML = `AUTO (${hls.levels[data.level].height}p)`
+                        } else {
+                            span.innerHTML = `AUTO`
+                        }
+                    })
+
+                    const player = new Plyr(video, defaultOptions);
+                    window.hls = hls;
+                });
+
+                hls.attachMedia(video);
+            }
+
+            function updateQuality(newQuality) {
+                if (window.hls && newQuality === 0) {
+                    window.hls.currentLevel = -1;
+                } else if (window.hls) {
+                    window.hls.levels.forEach((level, levelIndex) => {
+                        if (level.height === newQuality) {
+                            console.log("Found quality match with " + newQuality);
+                            window.hls.currentLevel = levelIndex;
+                        }
+                    });
+                }
+            }
+
+            @this.on('plyr', (selected) => {
+                if (selected['player'] === 'hls') {
+                    if (!Hls.isSupported()) {
+                        initializePlyr('#player', defaultOptions);
+                    } else {
+                        initializeHls(video, selected['url_movie'], defaultOptions);
+                    }
+                } else {
+                    initializePlyr('#player', defaultOptions);
+                }
+            });
+
+            // Initial setup outside the livewire event
+            if (Hls.isSupported()) {
+                initializeHls(video, source, defaultOptions);
+            } else {
+                initializePlyr('#player', defaultOptions);
+            }
+        });
+    </script>
 </div>

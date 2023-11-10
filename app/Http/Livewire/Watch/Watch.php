@@ -2,9 +2,6 @@
 
 namespace App\Http\Livewire\Watch;
 
-use App\Models\SeoSetting;
-use Artesaos\SEOTools\Facades\SEOMeta;
-use Artesaos\SEOTools\Facades\SEOTools;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -13,26 +10,38 @@ class Watch extends Component
     use LivewireAlert;
 
     public $user;
-    
+
     public $post,
         $download = false,
         $selectedEmbeds,
         $isVip = false,
-        $hasPost = false;
+        $hasPost = false,
+        $selected;
 
     public $rules = [
         'selectedEmbeds' => 'required'
     ];
 
-    public $listeners = [ 'reRender' => 'reRender' ];
+    public $listeners = ['reRender' => 'reRender'];
 
-    public function reRender(){
-
+    public function reRender()
+    {
     }
-    
+
+    public function updated()
+    {
+        $this->selected = json_decode($this->selectedEmbeds, true);
+
+        if ($this->selectedEmbeds) {
+            $this->emitSelf("plyr", $this->selected);
+        }
+    }
+
     public function mount()
     {
         $this->selectedEmbeds = $this->post->movies()->exists() ? $this->post->movies[0] : null;
+        $this->selected = $this->selectedEmbeds;
+
         if (auth()->check()) {
             $this->user = auth()->user();
             $this->isPostExis();
@@ -69,7 +78,7 @@ class Watch extends Component
             $this->alert('warning', 'You need to login first');
             return;
         }
-    
+
         try {
             if (!$this->hasPost) {
                 $this->user->savedPosts()->attach($this->post->id);

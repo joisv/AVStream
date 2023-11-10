@@ -47,6 +47,8 @@
     </style>
     @livewireStyles
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+    
 </head>
 
 <body class="antialiased bg-background">
@@ -114,6 +116,8 @@
     @include('layouts.home-footer')
     @livewireScripts
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+    <script src="https://cdn.rawgit.com/video-dev/hls.js/18bb552/dist/hls.min.js"></script>
     <x-livewire-alert::scripts />
     @stack('script')
 </body>
