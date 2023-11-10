@@ -3,16 +3,15 @@
 @endphp
 <div class="lg:flex sm:space-x-4 overflow-hidden min-h-[200vh] md:mt-[10vh] mt-[8vh] ">
     <div class="max-w-screen-lg w-full lg:w-[70%] p-3 lg:p-0 top-0 relative text-text h-fit">
-        <div class="w-full relative pb-[56.25%] " wire:loading.remove wire:target="selectedEmbeds">
+        <div class="w-full {{ $selected['player'] == 'hls' || $selected['player'] == 'direct' ? '' : 'relative pb-[56%]'}}" wire:loading.remove wire:target="selectedEmbeds">
             @if ($selected)
                 @if ($post->isVip == 1)
                     @auth
                         @can('can premium content')
                             @if ($selected['player'] == 'hls')
-                                <video controls crossorigin playsinline id="hls" poster="{{ $selected['poster'] }}"></video>
+                                <video controls crossorigin playsinline id="hls" poster="{{ Str::startsWith($selected['poster'], ['http://', 'https://']) ? $selected['poster'] : asset('storage/' . $selected['poster']) }}"></video>
                             @elseif($selected['player'] == 'direct')
-                                <video controls crossorigin playsinline poster="{{ $selected['poster'] }}" id="player"
-                                    class="w-full h-full">
+                                <video controls crossorigin playsinline poster="{{ Str::startsWith($selected['poster'], ['http://', 'https://']) ? $selected['poster'] : asset('storage/' . $selected['poster']) }}" id="player">
                                     <!-- Video files -->
                                     <source src="{{ $selected['url_movie'] }}" type="video/mp4" size="576">
 
@@ -23,8 +22,8 @@
                                         src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt"> --}}
 
                                     <!-- Fallback for browsers that don't support the <video> element -->
-                                    {{-- <a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4"
-                                        download>Download</a> --}}
+                                    <a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4"
+                                        download>Download</a>
                                 </video>
                             @else
                                 <iframe class="absolute top-0 left-0 w-full h-full" src="{{ $selected['url_movie'] ?? '' }}"
@@ -103,29 +102,6 @@
                             found...</span></h1>
                 </div>
             @endif
-            {{-- <video controls crossorigin playsinline
-                poster="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.jpg" id="player" class="w-full h-full">
-                <!-- Video files -->
-                <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" type="video/mp4"
-                    size="576">
-                <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4" type="video/mp4"
-                    size="720">
-                <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4" type="video/mp4"
-                    size="1080">
-                <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1440p.mp4" type="video/mp4"
-                    size="1440">
-
-                <!-- Caption files -->
-                <track kind="captions" label="English" srclang="en"
-                    src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt" default>
-                <track kind="captions" label="Français" srclang="fr"
-                    src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt">
-
-                <!-- Fallback for browsers that don't support the <video> element -->
-                <a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" download>Download</a>
-            </video> --}}
-            {{-- <video controls crossorigin playsinline
-                poster="https://bitdash-a.akamaihd.net/content/sintel/poster.png"></video> --}}
         </div>
         <div class="pb-[24%] flex flex-col items-center" wire:loading.flex wire:target="selectedEmbeds">
             <div class="mt-[24%]">
@@ -396,18 +372,22 @@
 
     <livewire:watch.download :postId="$post->id" />
     <livewire:watch.report-issue :post_id="$post->id" />
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', () => {
             const source = @js($selected['url_movie']);
             const video = document.getElementById('hls');
-            const defaultOptions = {};
+            const defaultOptions = {
+                ratio: '16:9'
+            };
 
             function initializePlyr(playerSelector, options) {
                 const player = new Plyr(playerSelector, options);
                 window.player = player;
+                
             }
 
             function initializeHls(video, source, defaultOptions) {
+                
                 const hls = new Hls();
                 hls.loadSource(source);
 
@@ -440,6 +420,9 @@
 
                     const player = new Plyr(video, defaultOptions);
                     window.hls = hls;
+                    window.addEventListener('resize', () => {
+                        player.setup();
+                    });
                 });
 
                 hls.attachMedia(video);
@@ -477,5 +460,183 @@
                 initializePlyr('#player', defaultOptions);
             }
         });
+    </script> --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            @this.on('plyr', (selected) => {
+                const source = selected['url_movie'];
+                const video = document.getElementById('hls');
+
+                const defaultOptions = {
+                    ratio: '16:9',
+                    captions: {
+                        active: false,
+                        language: 'auto',
+                        update: false
+                    },
+                    fullscreen: {
+                        enabled: true,
+                        fallback: true,
+                        iosNative: false,
+                        container: null
+                    }
+                };
+                if (selected['player'] == 'hls') {
+                    if (!Hls.isSupported()) {
+                        const player = new Plyr('#player', defaultOptions);
+                        window.player = player;
+                    } else {
+                        // For more Hls.js options, see https://github.com/dailymotion/hls.js
+                        const hls = new Hls();
+                        hls.loadSource(source);
+
+                        // From the m3u8 playlist, hls parses the manifest and returns
+                        // all available video qualities. This is important, in this approach,
+                        // we will have one source on the Plyr player.
+                        hls.on(Hls.Events.MANIFEST_PARSED, function(event, data) {
+
+                            // Transform available levels into an array of integers (height values).
+                            const availableQualities = hls.levels.map((l) => l.height)
+                            availableQualities.unshift(0) //prepend 0 to quality array
+
+                            // Add new qualities to option
+                            defaultOptions.quality = {
+                                default: 0, //Default - AUTO
+                                options: availableQualities,
+                                forced: true,
+                                onChange: (e) => updateQuality(e),
+                            }
+                            // Add Auto Label 
+                            defaultOptions.i18n = {
+                                qualityLabel: {
+                                    0: 'Auto',
+                                },
+                            }
+
+                            hls.on(Hls.Events.LEVEL_SWITCHED, function(event, data) {
+                                var span = document.querySelector(
+                                    ".plyr__menu__container [data-plyr='quality'][value='0'] span"
+                                )
+                                if (hls.autoLevelEnabled) {
+                                    span.innerHTML =
+                                        `AUTO (${hls.levels[data.level].height}p)`
+                                } else {
+                                    span.innerHTML = `AUTO`
+                                }
+                            })
+
+                            // Initialize new Plyr player with quality options
+                            var player = new Plyr(video, defaultOptions);
+                        });
+
+                        hls.attachMedia(video);
+                        window.hls = hls;
+                    }
+
+                    function updateQuality(newQuality) {
+                        if (newQuality === 0) {
+                            window.hls.currentLevel = -1; //Enable AUTO quality if option.value = 0
+                        } else {
+                            window.hls.levels.forEach((level, levelIndex) => {
+                                if (level.height === newQuality) {
+                                    console.log("Found quality match with " + newQuality);
+                                    window.hls.currentLevel = levelIndex;
+                                }
+                            });
+                        }
+                    }
+                } else {
+                    const player = new Plyr('#player');
+                    window.player = player;
+                }
+            })
+
+            const source = @js($selected['url_movie']);
+            const video = document.getElementById('hls');
+
+            const defaultOptions = {
+                ratio: '16:9',
+                captions: {
+                    active: false,
+                    language: 'auto',
+                    update: false
+                },
+                fullscreen: {
+                    enabled: true,
+                    fallback: true,
+                    iosNative: false,
+                    container: null
+                }
+            };
+            if (@js($selected['player']) == 'hls') {
+
+                if (!Hls.isSupported()) {
+                    const player = new Plyr('#player');
+                    window.player = player;
+                } else {
+                    // For more Hls.js options, see https://github.com/dailymotion/hls.js
+                    const hls = new Hls();
+                    hls.loadSource(source);
+    
+                    // From the m3u8 playlist, hls parses the manifest and returns
+                    // all available video qualities. This is important, in this approach,
+                    // we will have one source on the Plyr player.
+                    hls.on(Hls.Events.MANIFEST_PARSED, function(event, data) {
+    
+                        // Transform available levels into an array of integers (height values).
+                        const availableQualities = hls.levels.map((l) => l.height)
+                        availableQualities.unshift(0) //prepend 0 to quality array
+    
+                        // Add new qualities to option
+                        defaultOptions.quality = {
+                            default: 0, //Default - AUTO
+                            options: availableQualities,
+                            forced: true,
+                            onChange: (e) => updateQuality(e),
+                        }
+                        // Add Auto Label 
+                        defaultOptions.i18n = {
+                            qualityLabel: {
+                                0: 'Auto',
+                            },
+                        }
+    
+                        hls.on(Hls.Events.LEVEL_SWITCHED, function(event, data) {
+                            var span = document.querySelector(
+                                ".plyr__menu__container [data-plyr='quality'][value='0'] span"
+                            )
+                            if (hls.autoLevelEnabled) {
+                                span.innerHTML = `AUTO (${hls.levels[data.level].height}p)`
+                            } else {
+                                span.innerHTML = `AUTO`
+                            }
+                        })
+    
+                        // Initialize new Plyr player with quality options
+                        var player = new Plyr(video, defaultOptions);
+                    });
+    
+                    hls.attachMedia(video);
+                    window.hls = hls;
+                }
+    
+                function updateQuality(newQuality) {
+                    if (newQuality === 0) {
+                        window.hls.currentLevel = -1; //Enable AUTO quality if option.value = 0
+                    } else {
+                        window.hls.levels.forEach((level, levelIndex) => {
+                            if (level.height === newQuality) {
+                                console.log("Found quality match with " + newQuality);
+                                window.hls.currentLevel = levelIndex;
+                            }
+                        });
+                    }
+                }
+            } else {
+                const player = new Plyr('#player');
+                    window.player = player;
+            }
+        });
     </script>
+
 </div>
