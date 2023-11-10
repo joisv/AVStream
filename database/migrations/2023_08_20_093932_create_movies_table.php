@@ -17,7 +17,9 @@ return new class extends Migration
             $table->uuid('user_id');
             $table->string('name');
             $table->boolean('isVip')->default(false);
+            $table->enum('player', ['youtube', 'direct', 'hls', 'vimeo', 'embed']);
             $table->string('url_movie');
+            $table->string('poster')->nullable();
             $table->timestamps();
         });
     }

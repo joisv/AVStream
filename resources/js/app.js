@@ -5,7 +5,7 @@ import collapse from '@alpinejs/collapse'
 import persist from '@alpinejs/persist'
 
 window.Alpine = Alpine;
- 
+
 Alpine.plugin(focus)
 Alpine.plugin(collapse)
 Alpine.plugin(persist)
@@ -17,5 +17,4 @@ Alpine.store('modal', {
         this.on = ! this.on
     }
 })
-
 Alpine.start();

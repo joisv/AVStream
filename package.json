@@ -20,6 +20,7 @@
         "@alpinejs/collapse": "^3.13.0",
         "@alpinejs/focus": "^3.12.3",
         "@alpinejs/persist": "^3.13.0",
-        "apexcharts": "^3.41.1"
+        "apexcharts": "^3.41.1",
+        "plyr": "^3.7.8"
     }
 }

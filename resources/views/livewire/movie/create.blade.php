@@ -1,15 +1,14 @@
-<x-modals>
+<x-modals maxWidth="2xl">
     <div class="p-3 bg-gray-100 relative overflow-y-auto" x-data="{
         open: false,
         search: @entangle('search').defer,
         selected: @entangle('title').defer
     }" x-init="$watch('search', (value, oldValue) => {
         value ? open = true : open = false;
-        });
-        $watch('selected', (value, oldValue) => {
-            value ? open = false : open = open
-        })
-    ">
+    });
+    $watch('selected', (value, oldValue) => {
+        value ? open = false : open = open
+    })">
         <div class="flex justify-between">
             <div>
                 <x-primary-button wire:click="addMovie" x-data type="button"
@@ -24,7 +23,7 @@
             </div>
             @if ($title)
                 <button type="button" wire:click="deleteSelected"
-                    class="p-2 bg-rose-500 text-white font-medium text-sm text-center rounded-md h-fit">{{ Str::limit($title, 10, '...') }}</button>
+                    class="p-2 bg-rose-500 text-white font-medium text-sm text-center rounded-md h-fit">{{ Str::limit($title, 30, '...') }}</button>
             @endif
         </div>
         <form wire:submit.prevent="save">
@@ -77,28 +76,89 @@
                     </div>
             </div>
             @foreach ($movies as $index => $movie)
-                <div class="flex items-end space-x-2 w-full" wire:key="movie-{{ $index }}">
-                    <label for="isVip-{{ $index }}" class="{{ $movies[$index]['isVip'] ? 'bg-rose-500' : 'bg-gray-400' }} h-fit p-2 relative cursor-pointer rounded-sm">
-                        <input id="isVip-{{ $index }}" wire:model="movies.{{ $index }}.isVip" type="checkbox" name="" class="absolute opacity-0">
-                        <x-icons.crown />
-                    </label>
-                    <div class="space-y-2 w-full">
-                        <x-inputs.label-input for="name-{{ $index }}">name</x-input.lable-input>
-                            <x-inputs.text-input type="text" id="name-{{ $index }}"
-                                wire:model.defer="movies.{{ $index }}.name" placeholder="HD 720p (2gb)" />
-                            @error("movies.{$index}.name")
-                                <span class="error">{{ $message }}</span>
-                            @enderror
+                <div>
+                    <div class="sm:flex items-center sm:space-x-2 w-full" wire:key="movie-{{ $index }}">
+                        <div class="flex items-end space-x-1 sm:space-x-2">
+                            <label for="isVip-{{ $index }}"
+                                class="{{ $movies[$index]['isVip'] ? 'bg-rose-500' : 'bg-gray-400' }} h-fit p-2 relative cursor-pointer rounded-sm">
+                                <input id="isVip-{{ $index }}" wire:model="movies.{{ $index }}.isVip"
+                                    type="checkbox" name="" class="absolute opacity-0">
+                                <x-icons.crown />
+                            </label>
+                            <div class="space-y-2 w-full">
+                                <x-inputs.label-input for="player-{{ $index }}"
+                                    class="hidden sm:block">Player</x-input.lable-input>
+                                    <select id="player-{{ $index }}"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        wire:model="movies.{{ $index }}.player">
+                                        <option selected>Choose player</option>
+                                        @foreach ($players as $player)
+                                            <option value="{{ $player['player'] }}">{{ $player['name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error("players.{$index}.player")
+                                        <span class="error">{{ $message }}</span>
+                                    @enderror
+                            </div>
+                        </div>
+                        <div class="flex items-center w-full space-x-1 sm:space-x-2">
+                            <div class="space-y-2 w-full">
+                                <x-inputs.label-input for="name-{{ $index }}">name</x-input.lable-input>
+                                    <x-inputs.text-input type="text" id="name-{{ $index }}"
+                                        wire:model.defer="movies.{{ $index }}.name"
+                                        placeholder="HD 720p (2gb)" />
+                                    @error("movies.{$index}.name")
+                                        <span class="error">{{ $message }}</span>
+                                    @enderror
+                            </div>
+                            <div class="space-y-2 w-full">
+                                <x-inputs.label-input for="embed-{{ $index }}">embed</x-input.lable-input>
+                                    <x-inputs.text-input type="text" id="embed-{{ $index }}"
+                                        wire:model.defer="movies.{{ $index }}.url_movie"
+                                        placeholder="url {{ $movies[$index]['player'] }}" />
+                                    @error("movies.{$index}.url_movie")
+                                        <span class="error">{{ $message }}</span>
+                                    @enderror
+                            </div>
+                        </div>
                     </div>
-                    <div class="space-y-2 w-full">
-                        <x-inputs.label-input for="embed-{{ $index }}">embed</x-input.lable-input>
-                            <x-inputs.text-input type="text" id="embed-{{ $index }}"
-                                wire:model.defer="movies.{{ $index }}.url_movie" placeholder="url embed" />
-                            @error("movies.{$index}.url_movie")
-                                <span class="error">{{ $message }}</span>
-                            @enderror
-                    </div>
-                    <div>
+                    @if ($movies[$index]['player'] == 'direct' || $movies[$index]['player'] == 'hls')
+                        <div class="w-full space-y-1 mt-2" x-data="{ activeTab: 'upload' }">
+                            <div class="flex gap-2">
+                                <button type="button" @click.prevent="activeTab = 'upload'"
+                                    :class="{ 'text-indigo-600': activeTab === 'upload' }" class="underline">
+                                    upload
+                                </button>
+                                <button type="button" @click.prevent="activeTab = 'link'"
+                                    :class="{ 'text-indigo-600': activeTab === 'link' }" class="underline">
+                                    link
+                                </button>
+
+                            </div>
+                            <div class="">
+                                <div x-cloak x-show="activeTab === 'upload'">
+                                    {{-- <x-inputs.label-input 
+                                   for="poster">Upload poster</x-inputs.label-input> --}}
+                                    <input
+                                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-sm cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none p-2"
+                                        id="poster" type="file"
+                                        wire:model="movies.{{ $index }}.poster">
+                                    @error("movies.{$index}.poster")
+                                        <span class="error">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div x-cloak x-show="activeTab === 'link'">
+                                    {{-- <x-inputs.label-input for="poster_link">links</x-input.lable-input> --}}
+                                    <x-inputs.text-input type="text" id="poster_link_{{ $index }}"
+                                        placeholder="url poster" wire:model.debounce.500ms="movies.{{ $index }}.poster" />
+                                    @error("movies.{$index}.poster")
+                                        <span class="error">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                    <div class="mt-2 pb-3 border border-b-rose-500 sm:pb-0 sm:border-0 ">
                         <x-primary-button :disabled="$index === 0" wire:click="deleteMovie({{ $index }})" x-data
                             type="button" custom="bg-yellow-500 hover:bg-yellow-600 focus:ring-yellow-300 h-fit">
                             <x-slot name="icon">

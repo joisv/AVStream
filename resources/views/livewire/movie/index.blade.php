@@ -68,7 +68,7 @@
                             </x-tables.cell>
                             <x-tables.cell>
                                 <div
-                                    class="{{ $movie->isVip ? 'bg-rose-500' : 'bg-gray-400' }} h-fit p-2 cursor-pointer rounded-sm">
+                                    class="{{ $movie->isVip ? 'bg-rose-500' : 'bg-gray-400' }} h-fit w-fit p-2 cursor-pointer rounded-sm">
                                     <x-icons.crown />
                                 </div>
                             </x-tables.cell>
@@ -114,5 +114,10 @@
         </div>
         <livewire:movie.create />
         <livewire:movie.edit />
+        <div class="absolute w-full left-0 top-0 h-full" wire:loading.flex wire:target="editModal">
+            <div class="w-full flex justify-center h-full items-center">
+                <x-icons.loading-circle />
+            </div>
+        </div>
     </div>
 </div>

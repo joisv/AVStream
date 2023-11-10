@@ -10,7 +10,7 @@
                     <a href="{{ route('watch', ['c' => $recomendation->code]) }}">
                         <div class="flex lg:space-x-2 md:space-x-6 space-x-3 items-start">
                             <div
-                                class="rounded-sm overflow-hidden w-[45%] lg:w-[55%] xl:h-32 sm:h-40 h-24 md:h-44 lg:h-20 relative bg-red-500">
+                                class="rounded-sm overflow-hidden w-[45%] lg:w-[55%] xl:h-32 sm:h-40 h-24 md:h-44 lg:h-20 relative">
                                 <img src="{{ asset('storage/' . $recomendation->poster_path) }}" alt="" srcset=""
                                     class="object-cover object-center w-full">
                                 @if ($recomendation->isVip)

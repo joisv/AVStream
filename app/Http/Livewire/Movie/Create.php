@@ -7,27 +7,35 @@ use App\Models\Post;
 use Illuminate\Support\Facades\Gate;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Create extends Component
-{   
+{
     use LivewireAlert;
+    use WithFileUploads;
     public Post $post;
-    
-    public $movies = [
-        [
-            'name' => '', 
-            'url_movie' => '',
-            'isVip' => false,
-            'user_id' => ''
-        ]
-    ];
 
     public $modal = false,
         $search,
         $post_id,
         $title;
 
-    public $listeners = ['openModal' => 'openModal'];
+    public $players = [
+        ['player' => 'hls', 'name' => 'Hls (.m3u8)'],
+        ['player' => 'embed', 'name' => 'Embed'],
+        ['player' => 'direct', 'name' => 'Direct (.mp4, .mkv etc..)'],
+    ];
+
+    public $movies = [
+        [
+            'name' => '',
+            'url_movie' => '',
+            'isVip' => false,
+            'user_id' => '',
+            'player' => 'embed',
+            'poster' => ''
+        ]
+    ];
 
     public function updated($propertyName)
     {
@@ -37,6 +45,28 @@ class Create extends Component
             $this->title = $post->title;
         }
     }
+    
+    protected function rules()
+    {
+        foreach ($this->movies as $index => $movie) {
+
+            $poster_path = is_object($movie['poster'])
+                ? 'nullable|required|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
+                : 'nullable|url';
+
+            return array_merge($this->rules, ['movies.*.poster' => $poster_path]);
+        }
+    }
+
+    protected $rules = [
+        'movies.*.name' => 'required|string|max:255',
+        'movies.*.url_movie' => 'required|url|max:255',
+        'post_id' => 'required',
+        'players.*.player' => 'required',
+        'movies.*.poster' => 'nullable|required|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
+    ];
+
+    public $listeners = ['openModal' => 'openModal'];
 
     public function render()
     {
@@ -48,20 +78,20 @@ class Create extends Component
     public function save()
     {
         Gate::authorize('create', Movie::class);
-        
-        $this->validate([
-            'movies.*.name' => 'required|string|max:255',
-            'movies.*.url_movie' => 'required|url|max:255',
-            'post_id' => 'required'
-        ]);
+
+        $this->validate();
 
         foreach ($this->movies as $item) {
+            $poster = is_object($item['poster']) ? $this->deletePosterPath($item['poster']) : $item['poster'];
+
             Movie::create([
                 'name' => $item['name'],
                 'url_movie' => $item['url_movie'],
                 'isVip' => $item['isVip'],
                 'user_id' => auth()->user()->id,
-                'post_id' => $this->post_id
+                'post_id' => $this->post_id,
+                'player' => $item['player'],
+                'poster' => $poster
             ]);
         }
 
@@ -72,6 +102,12 @@ class Create extends Component
         $this->resetMovies();
     }
 
+    public function deletePosterPath($poster)
+    {
+        $prof = $poster->store('posters');
+        return $prof;
+    }
+
     public function openModal()
     {
         $this->modal = !$this->modal;
@@ -79,7 +115,7 @@ class Create extends Component
 
     public function addMovie()
     {
-        $this->movies[] = ['name' => '', 'url_movie' => '', 'isVip' => false, 'user_id' => ''];
+        $this->movies[] = ['name' => '', 'url_movie' => '', 'isVip' => false, 'user_id' => '', 'player' => 'embed'];
     }
 
     public function deleteMovie($index)
@@ -95,9 +131,7 @@ class Create extends Component
     public function resetMovies()
     {
         $this->movies = [
-            ['name' => '', 'url_movie' => '', 'isVip' => false, 'user_id' => '']
+            ['name' => '', 'url_movie' => '', 'isVip' => false, 'user_id' => '', 'player' => '']
         ];
     }
-
-    
 }
