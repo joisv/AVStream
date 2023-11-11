@@ -28,7 +28,10 @@ use App\Http\Livewire\Studio\Index as StudioIndex;
 use App\Http\Livewire\Subscription\SubscriptionLog;
 use App\Http\Livewire\Terms;
 use App\Http\Livewire\User\Index as UserIndex;
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
+use Spatie\Sitemap\SitemapGenerator;
+use Spatie\Sitemap\Tags\Url;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +43,21 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('sitemap', function () {
+    $posts =  Post::latest('id')->take(8)->get();
+    SitemapGenerator::create(config('app.url'))
+        ->getSitemap()
+        ->add($posts->map(function ($post) {
+            return Url::create("/watch?c=$post->code")
+                ->setLastModificationDate($post->updated_at)
+                ->setChangeFrequency(Url::CHANGE_FREQUENCY_DAILY)
+                ->setPriority(0.5);
+        }))
+        ->writeToFile(public_path('sitemap.xml'));
+
+    return 'Sitemap created';
+});
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
