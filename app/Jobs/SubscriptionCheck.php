@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Models\Notification;
 use App\Models\Subscription;
 use Carbon\Carbon;
+use DefStudio\Telegraph\Facades\Telegraph;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -36,6 +37,9 @@ class SubscriptionCheck implements ShouldQueue
             if (now()->isAfter($subscription->end_date)) {
                 Log::info('Subscription expired: ' . $subscription->id);
                 $subscription->update(['status' => 'expired']);
+
+                Telegraph::message("<b>Subscription Expired!!!</b>\n\nPayment Code: $subscription->payment_code\nUsername: ".$subscription->user?->name."\nEmail: ".$subscription->user?->email."\nPayment method: $subscription->payment_method\nBilling amount: $subscription->billing_amount\n")->send();
+                
                 Notification::create([
                     'user_id' => $subscription->user_id,
                     'title' => 'VIP subscription expired',

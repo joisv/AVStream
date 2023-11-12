@@ -6,6 +6,9 @@ use App\Models\Notification;
 use App\Models\Payment;
 use App\Models\Plan;
 use App\Models\Subscription;
+use DefStudio\Telegraph\Facades\Telegraph;
+use DefStudio\Telegraph\Keyboard\Button;
+use DefStudio\Telegraph\Keyboard\Keyboard;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Illuminate\Support\Str;
@@ -35,21 +38,21 @@ class VipSubmit extends Component
                 'toast' => true,
             ]);
         } else {
-           $this->createSubscription();
+            $this->createSubscription();
         }
     }
 
     public function hasPendingSubscription()
     {
         $user = auth()->user();
-    
+
         if ($user->can('can premium content') || $user->subscriptions()->where('status', 'pending')->exists()) {
             return true;
         }
-    
+
         return false;
     }
-    
+
     public function createSubscription()
     {
         $duration = $this->duration;
@@ -65,28 +68,37 @@ class VipSubmit extends Component
                 break;
         }
 
-        Subscription::create([
-            'user_id' => auth()->user()->id,
-            'plan_id' => $this->plan_id,
-            'payment_code' => $this->generatePaymentCode(auth()->user()->name),
-            'start_date' => $start_date,
-            'end_date' => $end_date,
-            'status' => 'pending',
-            'billing_amount' => $this->price,
-            'payment_method' => $this->payment_method,
-        ]);
 
-        Notification::create([
-            'user_id' => auth()->user()->id,
-            'title' => 'Successfully subscribed ',
-            'message' => 'Congratulations! You have successfully subscribed. Please copy youre payment code and confirm your payment on the Contact page. Thank you!',
-            'is_read' => true
-        ]);
+        try {
+            $payment_code = $this->generatePaymentCode(auth()->user()->name);
+            $user = auth()->user();
+            Subscription::create([
+                'user_id' => $user->id,
+                'plan_id' => $this->plan_id,
+                'payment_code' => $payment_code,
+                'start_date' => $start_date,
+                'end_date' => $end_date,
+                'status' => 'pending',
+                'billing_amount' => $this->price,
+                'payment_method' => $this->payment_method,
+            ]);
+            
+            Telegraph::message("<b>Subscription Created</b>\n\nPayment Code: $payment_code\nUsername: $user->name\nEmail: $user->email\nPayment method: $this->payment_method\nBilling amount: $this->price\n")->send();
 
-        $this->modal = false;
-        $this->emit('sendNotif');
-        $this->alert('success', 'Succes created subscription check your notification');
-        return redirect()->route('usersubscription.log');
+            Notification::create([
+                'user_id' => $user->id,
+                'title' => 'Successfully subscribed ',
+                'message' => 'Congratulations! You have successfully subscribed. Please copy youre payment code and confirm your payment on the Contact page. Thank you!',
+                'is_read' => true
+            ]);
+
+            $this->modal = false;
+            $this->emit('sendNotif');
+            $this->alert('success', 'Succes created subscription check your notification');
+            return redirect()->route('usersubscription.log');
+        } catch (\Throwable $th) {
+            $this->alert('error', 'Something went wrong');
+        }
     }
 
     public function openModal($plan)

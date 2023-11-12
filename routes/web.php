@@ -29,6 +29,7 @@ use App\Http\Livewire\Subscription\SubscriptionLog;
 use App\Http\Livewire\Terms;
 use App\Http\Livewire\User\Index as UserIndex;
 use App\Models\Post;
+use DefStudio\Telegraph\Facades\Telegraph;
 use Illuminate\Support\Facades\Route;
 use Spatie\Sitemap\SitemapGenerator;
 use Spatie\Sitemap\Tags\Url;
@@ -59,11 +60,19 @@ Route::get('sitemap', function () {
     return 'Sitemap created';
 });
 
+Route::get('bot', function () {
+
+
+    $response = Telegraph::html("<b>Subscription Created</b>\n\nPayment Code: halo dunia\nUsername: halo dunia\nEmail: Halo dunia\nPayment method: halo dunia\nPayment ammount\n")->send();
+    return response()->json($response->successful());
+
+});
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/actresses', [ ActressController::class, 'index' ])->name('actresses');
+Route::get('/actresses', [ActressController::class, 'index'])->name('actresses');
 
-Route::get('/actress/{actress:slug}', [ ActressController::class, 'show' ])->name('actress');
+Route::get('/actress/{actress:slug}', [ActressController::class, 'show'])->name('actress');
 
 Route::get('/genres', [GenreController::class, 'index'])->name('genres');
 
@@ -73,7 +82,7 @@ Route::get('/studios', [StudioController::class, 'index'])->name('studios');
 
 Route::get('/detail/studio/{studio:slug}', [StudioController::class, 'show'])->name('studio.show');
 
-Route::get('/category/{category:slug}', [ ControllersCategoryController::class, 'show' ])->name('category');
+Route::get('/category/{category:slug}', [ControllersCategoryController::class, 'show'])->name('category');
 
 Route::get('contacts', [ContactController::class, 'index'])->name('contact');
 
@@ -84,7 +93,7 @@ Route::get('/watch', [HomeController::class, 'show'])->name('watch');
 Route::get('/terms', [ContactController::class, 'terms'])->name('terms');
 Route::get('/about', [ContactController::class, 'about'])->name('about');
 
-Route::get('/watch-by/{keyword}', [ WatchByController::class, 'index' ] )->name('watch.by')->middleware('checkKeyword');
+Route::get('/watch-by/{keyword}', [WatchByController::class, 'index'])->name('watch.by')->middleware('checkKeyword');
 
 Route::get('/vip', [VipController::class, 'index'])->name('vip');
 
