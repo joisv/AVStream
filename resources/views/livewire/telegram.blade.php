@@ -1,4 +1,4 @@
-<div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg space-y-4">
+<div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg space-y-4 relative">
     <h1 class="text-xl font-semibold">Telegram bot</h1>
     <form wire:submit.prevent="save">
         <div class="space-y-3 md:w-[65%] w-full">
@@ -24,4 +24,9 @@
             </x-primary-button>
         </div>
     </form>
+    <div class="absolute w-full left-0 -top-4 bg-gray-400 opacity-70 h-full"  wire:loading.flex wire:target="save">
+        <div class="w-full flex justify-center h-full items-center">
+            <x-icons.loading-circle />
+        </div>
+    </div>
 </div>

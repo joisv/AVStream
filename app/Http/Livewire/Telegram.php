@@ -10,14 +10,14 @@ use Livewire\Component;
 class Telegram extends Component
 {
     use LivewireAlert;
-    
+
     public $bot;
     public $chat;
     public $chat_id;
     public $token;
     public $bot_name;
     public $chat_name;
-    
+
     public function mount()
     {
         $this->bot = TelegraphBot::first();
@@ -28,7 +28,7 @@ class Telegram extends Component
         $this->bot_name = $this->bot->name;
         $this->token = $this->bot->token;
     }
-    
+
     public function render()
     {
         return view('livewire.telegram');
@@ -43,20 +43,24 @@ class Telegram extends Component
             'chat_name' => 'required|string',
         ]);
 
-        if ($this->bot) {
-            $this->bot->update([
-                'token' => $this->token,
-                'name' => $this->bot_name ?? 'AvstreamBot'
-            ]);
-        }
+        try {
+            if ($this->bot) {
+                $this->bot->update([
+                    'token' => $this->token,
+                    'name' => $this->bot_name ?? 'AvstreamBot'
+                ]);
+            }
 
-        if ($this->chat) {
-            $this->chat->update([
-                'chat_id' => $this->chat_id,
-                'name' => $this->chat_name ?? 'AvstreamChat'
-            ]);
+            if ($this->chat) {
+                $this->chat->update([
+                    'chat_id' => $this->chat_id,
+                    'name' => $this->chat_name ?? 'AvstreamChat'
+                ]);
+            }
+            $this->alert('success', 'Telegram bot updated');
+        } catch (\Throwable $th) {
+            //throw $th;
+            $this->alert('error', 'Something went wrong');
         }
-        
-        $this->alert('success', 'Telegram bot updated');
     }
 }

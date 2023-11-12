@@ -18,7 +18,7 @@ class Recomended extends Component
 
     public function getPosts()
     {
-        $this->posts = Post::latest('id')->take($this->take)->get();
+        $this->posts = Post::orderBy('views', 'desc')->take($this->take)->get();
         $this->isLoading = false;
     }
 
