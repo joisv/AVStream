@@ -1,36 +1,53 @@
 @php
     $selectedName = $selected ? Str::limit($selected['name'], 10, '...') : '';
 @endphp
-<div class="lg:flex sm:space-x-4 overflow-hidden min-h-[200vh] md:mt-[10vh] mt-[8vh] ">
+<div class="lg:flex sm:space-x-4 overflow-hidden min-h-[200vh] md:mt-[10vh] mt-[8vh] " x-data="{
+    label: @entangle('selected').defer,
+    iframe: null,
+    wrapp: false
+}"
+    @plyr.window="() => {
+    this.iframe = document.querySelector('iframe');
+        
+        if (this.iframe !== null) {
+            wrapp = ! wrapp;
+        }
+}" x-init="() => {
+    this.iframe = document.querySelector('iframe');
+        
+    if (this.iframe !== null) {
+        wrapp = ! wrapp;
+    }
+}">
     <div class="max-w-screen-lg w-full lg:w-[70%] p-3 lg:p-0 top-0 relative text-text h-fit">
-        <div class="w-full {{ $selected['player'] == 'hls' || $selected['player'] == 'direct' ? '' : 'relative pb-[56%]'}}" wire:loading.remove wire:target="selectedEmbeds">
+        
+        <div :class="{ 'w-full': ! wrapp, 'w-full relative pb-[56%]': wrapp }" wire:loading.remove wire:target="selectedEmbeds">
             @if ($selected)
                 @if ($post->isVip == 1)
                     @auth
                         @can('can premium content')
                             @if ($selected['player'] == 'hls')
-                                <video controls crossorigin playsinline id="hls" poster="{{ Str::startsWith($selected['poster'], ['http://', 'https://']) ? $selected['poster'] : asset('storage/' . $selected['poster']) }}"></video>
+                                <video controls crossorigin playsinline id="hls"
+                                    poster="{{ Str::startsWith($selected['poster'], ['http://', 'https://']) ? $selected['poster'] : asset('storage/' . $selected['poster']) }}"></video>
                             @elseif($selected['player'] == 'direct')
-                                <video controls crossorigin playsinline poster="{{ Str::startsWith($selected['poster'], ['http://', 'https://']) ? $selected['poster'] : asset('storage/' . $selected['poster']) }}" id="player">
+                                <video controls crossorigin playsinline
+                                    poster="{{ Str::startsWith($selected['poster'], ['http://', 'https://']) ? $selected['poster'] : asset('storage/' . $selected['poster']) }}"
+                                    id="player">
                                     <!-- Video files -->
                                     <source src="{{ $selected['url_movie'] }}" type="video/mp4" size="576">
 
                                     <!-- Caption files -->
                                     {{-- <track kind="captions" label="English" srclang="en"
-                                        src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt" default>
-                                    <track kind="captions" label="Français" srclang="fr"
-                                        src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt"> --}}
+                                    src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt" default>
+                                <track kind="captions" label="Français" srclang="fr"
+                                    src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt"> --}}
 
                                     <!-- Fallback for browsers that don't support the <video> element -->
                                     <a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4"
                                         download>Download</a>
                                 </video>
                             @else
-                                <iframe class="absolute top-0 left-0 w-full h-full" src="{{ $selected['url_movie'] ?? '' }}"
-                                    title="Jav Player" frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    allowfullscreen>
-                                </iframe>
+                                <x-embed-player src="{{ $selected['url_movie'] ?? '' }}" />
                             @endif
                         @else
                             <div class="absolute top-0 left-0 w-full h-full flex justify-center items-center">
@@ -59,11 +76,29 @@
                     @if ($selected['isVip'])
                         @auth
                             @can('can premium content')
-                                <iframe class="absolute top-0 left-0 w-full h-full" src="{{ $selected['url_movie'] ?? '' }}"
-                                    title="Jav Player" frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    allowfullscreen>
-                                </iframe>
+                                @if ($selected['player'] == 'hls')
+                                    <video controls crossorigin playsinline id="hls"
+                                        poster="{{ Str::startsWith($selected['poster'], ['http://', 'https://']) ? $selected['poster'] : asset('storage/' . $selected['poster']) }}"></video>
+                                @elseif($selected['player'] == 'direct')
+                                    <video controls crossorigin playsinline
+                                        poster="{{ Str::startsWith($selected['poster'], ['http://', 'https://']) ? $selected['poster'] : asset('storage/' . $selected['poster']) }}"
+                                        id="player">
+                                        <!-- Video files -->
+                                        <source src="{{ $selected['url_movie'] }}" type="video/mp4" size="576">
+
+                                        <!-- Caption files -->
+                                        {{-- <track kind="captions" label="English" srclang="en"
+                                src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt" default>
+                            <track kind="captions" label="Français" srclang="fr"
+                                src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt"> --}}
+
+                                        <!-- Fallback for browsers that don't support the <video> element -->
+                                        <a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4"
+                                            download>Download</a>
+                                    </video>
+                                @else
+                                    <x-embed-player src="{{ $selected['url_movie'] ?? '' }}" />
+                                @endif
                             @else
                                 <div class="absolute top-0 left-0 w-full h-full flex justify-center items-center">
                                     <x-icons.crown isVip="true" default="60px" />
@@ -89,11 +124,29 @@
                             </div>
                         @endauth
                     @else
-                        <iframe class="absolute top-0 left-0 w-full h-full" src="{{ $selected['url_movie'] ?? '' }}"
-                            title="Jav Player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen>
-                        </iframe>
+                        @if ($selected['player'] == 'hls')
+                            <video controls crossorigin playsinline id="hls"
+                                poster="{{ Str::startsWith($selected['poster'], ['http://', 'https://']) ? $selected['poster'] : asset('storage/' . $selected['poster']) }}"></video>
+                        @elseif($selected['player'] == 'direct')
+                            <video controls crossorigin playsinline
+                                poster="{{ Str::startsWith($selected['poster'], ['http://', 'https://']) ? $selected['poster'] : asset('storage/' . $selected['poster']) }}"
+                                id="player">
+                                <!-- Video files -->
+                                <source src="{{ $selected['url_movie'] }}" type="video/mp4" size="576">
+
+                                <!-- Caption files -->
+                                {{-- <track kind="captions" label="English" srclang="en"
+                        src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt" default>
+                    <track kind="captions" label="Français" srclang="fr"
+                        src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt"> --}}
+
+                                <!-- Fallback for browsers that don't support the <video> element -->
+                                <a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4"
+                                    download>Download</a>
+                            </video>
+                        @else
+                            <x-embed-player src="{{ $selected['url_movie'] ?? '' }}" />
+                        @endif
                     @endif
                 @endif
             @else
@@ -102,6 +155,7 @@
                             found...</span></h1>
                 </div>
             @endif
+
         </div>
         <div class="pb-[24%] flex flex-col items-center" wire:loading.flex wire:target="selectedEmbeds">
             <div class="mt-[24%]">
@@ -120,6 +174,7 @@
                             @can('can premium content')
                                 <div class="md:w-[30%] w-full">
                                     <div class="flex justify-end items-center">
+                                        
                                         <x-dropdown-navigation align="right" width="48">
                                             <x-slot name="trigger">
                                                 <button
@@ -577,16 +632,16 @@
                     // For more Hls.js options, see https://github.com/dailymotion/hls.js
                     const hls = new Hls();
                     hls.loadSource(source);
-    
+
                     // From the m3u8 playlist, hls parses the manifest and returns
                     // all available video qualities. This is important, in this approach,
                     // we will have one source on the Plyr player.
                     hls.on(Hls.Events.MANIFEST_PARSED, function(event, data) {
-    
+
                         // Transform available levels into an array of integers (height values).
                         const availableQualities = hls.levels.map((l) => l.height)
                         availableQualities.unshift(0) //prepend 0 to quality array
-    
+
                         // Add new qualities to option
                         defaultOptions.quality = {
                             default: 0, //Default - AUTO
@@ -600,7 +655,7 @@
                                 0: 'Auto',
                             },
                         }
-    
+
                         hls.on(Hls.Events.LEVEL_SWITCHED, function(event, data) {
                             var span = document.querySelector(
                                 ".plyr__menu__container [data-plyr='quality'][value='0'] span"
@@ -611,15 +666,15 @@
                                 span.innerHTML = `AUTO`
                             }
                         })
-    
+
                         // Initialize new Plyr player with quality options
                         var player = new Plyr(video, defaultOptions);
                     });
-    
+
                     hls.attachMedia(video);
                     window.hls = hls;
                 }
-    
+
                 function updateQuality(newQuality) {
                     if (newQuality === 0) {
                         window.hls.currentLevel = -1; //Enable AUTO quality if option.value = 0
@@ -634,7 +689,7 @@
                 }
             } else {
                 const player = new Plyr('#player');
-                    window.player = player;
+                window.player = player;
             }
         });
     </script>

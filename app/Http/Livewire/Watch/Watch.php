@@ -30,10 +30,11 @@ class Watch extends Component
 
     public function updated()
     {
-        $this->selected = json_decode($this->selectedEmbeds, true);
-
+        
         if ($this->selectedEmbeds) {
+            $this->selected = json_decode($this->selectedEmbeds, true);
             $this->emitSelf("plyr", $this->selected);
+            $this->dispatchBrowserEvent('plyr');
         }
     }
 
