@@ -50,7 +50,7 @@
     <div class="w-full mt-4 p-4">
         <button wire:click="loadMore" type="button" class="flex justify-center space-x-4 items-center mx-auto group" wire:loading.remove wire:target="loadMore">
             <div>
-                <h3 class="text-gray-300 font-semibold text-lg sm:text-xl group-hover:text-rose-500 ease-in duration-100">Load mores</h3>
+                <h3 class="text-gray-300 font-semibold text-lg sm:text-xl group-hover:text-rose-500 ease-in duration-100">load more</h3>
             </div>
             <svg class="fill-gray-300 h-7 w-7  group-hover:fill-rose-500 ease-in duration-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                 <path fill-rule="evenodd"

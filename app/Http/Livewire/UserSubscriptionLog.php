@@ -26,7 +26,6 @@ class UserSubscriptionLog extends Component
     public function getSubcriptionLog()
     {
         $this->usersSubscription = Auth::user()->subscriptions->where('status', 'pending')->first();
-
         $query = Subscription::search('name', $this->search)
             ->with('user')
             ->where('user_id', auth()->user()->id)
