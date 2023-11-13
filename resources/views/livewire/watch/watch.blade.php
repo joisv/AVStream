@@ -7,21 +7,35 @@
     wrapp: false
 }"
     @plyr.window="() => {
-    this.iframe = document.querySelector('iframe');
-        
+        this.iframe = document.querySelector('iframe');
+        let wrapper = null;
         if (this.iframe !== null) {
-            wrapp = ! wrapp;
+            wrapper = document.querySelector('.wrapper-player');
+            wrapper.classList.add('pb-[56%]', 'relative');
+        } else {
+            // Pastikan wrapper tidak null sebelum mencoba menghapus kelas
+            if (wrapper !== null) {
+                wrapper.classList.remove('pb-[56%]', 'relative');
+            }
         }
-}" x-init="() => {
-    this.iframe = document.querySelector('iframe');
-        
-    if (this.iframe !== null) {
-        wrapp = ! wrapp;
-    }
-}">
+}"
+    x-init="() => {
+        this.iframe = document.querySelector('iframe');
+        let wrapper = null;
+        if (this.iframe !== null) {
+            wrapper = document.querySelector('.wrapper-player');
+            wrapper.classList.add('pb-[56%]', 'relative');
+        } else {
+            // Pastikan wrapper tidak null sebelum mencoba menghapus kelas
+            if (wrapper !== null) {
+                wrapper.classList.remove('pb-[56%]', 'relative');
+            }
+        }
+    }">
     <div class="max-w-screen-lg w-full lg:w-[70%] p-3 lg:p-0 top-0 relative text-text h-fit">
-        
-        <div :class="{ 'w-full': ! wrapp, 'w-full relative pb-[56%]': wrapp }" wire:loading.remove wire:target="selectedEmbeds">
+
+        <div class="wrapper-player w-full" wire:loading.remove
+            wire:target="selectedEmbeds">
             @if ($selected)
                 @if ($post->isVip == 1)
                     @auth
@@ -159,7 +173,6 @@
         </div>
         <div class="pb-[24%] flex flex-col items-center" wire:loading.flex wire:target="selectedEmbeds">
             <div class="mt-[24%]">
-
                 <x-icons.loading-circle default="34px" />
             </div>
         </div>
@@ -174,7 +187,7 @@
                             @can('can premium content')
                                 <div class="md:w-[30%] w-full">
                                     <div class="flex justify-end items-center">
-                                        
+
                                         <x-dropdown-navigation align="right" width="48">
                                             <x-slot name="trigger">
                                                 <button
@@ -303,7 +316,8 @@
                         </li>
                         <li>
                             <button type="button" class="flex space-x-1 items-center focus:opacity-60"
-                                wire:click="getDownload">
+                                x-data=""
+                                x-on:click.prevent="$dispatch('open-modal', 'download-modal')">
                                 <svg width="21px" height="21px" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -323,7 +337,8 @@
                             </button>
                         </li>
                         <li>
-                            <button wire:click="reportIssue" type="button"
+                            <button x-data=""
+                                x-on:click.prevent="$dispatch('open-modal', 'report-modal')" type="button"
                                 class="flex space-x-1 items-center focus:opacity-60">
                                 <svg width="21px" height="21px" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -424,9 +439,12 @@
         <livewire:watch.recomendation />
     </div>
     <livewire:watch.trending />
-
-    <livewire:watch.download :postId="$post->id" />
-    <livewire:watch.report-issue :post_id="$post->id" />
+    <x-modal-v2 name="download-modal" :show="$errors->isNotEmpty()" maxWidth="sm">
+        <livewire:watch.download :postId="$post->id" />
+    </x-modal-v2>
+    <x-modal-v2 name="report-modal" :show="$errors->isNotEmpty()" maxWidth="sm">
+        <livewire:watch.report-issue :post_id="$post->id" />
+    </x-modal-v2>
     {{-- <script>
         document.addEventListener('DOMContentLoaded', () => {
             const source = @js($selected['url_movie']);
@@ -693,5 +711,4 @@
             }
         });
     </script>
-
 </div>

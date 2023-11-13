@@ -1,4 +1,4 @@
-<x-modals maxWidth="sm">
+<div>
     <div class="bg-background border-rose-500 p-3 text-white overflow-hidden space-y-3"
         wire:init="getDownloads">
         <h1 class="font-semibold text-lg text-start text-rose-500">Download Quality</h1>
@@ -67,4 +67,4 @@
         })
     </script>
 </div>
-</x-modals>
+</div>

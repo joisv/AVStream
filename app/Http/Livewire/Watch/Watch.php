@@ -30,7 +30,7 @@ class Watch extends Component
 
     public function updated()
     {
-        
+
         if ($this->selectedEmbeds) {
             $this->selected = json_decode($this->selectedEmbeds, true);
             $this->emitSelf("plyr", $this->selected);
@@ -63,18 +63,11 @@ class Watch extends Component
         ]);
     }
 
-    public function getDownload()
-    {
-        $this->emitTo('watch.download', 'getDownload');
-    }
-
-    public function reportIssue()
-    {
-        $this->emitTo('watch.report-issue', 'reportIssue');
-    }
 
     public function savePost()
     {
+        $this->selected = json_decode($this->selectedEmbeds, true);
+        $this->emitSelf("plyr", $this->selected);
         if (!auth()->check()) {
             $this->alert('warning', 'You need to login first');
             return;

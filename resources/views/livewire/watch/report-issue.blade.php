@@ -1,12 +1,13 @@
 @php
     $reportContent = ['Buffering occurs periodically', 'Low video quality', 'Video disconnects or stops abruptly', 'Audio and video synchronization is incorrect', 'Playback issues on specific devices', 'Disturbing ads or pop-ups', 'Display becomes unresponsive'];
 @endphp
-<x-modals maxWidth="md">
+<div @closemodal.window="show = ! show">
     <form wire:submit.prevent="save">
         <div class="space-y-2 w-full p-3 bg-background border border-rose-500 text-white">
             <header>
                 <h1 class="text-rose-500 font-medium text-xl py-3">Report this post</h1>
             </header>
+            <button type="button" x-on:click.prevent="$dispatch('open-modal', 'close-modal')" class="text-white">close</button>
 
             @foreach ($reportContent as $index => $report)
                 <div class="flex items-center">
@@ -34,4 +35,4 @@
             <x-icons.loading-circle />
         </div>
     </div>
-</x-modals>
+</div @openmodal.window="console.log('halo dunia')">

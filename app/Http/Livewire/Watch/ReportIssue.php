@@ -10,13 +10,8 @@ class ReportIssue extends Component
 {
     use LivewireAlert;
     
-    public $modal = false,
-    $post_id,
+    public $post_id,
     $content = 'Video disconnects or stops abruptly';
-    
-    public $listeners = [
-        'reportIssue' => 'reportIssue'
-    ];
     
     public $rules = [
         'post_id' => 'required',
@@ -42,7 +37,7 @@ class ReportIssue extends Component
                     'is_new' => true,
                     'status' => 'open'
                 ]);
-                $this->modal = false;
+                $this->dispatchBrowserEvent('closemodal');
                 $this->alert('success', 'Report sent successfully');
                 
             } catch (\Illuminate\Validation\ValidationException $e) {
@@ -55,13 +50,8 @@ class ReportIssue extends Component
             }
            
         } else {
-            $this->modal = false;
+            $this->dispatchBrowserEvent('open-modal', 'close-modal');
            $this->alert('error', 'Login first');
         }
-    }
-
-    public function reportIssue()
-    {
-        $this->modal = true;
     }
 }
