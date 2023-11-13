@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Models\SeoSetting as ModelsSeoSetting;
-use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -35,7 +34,7 @@ class SeoSetting extends Component
     protected function rules()
     {
         $favicon = is_object($this->favicon)
-            ? 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            ? 'nullable|image|mimes:jpeg,png,jpg,gif,ico|max:2048'
             : '';
 
         $logo = is_object($this->logo)

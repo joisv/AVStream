@@ -7,7 +7,7 @@
     {{ $seo ?? '' }}
 
     {{-- icons --}}
-    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ asset('images/icon/apple-touch-icon-57x57.png') }}" />
+    {{-- <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ asset('images/icon/apple-touch-icon-57x57.png') }}" />
     <link rel="apple-touch-icon-precomposed" sizes="114x114"
         href="{{ asset('images/icon/apple-touch-icon-114x114.png') }}" />
     <link rel="apple-touch-icon-precomposed" sizes="72x72"
@@ -33,7 +33,9 @@
     <meta name="msapplication-square70x70logo" content="{{ asset('images/icon/mstile-70x70.png') }}" />
     <meta name="msapplication-square150x150logo" content="{{ asset('images/icon/mstile-150x150.png') }}" />
     <meta name="msapplication-wide310x150logo" content="{{ asset('images/icon/mstile-310x150.png') }}" />
-    <meta name="msapplication-square310x310logo" content="{{ asset('images/icon/mstile-310x310.png') }}" />
+    <meta name="msapplication-square310x310logo" content="{{ asset('images/icon/mstile-310x310.png') }}" /> --}}
+    
+    <link rel="icon" type="image/x-icon" href="{{ asset($setting->favicon ? ('storage/' . $setting->favicon) : 'images/nyan-cat.gif') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">

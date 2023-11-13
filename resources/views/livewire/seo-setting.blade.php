@@ -4,41 +4,6 @@
     </header>
     <form wire:submit.prevent="save" class="py-4">
         <div class="md:w-[65%] w-full space-y-5">
-            {{-- <div class="col-span-full">
-                <div class="mt-2 flex items-center gap-x-3">
-                    @if ($favicon)
-
-                        @if (is_object($favicon))
-                            <div class="w-10 h-10 rounded-full overflow-hidden">
-                                <img src="{{ $favicon->temporaryUrl() }}" alt=""
-                                    class="object-cover object-center w-full h-full">
-                            </div>
-                        @elseif (Str::startsWith($favicon, 'favicon'))
-                            <div class="w-10 h-10 rounded-full overflow-hidden">
-                                <img src="{{ asset('storage/' . $favicon) }}" alt=""
-                                    class="object-cover object-center w-full h-full">
-                            </div>
-                        @endif
-                    @else
-                        <div class="w-10 h-10 rounded-full overflow-hidden">
-                            <img src="{{ asset('images/nyan-cat.gif') }}" alt=""
-                                class="object-cover object-center w-full h-full">
-                        </div>
-                    @endif
-                    <button type="button"
-                        class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 relative">Favicon
-                        <input type="file" id="imageInput" accept="image/*" class="left-0 opacity-0 w-20 absolute"
-                            wire:model="favicon">
-                    </button>
-                    @error('favicon')
-                        <span class="error">{{ $message }}</span>
-                    @enderror
-                    <div wire:loading.flex wire:target="favicon" class="w-fit h-fit items-center justify-center"
-                        wire:ignore>
-                        <x-icons.loading />
-                    </div>
-                </div>
-            </div> --}}
             {{-- Logo --}}
             <div class="col-span-full">
                 <div class="mt-2 space-y-2 items-center gap-x-3">
@@ -75,6 +40,47 @@
                         class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 p-2"
                         id="logo" type="file" wire:model="logo">
                     @error('logo')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
+
+                </div>
+            </div>
+            <div class="col-span-full" x-data="{
+                icon: 'max 2mb recomended (.ico) 100*100 '
+            }">
+                <div class="mt-2 space-y-2 items-center gap-x-3">
+                    <div>
+                        <x-inputs.label-input for="logo" class="text-gray-500">Favicon</x-inputs.label-input>
+                        <p class="text-sm text-gray-800" x-text="icon"></p>
+                    </div>
+                    <div class="flex space-x-2 items-center">
+                        @if ($favicon)
+
+                            @if (is_object($favicon))
+                                <div class="w-14 h-14">
+                                    <img src="{{ $favicon->temporaryUrl() }}" alt=""
+                                        class="object-cover object-center w-full h-full">
+                                </div>
+                            @elseif (Str::startsWith($favicon, 'favicon'))
+                                <div class="w-14 h-14">
+                                    <img src="{{ asset('storage/' . $favicon) }}" alt=""
+                                        class="object-cover object-center w-full h-full">
+                                </div>
+                            @endif
+                        @else
+                            <div class="w-14 h-14">
+                                <img src="{{ asset('images/nyan-cat.gif') }}" alt=""
+                                    class="object-cover object-center w-full h-full">
+                            </div>
+                        @endif
+                        <div wire:loading.flex wire:target="favicon" class="w-fit h-fit items-center justify-center">
+                            <x-icons.loading />
+                        </div>
+                    </div>
+                    <input
+                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 p-2"
+                        id="logo" type="file" wire:model="favicon">
+                    @error('favicon')
                         <span class="error">{{ $message }}</span>
                     @enderror
 

@@ -275,14 +275,6 @@ $watch('searchStudio', (value, oldValue) => {
                             <input
                             class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 p-2"
                             id="logo" type="file" wire:model="poster_path">
-                            {{-- <x-primary-button type="button"
-                                custom="bg-gray-800 hover:bg-gray-900 focus:ring-gray-400">
-                                <x-slot name="child">
-                                    edit
-                                    <input type="file" id="imageInput" accept="image/*"
-                                        class=" w-10 opacity-0 absolute">
-                                </x-slot>
-                            </x-primary-button> --}}
                         </div>
                     </div>
                     <div class="text-center flex flex-col items-center">
