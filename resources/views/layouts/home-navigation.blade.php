@@ -2,7 +2,7 @@
     $userName = auth()->check() ? Str::limit(auth()->user()->name, 8, '...') : '';
 @endphp
 
-<div x-data="{
+<div class="md:mb-24 mb-10" x-data="{
     watchJav: false,
     category: false,
     myCollection: false,
@@ -14,10 +14,8 @@
             <div>
                 <a href="/">
                     @if ($setting->logo)
-                        <div class="md:w-20 ">
-                            <img src="{{ asset('storage/' . $setting->logo) }}" alt="" srcset=""
-                                class="object-contain">
-                        </div>
+                        <img src="{{ asset('storage/' . $setting->logo) }}" alt="" srcset=""
+                                class="max-w-[354px] max-h-[65px]">
                     @else
                         <h1 class="text-rose-400 font-semibold text-3xl uppercase">AV<span
                                 class="text-gray-200">STREAM</span>
@@ -102,7 +100,9 @@
                                     </svg>
                                 </div>
                                 <div x-cloak x-show="$store.count > 0 || $store.isSubscriptionExist > 0"
-                                    class="w-3 h-3 absolute rounded-full text-center font-medium text-white top-0 left-2" x-bind:class="$store.count > 0 && $store.isSubscriptionExist > 0 ? 'bg-gray-200' : ($store.count > 0 ? 'bg-rose-400' : ($store.isSubscriptionExist > 0 ? 'bg-yellow-500' : ''))">
+                                    class="w-3 h-3 absolute rounded-full text-center font-medium text-white top-0 left-2"
+                                    x-bind:class="$store.count > 0 && $store.isSubscriptionExist > 0 ? 'bg-gray-200' : ($store.count >
+                                        0 ? 'bg-rose-400' : ($store.isSubscriptionExist > 0 ? 'bg-yellow-500' : ''))">
 
                                 </div>
                             </button>
@@ -172,10 +172,8 @@
             <div>
                 <a href="/">
                     @if ($setting->logo)
-                        <div class="w-16">
                             <img src="{{ asset('storage/' . $setting->logo) }}" alt="" srcset=""
-                                class="object-containt">
-                        </div>
+                                class="w-1/2 h-full">
                     @else
                         <h1 class="text-rose-400 font-semibold text-3xl">AV<span class="text-gray-200">Stream</span>
                         </h1>
@@ -208,7 +206,9 @@
                                 </g>
                             </svg>
                             <div x-cloak x-show="$store.count > 0 || $store.isSubscriptionExist > 0"
-                                class="w-3 h-3 absolute rounded-full text-center font-medium text-white top-0 left-2" x-bind:class="$store.count > 0 && $store.isSubscriptionExist > 0 ? 'bg-rose-500' : ($store.count > 0 ? 'bg-rose-400' : ($store.isSubscriptionExist > 0 ? 'bg-yellow-500' : ''))">
+                                class="w-3 h-3 absolute rounded-full text-center font-medium text-white top-0 left-2"
+                                x-bind:class="$store.count > 0 && $store.isSubscriptionExist > 0 ? 'bg-rose-500' : ($store.count > 0 ?
+                                    'bg-rose-400' : ($store.isSubscriptionExist > 0 ? 'bg-yellow-500' : ''))">
 
                             </div>
                         </button>
@@ -282,8 +282,11 @@
                                         </svg>
                                     </div>
                                     <div x-cloak x-show="$store.count > 0 || $store.isSubscriptionExist > 0"
-                                        class="w-3 h-3 absolute rounded-full text-center font-medium text-white top-0 left-2" x-bind:class="$store.count > 0 && $store.isSubscriptionExist > 0 ? 'bg-rose-500' : ($store.count > 0 ? 'bg-rose-400' : ($store.isSubscriptionExist > 0 ? 'bg-yellow-500' : ''))">
-    
+                                        class="w-3 h-3 absolute rounded-full text-center font-medium text-white top-0 left-2"
+                                        x-bind:class="$store.count > 0 && $store.isSubscriptionExist > 0 ? 'bg-rose-500' : ($store
+                                            .count > 0 ? 'bg-rose-400' : ($store.isSubscriptionExist > 0 ?
+                                                'bg-yellow-500' : ''))">
+
                                     </div>
                                 </button>
                                 <div x-show="myCollection" class="bg-gray-600 py-1">
