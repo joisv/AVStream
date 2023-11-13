@@ -4,75 +4,86 @@
     </header>
     <form wire:submit.prevent="save" class="py-4">
         <div class="md:w-[65%] w-full space-y-5">
-            {{-- <div class="col-span-full">
-                <div class="mt-2 flex items-center gap-x-3">
-                    @if ($favicon)
-
-                        @if (is_object($favicon))
-                            <div class="w-10 h-10 rounded-full overflow-hidden">
-                                <img src="{{ $favicon->temporaryUrl() }}" alt=""
-                                    class="object-cover object-center w-full h-full">
-                            </div>
-                        @elseif (Str::startsWith($favicon, 'favicon'))
-                            <div class="w-10 h-10 rounded-full overflow-hidden">
-                                <img src="{{ asset('storage/' . $favicon) }}" alt=""
-                                    class="object-cover object-center w-full h-full">
-                            </div>
-                        @endif
-                    @else
-                        <div class="w-10 h-10 rounded-full overflow-hidden">
-                            <img src="{{ asset('images/nyan-cat.gif') }}" alt=""
-                                class="object-cover object-center w-full h-full">
-                        </div>
-                    @endif
-                    <button type="button"
-                        class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 relative">Favicon
-                        <input type="file" id="imageInput" accept="image/*" class="left-0 opacity-0 w-20 absolute"
-                            wire:model="favicon">
-                    </button>
-                    @error('favicon')
-                        <span class="error">{{ $message }}</span>
-                    @enderror
-                    <div wire:loading.flex wire:target="favicon" class="w-fit h-fit items-center justify-center"
-                        wire:ignore>
-                        <x-icons.loading />
-                    </div>
-                </div>
-            </div> --}}
             {{-- Logo --}}
             <div class="col-span-full">
-                <div class="mt-2 flex items-center gap-x-3">
-                    @if ($logo)
+                <div class="mt-2 space-y-2 items-center gap-x-3">
+                    <div>
+                        <x-inputs.label-input for="logo" class="text-gray-500">Logo</x-inputs.label-input>
+                        <p class="text-sm text-gray-800">max 2mb recomended 354*100</p>
+                    </div>
+                    <div class="flex space-x-2 items-center">
+                        @if ($logo)
 
-                        @if (is_object($logo))
+                            @if (is_object($logo))
+                                <div class="w-32 h-12">
+                                    <img src="{{ $logo->temporaryUrl() }}" alt=""
+                                        class="object-contain w-full h-full object-center">
+                                </div>
+                            @elseif (Str::startsWith($logo, 'logo'))
+                                <div class="w-32 h-12">
+                                    <img src="{{ asset('storage/' . $logo) }}" alt=""
+                                        class="object-contain w-full h-full object-center">
+                                </div>
+                            @endif
+                        @else
                             <div class="w-32 h-12">
-                                <img src="{{ $logo->temporaryUrl() }}" alt=""
-                                    class="object-contain w-full h-full object-center">
-                            </div>
-                        @elseif (Str::startsWith($logo, 'logo'))
-                            <div class="w-32 h-12">
-                                <img src="{{ asset('storage/' . $logo) }}" alt=""
-                                    class="object-contain w-full h-full object-center">
+                                <img src="{{ asset('images/nyan-cat.gif') }}" alt=""
+                                    class="object-contain w-full h-full object-centert">
                             </div>
                         @endif
-                    @else
-                        <div class="w-32 h-12">
-                            <img src="{{ asset('images/nyan-cat.gif') }}" alt=""
-                                class="object-contain w-full h-full object-centert">
+                        <div wire:loading.flex wire:target="logo" class="w-fit h-fit items-center justify-center"
+                            wire:ignore>
+                            <x-icons.loading />
                         </div>
-                    @endif
-                    <button type="button"
-                        class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 relative">Logo
-                        <input type="file" id="logo" accept="image/*" class="left-0 opacity-0 w-20 absolute"
-                            wire:model="logo">
-                    </button>
+                    </div>
+                    <input
+                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 p-2"
+                        id="logo" type="file" wire:model="logo">
                     @error('logo')
                         <span class="error">{{ $message }}</span>
                     @enderror
-                    <div wire:loading.flex wire:target="logo" class="w-fit h-fit items-center justify-center"
-                        wire:ignore>
-                        <x-icons.loading />
+
+                </div>
+            </div>
+            <div class="col-span-full" x-data="{
+                icon: 'max 2mb recomended (.ico) 100*100 '
+            }">
+                <div class="mt-2 space-y-2 items-center gap-x-3">
+                    <div>
+                        <x-inputs.label-input for="logo" class="text-gray-500">Favicon</x-inputs.label-input>
+                        <p class="text-sm text-gray-800" x-text="icon"></p>
                     </div>
+                    <div class="flex space-x-2 items-center">
+                        @if ($favicon)
+
+                            @if (is_object($favicon))
+                                <div class="w-14 h-14">
+                                    <img src="{{ $favicon->temporaryUrl() }}" alt=""
+                                        class="object-cover object-center w-full h-full">
+                                </div>
+                            @elseif (Str::startsWith($favicon, 'favicon'))
+                                <div class="w-14 h-14">
+                                    <img src="{{ asset('storage/' . $favicon) }}" alt=""
+                                        class="object-cover object-center w-full h-full">
+                                </div>
+                            @endif
+                        @else
+                            <div class="w-14 h-14">
+                                <img src="{{ asset('images/nyan-cat.gif') }}" alt=""
+                                    class="object-cover object-center w-full h-full">
+                            </div>
+                        @endif
+                        <div wire:loading.flex wire:target="favicon" class="w-fit h-fit items-center justify-center">
+                            <x-icons.loading />
+                        </div>
+                    </div>
+                    <input
+                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 p-2"
+                        id="logo" type="file" wire:model="favicon">
+                    @error('favicon')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
+
                 </div>
             </div>
             <div class="w-full ">
@@ -100,13 +111,15 @@
                 <div class="flex justify-between py-2">
                     <x-inputs.label-input class="text-gray-500">Terms</x-inputs.label>
                         @if (auth()->user()->hasRole('super-admin'))
-                            <a href="{{ route('terms.edit') }}" class="w-fit h-fit px-1 rounded-sm bg-rose-400 text-white">edit</a>
+                            <a href="{{ route('terms.edit') }}"
+                                class="w-fit h-fit px-1 rounded-sm bg-rose-400 text-white">edit</a>
                         @endif
                 </div>
                 <div @click="expanded = ! expanded"
                     class="w-full cursor-pointer p-2 border rounded-sm select-none border-gray-300 " x-show="expanded"
                     x-collapse.min.70px>
-                    <article class="prose prose-base lg:prose-lg prose-code:text-rose-500 prose-a:text-blue-600 prose-p:text-gray-900">
+                    <article
+                        class="prose prose-base lg:prose-lg prose-code:text-rose-500 prose-a:text-blue-600 prose-p:text-gray-900">
                         {!! $seoSetting->terms !!}
                     </article>
                 </div>
@@ -115,27 +128,32 @@
                 <div class="flex justify-between py-2">
                     <x-inputs.label-input class="text-gray-500">About</x-inputs.label>
                         @if (auth()->user()->hasRole('super-admin'))
-                            <a href="{{ route('about.edit') }}" class="w-fit h-fit px-1 rounded-sm bg-rose-400 text-white">edit</a>
+                            <a href="{{ route('about.edit') }}"
+                                class="w-fit h-fit px-1 rounded-sm bg-rose-400 text-white">edit</a>
                         @endif
                 </div>
                 <div @click="expander = ! expander"
                     class="w-full cursor-pointer p-2 border rounded-sm select-none border-gray-300 " x-show="expander"
                     x-collapse.min.70px>
-                    <article class="prose prose-base lg:prose-lg prose-code:text-rose-500 prose-a:text-blue-600 prose-p:text-gray-900">
+                    <article
+                        class="prose prose-base lg:prose-lg prose-code:text-rose-500 prose-a:text-blue-600 prose-p:text-gray-900">
                         {!! $seoSetting->about !!}
                     </article>
                 </div>
             </div>
             <div class="w-full ">
                 <x-inputs.label-input for="whatsapp_number" class="text-gray-500">WhatsApp number</x-inputs.label-input>
-                <x-inputs.text-input wire:model.defer="whatsapp_number" id="whatsapp_number" placeholder="WhatsApp number for confirmation payment" />
+                <x-inputs.text-input wire:model.defer="whatsapp_number" id="whatsapp_number"
+                    placeholder="WhatsApp number for confirmation payment" />
                 @error('whatsapp_number')
                     <span class="error">{{ $message }}</span>
                 @enderror
             </div>
             <div class="w-full ">
-                <x-inputs.label-input for="banner_video_url" class="text-gray-500">Banner video <span class="text-sm font-semibold text-gray-500">.mp4</span></x-inputs.label-input>
-                <x-inputs.text-input wire:model.defer="banner_video_url" id="banner_video_url" placeholder="Banner video url (mp4)" />
+                <x-inputs.label-input for="banner_video_url" class="text-gray-500">Banner video <span
+                        class="text-sm font-semibold text-gray-500">.mp4</span></x-inputs.label-input>
+                <x-inputs.text-input wire:model.defer="banner_video_url" id="banner_video_url"
+                    placeholder="Banner video url (mp4)" />
                 @error('banner_video_url')
                     <span class="error">{{ $message }}</span>
                 @enderror
