@@ -31,6 +31,8 @@ use App\Http\Livewire\User\Index as UserIndex;
 use App\Models\Post;
 use DefStudio\Telegraph\Facades\Telegraph;
 use Illuminate\Support\Facades\Route;
+use Spatie\Analytics\Facades\Analytics;
+use Spatie\Analytics\Period;
 use Spatie\Sitemap\SitemapGenerator;
 use Spatie\Sitemap\Tags\Url;
 
@@ -44,6 +46,11 @@ use Spatie\Sitemap\Tags\Url;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('anal', function() {
+    $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(7));
+    return $analyticsData;
+});
 
 Route::get('sitemap', function () {
     $posts =  Post::latest('id')->take(8)->get();
