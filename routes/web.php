@@ -67,14 +67,6 @@ Route::get('sitemap', function () {
     return 'Sitemap created';
 });
 
-Route::get('bot', function () {
-
-
-    $response = Telegraph::html("<b>Subscription Created</b>\n\nPayment Code: halo dunia\nUsername: halo dunia\nEmail: Halo dunia\nPayment method: halo dunia\nPayment ammount\n")->send();
-    return response()->json($response->successful());
-
-});
-
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/actresses', [ActressController::class, 'index'])->name('actresses');
