@@ -31,6 +31,8 @@ use App\Http\Livewire\User\Index as UserIndex;
 use App\Models\Post;
 use DefStudio\Telegraph\Facades\Telegraph;
 use Illuminate\Support\Facades\Route;
+use Spatie\Analytics\Facades\Analytics;
+use Spatie\Analytics\Period;
 use Spatie\Sitemap\SitemapGenerator;
 use Spatie\Sitemap\Tags\Url;
 
@@ -45,6 +47,11 @@ use Spatie\Sitemap\Tags\Url;
 |
 */
 
+Route::get('anal', function() {
+    $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(7));
+    return $analyticsData;
+});
+
 Route::get('sitemap', function () {
     $posts =  Post::latest('id')->take(8)->get();
     SitemapGenerator::create(config('app.url'))
@@ -58,14 +65,6 @@ Route::get('sitemap', function () {
         ->writeToFile(public_path('sitemap.xml'));
 
     return 'Sitemap created';
-});
-
-Route::get('bot', function () {
-
-
-    $response = Telegraph::html("<b>Subscription Created</b>\n\nPayment Code: halo dunia\nUsername: halo dunia\nEmail: Halo dunia\nPayment method: halo dunia\nPayment ammount\n")->send();
-    return response()->json($response->successful());
-
 });
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
