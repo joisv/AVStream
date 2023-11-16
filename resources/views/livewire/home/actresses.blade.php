@@ -5,7 +5,9 @@
                 class="text-gray-300 hover:text-rose-500 ease-in duration-100 cursor-pointer font-extrabold text-2xl mb-3">
                 Actress List
             </h1>
-            <x-inputs.text wire:model.debounce.500ms="search" placeholder="Search actress name..." />
+            @if ($actresses->currentPage() === 1)
+                <x-inputs.text wire:model.debounce.500ms="search" placeholder="Search actress name..." />
+            @endif
         </header>
     </section>
     @if ($actresses->currentPage() === 1)

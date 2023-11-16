@@ -27,7 +27,7 @@ class Edit extends Component
         'age' => 'required|integer',
         'height' => 'required|integer',
         'debut' => 'required|date_format:Y',
-        'profile' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+        'profile' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
     ];
 
     public $listeners = [
@@ -39,7 +39,7 @@ class Edit extends Component
     protected function rules()
     {
         $profileRules = is_object($this->profile)
-            ? 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            ? 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
             : '';
         $name = $this->name != $this->actress->name ? 'unique:actresses,name|required|min:3|string' : '';
         return array_merge($this->rules, ['profile' => $profileRules , 'name' => $name]);

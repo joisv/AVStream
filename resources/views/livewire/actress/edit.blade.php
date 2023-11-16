@@ -23,11 +23,11 @@
                     @else
                         <x-icons.user />
                     @endif
-                    <button type="button"
-                        class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 relative">Change
-                        <input type="file" id="imageInput" accept="image/*" class="left-0 opacity-0 w-20 absolute"
-                            wire:model="profile">
-                    </button>
+                    <div>
+                        <input
+                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 p-2"
+                        id="logoEdit" type="file" wire:model="profile">
+                    </div>
 
                     <div wire:loading.flex wire:target="profile" class="w-fit h-fit items-center justify-center"
                         wire:ignore>

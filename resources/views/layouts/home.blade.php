@@ -34,9 +34,27 @@
     <meta name="msapplication-square150x150logo" content="{{ asset('images/icon/mstile-150x150.png') }}" />
     <meta name="msapplication-wide310x150logo" content="{{ asset('images/icon/mstile-310x150.png') }}" />
     <meta name="msapplication-square310x310logo" content="{{ asset('images/icon/mstile-310x310.png') }}" /> --}}
-    
-    <link rel="icon" type="image/x-icon" href="{{ asset($setting->favicon ? ('storage/' . $setting->favicon) : 'images/nyan-cat.gif') }}">
 
+    <link rel="icon" type="image/x-icon"
+        href="{{ asset($setting->favicon ? 'storage/' . $setting->favicon : 'images/nyan-cat.gif') }}">
+    <!-- Google Tag Manager -->
+    <script>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-T4S2P3QX');
+    </script>
+    <!-- End Google Tag Manager -->
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
@@ -50,10 +68,14 @@
     @livewireStyles
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
-    
+
 </head>
 
 <body class="antialiased bg-background">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T4S2P3QX" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <div class="relative" x-data="{
         screenWidth: window.innerWidth,
         expanded: $persist(false),

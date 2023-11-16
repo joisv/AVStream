@@ -20,7 +20,7 @@ class PostFactory extends Factory
             'title' => $this->faker->sentence(mt_rand(5, 10)),
             'user_id' => $this->faker->numberBetween(1, 10),
             'slug' => $this->faker->slug(),
-            'category_id' => $this->faker->numberBetween(1, 10),
+            'category_id' => $this->faker->numberBetween(1, 3),
             'status' => $this->faker->randomElement(['draf', 'posted']),
             'overview' => $this->faker->sentence(mt_rand(20, 25)),
             'code' => $this->faker->regexify('[A-Z]{5}[0-4]{3}'),

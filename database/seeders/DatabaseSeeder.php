@@ -9,7 +9,6 @@ use App\Models\Category;
 use App\Models\Contact;
 use App\Models\Download;
 use App\Models\Genre;
-use App\Models\Movie;
 use App\Models\Plan;
 use App\Models\Post;
 use App\Models\SeoSetting;
@@ -24,15 +23,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory(10)->create();
-        Post::factory(1)->create();
-        Genre::factory(10)->create();
-        Actress::factory(20)->create();
-        Category::factory(10)->create();
-        // Movie::factory(10)->create();
-        Download::factory(10)->create();
+        $this->call([
+            PermissionSeeder::class,
+            RoleSeeder::class,
+            AdminSeeder::class,
+            AdminPost::class,
+        ]);
+        
+        \App\Models\User::factory(1)->create();
+        Genre::factory(2)->create();
+        Actress::factory(2)->create();
+        Category::create([
+            'name' => 'Uncensored Leak',
+            'slug' => 'uncensored-leak'
+        ]);
+        Download::factory(2)->create();
         Contact::factory(3)->create();
-        Studio::factory(10)->create();
+        Studio::factory(2)->create();
         SeoSetting::factory(1)->create();
         Plan::factory(3)->create();
 
@@ -112,11 +119,6 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        $this->call([
-            PermissionSeeder::class,
-            RoleSeeder::class,
-            AdminSeeder::class,
-            AdminPost::class,
-        ]);
+        
     }
 }

@@ -32,7 +32,10 @@ class HomeController extends Controller
      */
     public function show(Request $request)
     {
-        $post = Post::where('code', $request->c)->with(['actresses', 'genres', 'studios', 'category'])->firstOrFail();
+        $post = Post::where('code', $request->c)->with(['actresses', 'genres', 'studios', 'category', 'movies'])->firstOrFail();
+        if ($post->movies !== null) {
+            abort(404, 'emebed not found');
+        }
         $post->increment('views');
         return view('watch', [
             'post' => $post
