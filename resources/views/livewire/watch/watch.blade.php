@@ -191,7 +191,7 @@
                                                 <button
                                                     class="inline-flex items-center px-3 py-2 border border-transparent text-base leading-4 dark:text-gray-400 bg-transparent text-gray-200 font-bold focus:outline-none transition ease-in-out duration-150">
                                                     <div class="hover:text-rose-400 ease-in duration-150 text-base sm:text-lg">
-                                                        Quality:
+                                                        Server:
                                                         {{ $selectedName ?? '' }}
                                                     </div>
 
@@ -370,7 +370,7 @@
                                 <h3>Actress:</h3>
                                 <p class="text-amber-200 opacity-90">
                                     @foreach ($post->actresses as $actress)
-                                        <a href="{{ route('actresses', $actress->name) }}">{{ $actress->name }}</a>
+                                        <a href="{{ route('actress', $actress->slug) }}">{{ $actress->name }}</a>
                                         @if (!$loop->last)
                                             ,
                                         @endif
@@ -383,7 +383,7 @@
                                 <h3>Genres:</h3>
                                 <p class="text-amber-200 opacity-90">
                                     @foreach ($post->genres as $genre)
-                                        <a href="{{ route('genres', $genre->name) }}">{{ $genre->name }}</a>
+                                        <a href="{{ route('genre.show', $genre->slug) }}">{{ $genre->name }}</a>
                                         @if (!$loop->last)
                                             ,
                                         @endif
@@ -396,7 +396,7 @@
                                 <h3>Studio:</h3>
                                 <p class="text-amber-200 opacity-90">
                                     @foreach ($post->studios as $studio)
-                                        <a href="{{ route('studios', $studio->name) }}">{{ $studio->name }}</a>
+                                        <a href="{{ route('studio.show', $studio->slug) }}">{{ $studio->name }}</a>
                                         @if (!$loop->last)
                                             ,
                                         @endif

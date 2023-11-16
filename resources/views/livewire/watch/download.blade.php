@@ -7,10 +7,10 @@
             <div class="text-gray-200">
                 @forelse ($regularDownloads as $index => $regular)
                     <div class="flex items-center mb-4">
-                        <input id="default-radio-1" type="radio" value="{{ $regular['id'] }}"
+                        <input id="default-radio-{{ $index }}" type="radio" value="{{ $regular['id'] }}"
                             wire:model="selectedDownload" wire:loading.attr="disabled" name="default-radio"
                             class="w-3 h-3 text-rose-600 bg-gray-200 focus:ring-rose-500 ">
-                        <label for="default-radio-1" class="ml-2 font-medium ">{{ $regular['name'] }}</label>
+                        <label for="default-radio-{{ $index }}" class="ml-2 font-medium ">{{ $regular['name'] }}</label>
                     </div>
                     {{-- {{ $regular['name'] }} --}}
                 @empty
