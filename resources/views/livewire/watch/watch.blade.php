@@ -4,45 +4,46 @@
 <div class="lg:flex sm:space-x-4 overflow-hidden min-h-[200vh] md:mt-[10vh] mt-[8vh] " x-data="{
     label: @entangle('selected').defer,
     iframe: null,
-    wrapp: false
+    wrapper: false,
+    playerErr: null
 }"
     @plyr.window="() => {
         this.iframe = document.querySelector('iframe');
-        let wrapper = null;
-        if (this.iframe !== null) {
-            wrapper = document.querySelector('.wrapper-player');
-            wrapper.classList.add('pb-[56%]', 'relative');
+        this.playerErr = document.getElementById('player_err')
+        console.log(this.iframe, this.pleyerErr)
+        this.wrapper = document.querySelector('.wrapper-player');
+        if (this.iframe !== null || this.playerErr !== null) {
+            this.wrapper.classList.add('pb-[56%]', 'relative');
         } else {
             // Pastikan wrapper tidak null sebelum mencoba menghapus kelas
             if (wrapper !== null) {
-                wrapper.classList.remove('pb-[56%]', 'relative');
+                this.wrapper.classList.remove('pb-[56%]', 'relative');
             }
         }
 }"
     x-init="() => {
         this.iframe = document.querySelector('iframe');
-        let wrapper = null;
-        if (this.iframe !== null) {
-            wrapper = document.querySelector('.wrapper-player');
-            wrapper.classList.add('pb-[56%]', 'relative');
+        this.playerErr = document.getElementById('player_err')
+        this.wrapper = document.querySelector('.wrapper-player');
+        if (this.iframe !== null || this.playerErr !== null) {
+            this.wrapper.classList.add('pb-[56%]', 'relative');
         } else {
             // Pastikan wrapper tidak null sebelum mencoba menghapus kelas
             if (wrapper !== null) {
-                wrapper.classList.remove('pb-[56%]', 'relative');
+                this.wrapper.classList.remove('pb-[56%]', 'relative');
             }
         }
     }">
     <div class="max-w-screen-lg w-full lg:w-[70%] p-3 lg:p-0 top-0 relative text-text h-fit">
-
-        <div class="wrapper-player w-full" wire:loading.remove
-            wire:target="selectedEmbeds">
+        <div class="wrapper-player w-full pb-[56%] relative" wire:loading.remove wire:target="selectedEmbeds">
             @if ($selected)
                 @if ($post->isVip == 1)
                     @auth
                         @can('can premium content')
                             @if ($selected['player'] == 'hls')
-                                <video controls crossorigin playsinline id="hls"
-                                    poster="{{ Str::startsWith($selected['poster'], ['http://', 'https://']) ? $selected['poster'] : asset('storage/' . $selected['poster']) }}"></video>
+                                <x-hls-player
+                                    poster="{{ Str::startsWith($selected['poster'], ['http://', 'https://']) ? $selected['poster'] : asset('storage/' . $selected['poster']) }}"
+                                    id="hls" />
                             @elseif($selected['player'] == 'direct')
                                 <video controls crossorigin playsinline
                                     poster="{{ Str::startsWith($selected['poster'], ['http://', 'https://']) ? $selected['poster'] : asset('storage/' . $selected['poster']) }}"
@@ -66,24 +67,23 @@
                         @else
                             <div class="absolute top-0 left-0 w-full h-full flex justify-center items-center">
                                 <x-icons.crown isVip="true" default="60px" />
-                                <div>
-                                    <h1 class="text-gray-300 text-xl font-semibold">VIP Content</h1>
-                                    <p class="text-base font-medium text-gray-400">you dont have VIP <a
-                                            href="{{ route('vip') }}" class="text-rose-500 font-medium underline">upgrade youre
-                                            account here</a></p>
-                                </div>
+                                <x-player-error>
+                                    <x-slot name="title">VIP Content</x-slot>
+                                    <x-slot name="message">you dont have VIP <a href="{{ route('vip') }}"
+                                        class="text-rose-500 font-medium underline">upgrade youre
+                                        account here</a></x-slot>
+                                </x-player-error>
                             </div>
                         @endcan
                     @else
                         <div class="absolute top-0 left-0 w-full h-full flex justify-center items-center">
                             <x-icons.crown isVip="true" default="60px" />
-                            <div>
-                                <h1 class="text-gray-300 text-xl font-semibold">VIP Content</h1>
-                                <p class="text-base font-medium text-gray-400">you need to login first and <a
-                                        href="{{ route('vip') }}" class="text-rose-500 font-medium underline">upgrade to
-                                        VIP</a>
-                                </p>
-                            </div>
+                            <x-player-error>
+                                <x-slot name="title">VIP Content</x-slot>
+                                <x-slot name="message">you need to login first and <a
+                                    href="{{ route('vip') }}" class="text-rose-500 font-medium underline">upgrade to
+                                    VIP</a></x-slot>
+                            </x-player-error>
                         </div>
                     @endauth
                 @else
@@ -91,8 +91,8 @@
                         @auth
                             @can('can premium content')
                                 @if ($selected['player'] == 'hls')
-                                    <video controls crossorigin playsinline id="hls"
-                                        poster="{{ Str::startsWith($selected['poster'], ['http://', 'https://']) ? $selected['poster'] : asset('storage/' . $selected['poster']) }}"></video>
+                                    <x-hls-player id="hls"
+                                        poster="{{ Str::startsWith($selected['poster'], ['http://', 'https://']) ? $selected['poster'] : asset('storage/' . $selected['poster']) }}"></x-hls-player>
                                 @elseif($selected['player'] == 'direct')
                                     <video controls crossorigin playsinline
                                         poster="{{ Str::startsWith($selected['poster'], ['http://', 'https://']) ? $selected['poster'] : asset('storage/' . $selected['poster']) }}"
@@ -116,31 +116,29 @@
                             @else
                                 <div class="absolute top-0 left-0 w-full h-full flex justify-center items-center">
                                     <x-icons.crown isVip="true" default="60px" />
-                                    <div>
-                                        <h1 class="text-gray-300 text-xl font-semibold">VIP Quality Content</h1>
-                                        <p class="text-base font-medium text-gray-400">you dont have VIP <a
-                                                href="{{ route('vip') }}" class="text-rose-500 font-medium underline">upgrade
-                                                youre
-                                                account here</a></p>
-                                        <p class="text-base font-medium text-gray-400"> or choose another quality</p>
-                                    </div>
+                                    <x-player-error>
+                                        <x-slot name="title">VIP Quality Content</x-slot>
+                                        <x-slot name="message">you dont have VIP <a
+                                            href="{{ route('vip') }}" class="text-rose-500 font-medium underline">upgrade
+                                            youre
+                                            account here</a></x-slot>
+                                    </x-player-error>
                                 </div>
                             @endcan
                         @else
                             <div class="absolute top-0 left-0 w-full h-full flex justify-center items-center">
                                 <x-icons.crown isVip="true" default="60px" />
-                                <div>
-                                    <h1 class="text-gray-300 text-xl font-semibold">VIP Quality Content</h1>
-                                    <p class="text-base font-medium text-gray-400">you need to login first or <span
-                                            class="text-rose-500 font-medium underline">choose another quality</span>
-                                    </p>
-                                </div>
+                                <x-player-error>
+                                    <x-slot name="title">VIP Quality Content</x-slot>
+                                    <x-slot name="message">you need to login first or <span
+                                        class="text-rose-500 font-medium underline">choose another quality</span></x-slot>
+                                </x-player-error>
                             </div>
                         @endauth
                     @else
                         @if ($selected['player'] == 'hls')
-                            <video controls crossorigin playsinline id="hls"
-                                poster="{{ Str::startsWith($selected['poster'], ['http://', 'https://']) ? $selected['poster'] : asset('storage/' . $selected['poster']) }}"></video>
+                            <x-hls-player id="hls"
+                                poster="{{ Str::startsWith($selected['poster'], ['http://', 'https://']) ? $selected['poster'] : asset('storage/' . $selected['poster']) }}"></x-hls-player>
                         @elseif($selected['player'] == 'direct')
                             <video controls crossorigin playsinline
                                 poster="{{ Str::startsWith($selected['poster'], ['http://', 'https://']) ? $selected['poster'] : asset('storage/' . $selected['poster']) }}"
