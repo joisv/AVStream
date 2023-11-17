@@ -35,4 +35,4 @@
             <x-icons.loading-circle />
         </div>
     </div>
-</div @openmodal.window="console.log('halo dunia')">
+</div >

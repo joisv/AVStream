@@ -24,7 +24,6 @@
     </div>
     <script>
         $(document).ready(function() {
-
             $('#summernote_about').summernote({
                 placeholder: 'about here...',
                 tabsize: 2,
