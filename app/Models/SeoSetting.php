@@ -19,7 +19,9 @@ class SeoSetting extends Model
         'about',
         'payments',
         'banner_video_url',
-        'whatsapp_number'
+        'whatsapp_number',
+        'is_warning_active',
+        'warning_message'
     ];
 
 }

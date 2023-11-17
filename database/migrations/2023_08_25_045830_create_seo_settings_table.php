@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('whatsapp_number')->nullable();
             $table->string('banner_video_url')->nullable();
             $table->text('keywords')->nullable();
+            $table->longText('warning_message')->nullable();
+            $table->boolean('is_warning_active')->default(true);
             $table->timestamps();
         });
     }

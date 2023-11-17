@@ -158,6 +158,17 @@
                     <span class="error">{{ $message }}</span>
                 @enderror
             </div>
+            {{-- @dump($is_warning_active) --}}
+            <div class="w-full">
+              <div class="flex justify-between items-center py-1">
+                <x-inputs.label-input for="summernote_warning" class="text-gray-500">Warning
+                    message</x-inputs.label-input>
+                    <livewire:dashboard.settings.warning :is_warning_active="$is_warning_active"/>
+              </div>
+                <div wire:ignore class="prose prose-base lg:prose-lg prose-code:text-rose-500 prose-a:text-blue-600">
+                    <div id="summernote_warning" name="editordata"></div>
+                </div>
+            </div>
         </div>
         <div class="w-full flex justify-end mt-4 md:mt-0">
             <x-primary-button wire:loading.attr="disabled" type="submit"
@@ -171,4 +182,31 @@
             </x-primary-button>
         </div>
     </form>
+    <script>
+        window.addEventListener('livewire:load', function() {
+            $('#summernote_warning').summernote({
+                placeholder: 'warning message here...',
+                tabsize: 2,
+                height: 250,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                ],
+                callbacks: {
+                    onInit: function() {
+                        $('#summernote_warning').summernote('code', @json($warning_message));
+                        $('.note-group-select-from-files').first().remove();
+                    },
+                    onChange: function(contents, $editable) {
+                        @this.set('warning_message', contents, true);
+                    }
+                }
+            });
+        })
+    </script>
 </div>

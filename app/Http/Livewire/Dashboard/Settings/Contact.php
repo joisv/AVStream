@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Dashboard\Settings;
 
 use App\Models\Contact as ModelsContact;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -17,7 +17,7 @@ class Contact extends Component
     
     public function render()
     {
-        return view('livewire.contact');
+        return view('livewire.dashboard.settings.contact');
     }
 
     public function mount()

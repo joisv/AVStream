@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Dashboard\Settings;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Artisan;
@@ -39,6 +39,6 @@ class MaintenanceToggle extends Component
 
     public function render()
     {
-        return view('livewire.maintenance-toggle');
+        return view('livewire.dashboard.settings.maintenance-toggle');
     }
 }

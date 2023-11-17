@@ -136,6 +136,15 @@
             {{ $slot }}
         </div>
     </div>
+    <x-modal-v2 name="warning-modal" :show="$errors->isNotEmpty()" maxWidth="lg">
+        <div class="w-full p-2 bg-background text-gray-200">
+            <header>
+                <h1 class="text-3xl font-bold ">AVStream is <span class="text-rose-500">adult only</span> website</h1>
+            </header>
+            <article>
+            </article>
+        </div>
+    </x-modal-v2>
     @stack('modal')
     @include('layouts.home-footer')
     @livewireScripts
