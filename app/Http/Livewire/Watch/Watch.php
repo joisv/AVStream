@@ -63,32 +63,6 @@ class Watch extends Component
         ]);
     }
 
-
-    public function savePost()
-    {
-        $this->selected = json_decode($this->selectedEmbeds, true);
-        $this->emitSelf("plyr", $this->selected);
-        if (!auth()->check()) {
-            $this->alert('warning', 'You need to login first');
-            return;
-        }
-
-        try {
-            if (!$this->hasPost) {
-                $this->user->savedPosts()->attach($this->post->id);
-                $this->alert('success', 'Successfully save Jav');
-                $this->hasPost = true;
-            } else {
-                $this->user->savedPosts()->detach($this->post->id);
-                $this->alert('success', 'Removed Jav');
-                $this->hasPost = false;
-            }
-            $this->emitSelf('reRender');
-        } catch (\Throwable $th) {
-            $this->alert('error', $th->getMessage());
-        }
-    }
-
     public function isPostExis()
     {
         $this->hasPost = $this->user->savedPosts()->find($this->post->id) ? true : false;

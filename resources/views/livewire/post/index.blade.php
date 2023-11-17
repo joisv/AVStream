@@ -70,7 +70,7 @@
                     @forelse ($posts as $post)
                         <x-tables.row>
                             <x-tables.cell>
-                                <span class="font-medium text-base text-gray-900 break-normal">
+                                <span class="font-medium text-base text-gray-900 whitespace-nowrap">
                                     {{Str::limit( $post->title, 45, '...') }}
                                 </span>
                             </x-tables.cell>

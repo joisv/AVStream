@@ -29,7 +29,6 @@ use App\Http\Livewire\Subscription\SubscriptionLog;
 use App\Http\Livewire\Terms;
 use App\Http\Livewire\User\Index as UserIndex;
 use App\Models\Post;
-use DefStudio\Telegraph\Facades\Telegraph;
 use Illuminate\Support\Facades\Route;
 use Spatie\Analytics\Facades\Analytics;
 use Spatie\Analytics\Period;
@@ -47,8 +46,8 @@ use Spatie\Sitemap\Tags\Url;
 |
 */
 
-Route::get('anal', function() {
-    $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(7));
+Route::get('analytics', function() {
+    $analyticsData = Analytics::fetchTotalVisitorsAndPageViews(Period::days(7));
     return $analyticsData;
 });
 

@@ -26,7 +26,7 @@ class Create extends Component
         'age' => 'required|integer',
         'height' => 'required|integer',
         'debut' => 'required|date_format:Y',
-        'profile' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+        'profile' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
     ];
 
     public function render()

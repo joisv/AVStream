@@ -173,7 +173,7 @@
                 <a href="/">
                     @if ($setting->logo)
                             <img src="{{ asset('storage/' . $setting->logo) }}" alt="" srcset=""
-                                class="w-1/2 h-full">
+                                class="w-20 sm:w-24 h-full">
                     @else
                         <h1 class="text-rose-400 font-semibold text-3xl">AV<span class="text-gray-200">Stream</span>
                         </h1>

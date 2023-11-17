@@ -79,16 +79,16 @@
                 <div>
                     <div class="sm:flex items-center sm:space-x-2 w-full" wire:key="movie-{{ $index }}">
                         <div class="flex items-end space-x-1 sm:space-x-2">
-                            <label for="isVip-{{ $index }}"
+                            <label for="isVipEdit_{{ $index }}"
                                 class="{{ $movies[$index]['isVip'] ? 'bg-rose-500' : 'bg-gray-400' }} h-fit p-2 relative cursor-pointer rounded-sm">
-                                <input id="isVip-{{ $index }}" wire:model="movies.{{ $index }}.isVip"
+                                <input id="isVipEdit_{{ $index }}" wire:model="movies.{{ $index }}.isVip"
                                     type="checkbox" name="" class="absolute opacity-0">
                                 <x-icons.crown />
                             </label>
                             <div class="space-y-2 w-full">
-                                <x-inputs.label-input for="player-{{ $index }}"
+                                <x-inputs.label-input for="playerEdit_{{ $index }}"
                                     class="hidden sm:block">Player</x-input.lable-input>
-                                    <select id="player-{{ $index }}"
+                                    <select id="playerEdit_{{ $index }}"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         wire:model="movies.{{ $index }}.player">
                                         <option selected>Choose player</option>
@@ -103,8 +103,8 @@
                         </div>
                         <div class="flex items-center w-full space-x-1 sm:space-x-2">
                             <div class="space-y-2 w-full">
-                                <x-inputs.label-input for="name-{{ $index }}">name</x-input.lable-input>
-                                    <x-inputs.text-input type="text" id="name-{{ $index }}"
+                                <x-inputs.label-input for="nameEdit_{{ $index }}">name</x-input.lable-input>
+                                    <x-inputs.text-input type="text" id="nameEdit_{{ $index }}"
                                         wire:model.defer="movies.{{ $index }}.name"
                                         placeholder="HD 720p (2gb)" />
                                     @error("movies.{$index}.name")
@@ -112,8 +112,8 @@
                                     @enderror
                             </div>
                             <div class="space-y-2 w-full">
-                                <x-inputs.label-input for="embed-{{ $index }}">embed</x-input.lable-input>
-                                    <x-inputs.text-input type="text" id="embed-{{ $index }}"
+                                <x-inputs.label-input for="embedEdit_{{ $index }}">embed</x-input.lable-input>
+                                    <x-inputs.text-input type="text" id="embedEdit_{{ $index }}"
                                         wire:model.defer="movies.{{ $index }}.url_movie"
                                         placeholder="url {{ $movies[$index]['player'] }}" />
                                     @error("movies.{$index}.url_movie")
