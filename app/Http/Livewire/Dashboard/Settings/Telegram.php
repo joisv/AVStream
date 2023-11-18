@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Dashboard\Settings;
 
 use DefStudio\Telegraph\Models\TelegraphBot;
 use DefStudio\Telegraph\Models\TelegraphChat;
@@ -31,7 +31,7 @@ class Telegram extends Component
 
     public function render()
     {
-        return view('livewire.telegram');
+        return view('livewire.dashboard.settings.telegram');
     }
 
     public function save()

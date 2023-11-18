@@ -48,7 +48,7 @@
                         $('.note-group-select-from-files').first().remove();
                     },
                     onChange: function(contents, $editable) {
-                        @this.set('terms', contents);
+                        @this.set('terms', contents, true);
                     }
                 }
             });

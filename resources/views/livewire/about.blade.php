@@ -24,7 +24,6 @@
     </div>
     <script>
         $(document).ready(function() {
-
             $('#summernote_about').summernote({
                 placeholder: 'about here...',
                 tabsize: 2,
@@ -44,7 +43,7 @@
                         $('.note-group-select-from-files').first().remove();
                     },
                     onChange: function(contents, $editable) {
-                        @this.set('about', contents);
+                        @this.set('about', contents, true);
                     }
                 }
             });

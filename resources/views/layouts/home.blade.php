@@ -68,7 +68,6 @@
     @livewireStyles
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
-
 </head>
 
 <body class="antialiased bg-background">
@@ -79,7 +78,16 @@
     <div class="relative" x-data="{
         screenWidth: window.innerWidth,
         expanded: $persist(false),
-        expandedDetail: $persist(true)
+        expandedDetail: $persist(true),
+        cookie: false,
+        warningSetting: @js($setting->is_warning_active),
+        openModal: () => {
+            $dispatch('open-modal', 'warning-modal')
+        },
+        enterWarning: () => {
+            $dispatch('closemodal')
+
+        }
     
     }" x-init="() => {
         window.addEventListener('resize', () => {
@@ -94,6 +102,20 @@
             }
     
         });
+    
+        cookie = $store.warning.checkCookie('warning')
+        if (cookie === false && warningSetting) {
+            $store.warning.showWarning = true
+            setTimeout(() => {
+                openModal()
+            }, [3500])
+        } else {
+            $store.warning.showWarning = false
+            {{-- setTimeout(() => {
+                openModal()
+            }, [3500]) --}}
+        }
+    
     }">
         @include('layouts.home-navigation')
         @if (request()->is('/'))
@@ -136,6 +158,29 @@
             {{ $slot }}
         </div>
     </div>
+    <button x-data="" x-on:click.prevent="$dispatch('open-modal', 'warning-modal')"
+        class="bg-red-500 p-3">skidi</button>
+    <x-modal-v2 name="warning-modal" :show="$errors->isNotEmpty()" maxWidth="lg">
+        <div class="w-full p-3 bg-background text-gray-200 space-y-3" @closemodal.window="show = ! show">
+            <div class="space-y-2">
+                <header>
+                    <h1 class="text-3xl font-bold ">{{ config('app.name') }} is <span class="text-rose-500">adult
+                            only</span> website</h1>
+                </header>
+                <article
+                    class="prose prose-sm md:prose-base prose-code:text-rose-500 prose-a:text-blue-600 prose-headings:text-gray-200">
+                    {!! $setting->warning_message !!}
+                </article>
+            </div>
+            <button x-data="" @click="() => {
+                $dispatch('closemodal')
+                $store.warning.setCookie('warning', 1, 1)
+            }"
+                class="p-2 h-fit bg-rose-600 text-gray-200 text-sm md:text-base font-semibold text-center rounded-sm w-full">
+                im 18 or older to enter {{ config('app.name') }}
+            </button>
+        </div>
+    </x-modal-v2>
     @stack('modal')
     @include('layouts.home-footer')
     @livewireScripts
@@ -144,6 +189,35 @@
     <script src="https://cdn.rawgit.com/video-dev/hls.js/18bb552/dist/hls.min.js"></script>
     <x-livewire-alert::scripts />
     @stack('script')
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.store('warning', {
+                showWarning: true,
+
+                setCookie(name, value, days) {
+                    var expires = "";
+                    if (days) {
+                        var date = new Date();
+                        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                        expires = "; expires=" + date.toUTCString();
+                    }
+                    document.cookie = name + "=" + value + expires + "; path=/";
+                },
+
+                checkCookie(name) {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i].trim();
+                        // Cek apakah cookie sesuai dengan nama yang diinginkan
+                        if (cookie.indexOf(name + '=') === 0) {
+                            return true; // Cookie ditemukan
+                        }
+                    }
+                    return false; // Cookie tidak ditemukan
+                }
+            })
+        })
+    </script>
 </body>
 
 </html>

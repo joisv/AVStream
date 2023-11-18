@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Dashboard\Settings;
 
 use App\Models\Payment as ModelsPayment;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -17,7 +17,7 @@ class Payment extends Component
     
     public function render()
     {
-        return view('livewire.payment');
+        return view('livewire.dashboard.settings.payment');
     }
 
     public function mount()

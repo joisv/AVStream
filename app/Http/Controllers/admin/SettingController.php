@@ -11,4 +11,19 @@ class SettingController extends Controller
     {
         return view('settings.edit');
     }
+
+    public function basic()
+    {
+        return view('dashboard.settings.basic');
+    }
+    public function contactPayment()
+    {
+        return view('dashboard.settings.contact-payment');
+    }
+
+    public function telegram()
+    {
+        return view('livewire.dashboard.settings.telegram');
+    }
+    
 }

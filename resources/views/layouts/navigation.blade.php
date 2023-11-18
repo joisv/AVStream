@@ -6,13 +6,14 @@
             @json(request()->routeIs('actress.index')) ||
             @json(request()->routeIs('studio.index')),
         openStream: @json(request()->routeIs('download')) || @json(request()->routeIs('movie')),
-        openSub: @json(request()->routeIs('subscription.plan'))
+        openSub: @json(request()->routeIs('subscription.plan')),
+        openSetting:  @json(request()->routeIs('setting.basic')) || @json(request()->routeIs('setting.telegram')) || @json(request()->routeIs('setting.contact-payment'))
     }" x-cloak
         :class="openMenu ? '-translate-x-[150%]' : ''">
         <button class="ring focus:ring-rose-500 p-2 rounded-md absolute -right-11 xl:hidden flex" @click="toggleMenu()">
             <x-icons.menu />
         </button>
-        <div class="bg-gray-800 space-y-5 min-h-[95vh] p-3 relative shadow-2xl overflow-y-auto">
+        <div class="bg-gray-800 space-y-5 h-[95vh] p-3 relative shadow-2xl overflow-y-auto">
 
             <div>
                 <a href="/">
@@ -190,6 +191,45 @@
                 <x-nav-link href="{{ route('reports') }}" :active="request()->routeIs('reports')">
                     <livewire:navigation.user-report />
                 </x-nav-link>
+                <div>
+                    <button
+                        class="focus:outline-none text-white focus:ring-4 focus:border-0 focus:bg-gray-700 border border-gray-200 font-medium items-center text-sm p-3 flex w-full"
+                        @click="openSetting = ! openSetting">
+                        <div class="flex gap-3 items-center w-full">
+                            <x-icons.settings />
+                            Settings
+                        </div>
+                        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
+                            class="ease-in duration-200" :class="openSetting ? 'rotate-180' : ''"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <path
+                                    d="M15 11L12.2121 13.7879C12.095 13.905 11.905 13.905 11.7879 13.7879L9 11M7 21H17C19.2091 21 21 19.2091 21 17V7C21 4.79086 19.2091 3 17 3H7C4.79086 3 3 4.79086 3 7V17C3 19.2091 4.79086 21 7 21Z"
+                                    stroke="rgb(229 231 235)" stroke-width="2" stroke-linecap="round"></path>
+                            </g>
+                        </svg>
+                    </button>
+                    <div x-cloak x-show="openSetting" x-transition:enter="transition ease-out duration-300"
+                        x-transition:enter-start="opacity-0 -translate-y-10"
+                        x-transition:enter-end="opacity-100 -translate-y-0"
+                        x-transition:leave="transition ease-in duration-300"
+                        x-transition:leave-start="opacity-100 -translate-y-0"
+                        x-transition:leave-end="opacity-0 -translate-y-10" class="mt-3 flex flex-col items-end">
+                        <div x-cloak class="w-[90%] bg-rose-500 space-y-2 p-3 shadow-2xl">
+                            <x-nav-link href="{{ route('setting.basic') }}" :active="request()->routeIs('setting.basic')">
+                                {{ __('Basic') }}
+                            </x-nav-link>
+                            <x-nav-link href="{{ route('setting.telegram') }}" :active="request()->routeIs('setting.telegram')">
+                                {{ __('Telegram') }}
+                            </x-nav-link>
+                            <x-nav-link href="{{ route('setting.contact-payment') }}" :active="request()->routeIs('setting.contact-payment')">
+                                {{ __('Contact & Payment') }}
+                            </x-nav-link>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

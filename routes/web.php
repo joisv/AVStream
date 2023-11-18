@@ -137,8 +137,6 @@ Route::middleware(['auth', 'role:admin|super-admin|writer'])->prefix('admin')->g
 
     Route::get('/users', UserIndex::class)->name('user.index');
 
-    Route::get('/settings', [SettingController::class, 'index'])->name('setting');
-
     Route::get('/terms', Terms::class)->name('terms.edit');
     Route::get('/about', About::class)->name('about.edit');
 
@@ -149,6 +147,10 @@ Route::middleware(['auth', 'role:admin|super-admin|writer'])->prefix('admin')->g
     });
 
     Route::get('/reports', ReportIndex::class)->name('reports');
+    
+    Route::get('/basic', [SettingController::class, 'basic'])->name('setting.basic');
+    Route::get('/telegram', [SettingController::class, 'telegram'])->name('setting.telegram');
+    Route::get('/contact-payment', [SettingController::class, 'contactPayment'])->name('setting.contact-payment');
 });
 
 require __DIR__ . '/auth.php';

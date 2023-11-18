@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Dashboard\Settings;
 
 use App\Models\SeoSetting as ModelsSeoSetting;
 use Illuminate\Support\Facades\Storage;
@@ -21,7 +21,11 @@ class SeoSetting extends Component
         $keywords,
         $logo,
         $whatsapp_number,
-        $banner_video_url;
+        $banner_video_url,
+        $warning_message,
+        $is_warning_active;
+
+    public $listeners = ['visibility' => 'visibility'];
 
     protected $rules = [
         'site_name' => 'required|string|max:255',
@@ -46,7 +50,7 @@ class SeoSetting extends Component
 
     public function render()
     {
-        return view('livewire.seo-setting');
+        return view('livewire.dashboard.settings.seo-setting');
     }
 
     public function mount()
@@ -61,6 +65,9 @@ class SeoSetting extends Component
             $this->keywords = $setting->keywords;
             $this->whatsapp_number = $setting->whatsapp_number;
             $this->banner_video_url = $setting->banner_video_url;
+            $this->warning_message = $setting->warning_message;
+            $this->is_warning_active = $setting->is_warning_active;
+            
         }
     }
 
@@ -76,6 +83,8 @@ class SeoSetting extends Component
             'keywords' => $this->keywords,
             'whatsapp_number' => $this->whatsapp_number,
             'banner_video_url' => $this->banner_video_url,
+            'warning_message' => $this->warning_message,
+            'is_warning_active' => $this->is_warning_active
         ]);
 
         $this->alert('success', 'Setting saved');
@@ -111,5 +120,11 @@ class SeoSetting extends Component
         }
 
         return null; // Kembalikan null jika logo tidak ada
+    }
+
+    public function visibility()
+    {
+        $this->is_warning_active = !$this->is_warning_active;
+        $this->emit('visibilityChange', $this->is_warning_active);
     }
 }
