@@ -158,8 +158,6 @@
             {{ $slot }}
         </div>
     </div>
-    <button x-data="" x-on:click.prevent="$dispatch('open-modal', 'warning-modal')"
-        class="bg-red-500 p-3">skidi</button>
     <x-modal-v2 name="warning-modal" :show="$errors->isNotEmpty()" maxWidth="lg">
         <div class="w-full p-3 bg-background text-gray-200 space-y-3" @closemodal.window="show = ! show">
             <div class="space-y-2">
