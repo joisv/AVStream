@@ -23,7 +23,7 @@ class SettingController extends Controller
 
     public function telegram()
     {
-        return view('livewire.dashboard.settings.telegram');
+        return view('dashboard.settings.telegram');
     }
     
 }
