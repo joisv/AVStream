@@ -11,11 +11,10 @@
 
     <x-danger-button
         x-data=""
-        @click="$store.modal.on = true"
+        x-on:click="$dispatch('open-modal', 'confirm-user-deletion')"
     >{{ __('Delete Account') }}</x-danger-button>
 
-    @push('modal')
-    <x-modal name="confirm-user-deletion" >
+    <x-modal-v2 name="confirm-user-deletion" maxWidth="sm" :show="$errors->isNotEmpty()">
         <form method="post" action="{{ route('profile.destroy') }}" class="p-6 bg-white">
             @csrf
             @method('delete')
@@ -43,7 +42,7 @@
             </div>
 
             <div class="mt-6 flex justify-end">
-                <x-secondary-button @click="$store.modal.on = false">
+                <x-secondary-button x-data x-on:click="show = ! show">
                     {{ __('Cancel') }}
                 </x-secondary-button>
 
@@ -52,6 +51,5 @@
                 </x-danger-button>
             </div>
         </form>
-    </x-modal>
-    @endpush
+    </x-modal-v2>
 </section>

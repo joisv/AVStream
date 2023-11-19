@@ -38,6 +38,7 @@ class Create extends Component
         ]);
 
         $this->modal = false;
+        $this->dispatchBrowserEvent('close');
         $this->emit('closeModal');
         $this->alert('success', 'Success create genre');
         $this->reset(['name']);

@@ -15,7 +15,7 @@
                         <option value="150">150</option>
                     </select>
                 </div>
-                <x-primary-button x-data @click="$store.modal.toggle()" type="button"
+                <x-primary-button x-data x-on:click="$dispatch('open-modal', 'create-category')" type="button"
                     custom="bg-rose-500 hover:bg-rose-600 focus:ring-rose-300">
                     <x-slot name="icon">
                         <x-icons.create />
@@ -26,7 +26,8 @@
                 </x-primary-button>
             </div>
         </div>
-        <div class="min-h-[20vh] w-full p-2 text-white max-w-3xl mx-auto sm:grid sm:grid-cols-2 sm:gap-3 space-y-1 sm:space-y-0 justify-items-center">
+        <div
+            class="min-h-[20vh] w-full p-2 text-white max-w-3xl mx-auto sm:grid sm:grid-cols-2 sm:gap-3 space-y-1 sm:space-y-0 justify-items-center">
             <div class="flex flex-col justify-center items-center bg-gray-900 w-full p-2">
                 <h1 class="text-xl font-semibold">Total Category</h1>
                 <h4 wire:loading.remove>{{ $categoryCount }}</h4>
@@ -36,7 +37,8 @@
             </div>
             <div class="flex flex-col justify-center items-center bg-gray-900 w-full p-2 space-y-2">
                 <h1 class="text-xl font-semibold">Latest category updated</h1>
-                <h4 wire:loading.remove class="text-center text-sm font-light">{{ Str::limit($categoryUpdate, 50, '...') }}</h4>
+                <h4 wire:loading.remove class="text-center text-sm font-light">
+                    {{ Str::limit($categoryUpdate, 50, '...') }}</h4>
                 <div wire:loading.flex class="w-6 h-6 items-center">
                     <x-icons.loading-circle />
                 </div>
@@ -101,9 +103,7 @@
     <x-modals maxWidth="sm">
         <livewire:category.edit />
     </x-modals>
-    @push('modal')
-        <x-modal>
-            <livewire:category.create />
-        </x-modal>
-    @endpush
+    <x-modal-v2 :show="$errors->isNotEmpty()" name="create-category" maxWidth="sm">
+        <livewire:category.create />
+    </x-modal-v2>
 </div>

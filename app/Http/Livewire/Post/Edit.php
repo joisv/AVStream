@@ -34,12 +34,6 @@ class Edit extends Component
     public $selectedActresses = [];
     public $selectedGenres = [];
     public $selectedStudio = [];
-
-    public $postBy = 'days';
-
-    public $listeners = [
-        'closeModal' => 'clearModal'
-    ];
     
     protected $rules = [
 
@@ -98,7 +92,7 @@ class Edit extends Component
             $this->alert('error', 'No poster found');
         }
     }
-
+    
     public function showAlert($message)
     {
         $this->dispatchBrowserEvent('showAlert', ['message' => $message]);
@@ -155,25 +149,5 @@ class Edit extends Component
         Storage::delete($this->post->poster_path);
         return $prof;
     }
-
-    public function createActress()
-    {
-        $this->modal = true;
-    }
-
-    public function createGenre()
-    {
-        $this->emitTo('genre.create', 'openModal');
-    }
-
-    public function createStudio()
-    {
-        $this->emitTo('studio.create', 'createModal');
-    }
     
-    public function clearModal($props) 
-    {
-        $this->modal = false;
-        $this->alert('success', 'Created '.$props.' successfully');
-    }
 }

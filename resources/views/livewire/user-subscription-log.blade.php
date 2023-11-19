@@ -18,18 +18,41 @@
             break;
     }
 @endphp
-<div class="min-h-screen sm:mb-[25vh] mb-[50vh]">
+<div class="min-h-screen sm:mb-[25vh] mb-[50vh]" x-data="{
+    wa_link: 'https://web.whatsapp.com/send',
+    phone: @js($whatsapp),
+    invoice_number: @js($usersSubscription->payment_code),
+    user_name: @js($usersSubscription->user->name),
+    billing: @js($usersSubscription->billing_amount),
+    email: @js($usersSubscription->user ? $usersSubscription->user->email : ''),
+    message: '*Confirm payment*',
+
+    confirmPayment() {
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            this.wa_link = 'whatsapp://send';
+        }
+    
+        const final_url = this.wa_link +
+            '?phone=' + encodeURIComponent(this.phone) +
+            '&text=' + encodeURIComponent(this.message + '\n\n' +
+                'Name: ' + this.user_name + '\n' +
+                'Email Address: ' + this.email + '\n' +
+                'Invoice: ' + this.invoice_number + '\n' +
+                'Amount: ' + this.billing
+            );
+    
+        window.open(final_url, '_blank');
+    }
+    
+}"
+>
     <div class="max-w-2xl h-32 mx-auto p-3 space-y-2 mt-20">
         <div class="flex justify-end items-center my-4">
             @empty(!$usersSubscription)
-                <a href="https://web.whatsapp.com/send?phone={{ $whatsapp }}&text=*Confirm payment*
-            %0AInvoice Number: {{ $usersSubscription->payment_code }}
-            %0AUse name: {{ $usersSubscription->user->name }}
-            %0AAmount: {{ $usersSubscription->billing_amount }}
-            %0AThank you!"
+                <button @click="confirmPayment"
                     class="focus:ring-4 focus:ring-rose-500 rounded-sm p-2 text-sm ease-in duration-100 text-gray-200 font-semibold bg-gray-900 hover:ring-2 hover:ring-rose-400">
                     Confirm payment
-                </a>
+                </button>
             @endempty
             <x-dropdown-navigation align="right" width="48">
                 <x-slot name="trigger">

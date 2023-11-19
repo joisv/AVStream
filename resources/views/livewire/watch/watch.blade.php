@@ -162,7 +162,7 @@
                     @endif
                 @endif
             @else
-                <div class="absolute top-0 left-0 w-full h-full flex justify-center items-center">
+                <div id="player_err" class="absolute top-0 left-0 w-full h-full flex justify-center items-center">
                     <h1 class="text-rose-500 text-2xl font-semibold">404 <span class="underline text-gray-500">Embed not
                             found...</span></h1>
                 </div>
@@ -596,7 +596,7 @@
                 }
             })
 
-            const source = @js($selected['url_movie']);
+            const source = @js($selected['url_movie'] ?? '') ;
             const video = document.getElementById('hls');
 
             const defaultOptions = {
@@ -613,7 +613,7 @@
                     container: null
                 }
             };
-            if (@js($selected['player']) == 'hls') {
+            if (@js($selected['player'] ?? '' ) == 'hls') {
 
                 if (!Hls.isSupported()) {
                     const player = new Plyr('#player');

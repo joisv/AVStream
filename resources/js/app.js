@@ -10,11 +10,4 @@ Alpine.plugin(focus)
 Alpine.plugin(collapse)
 Alpine.plugin(persist)
 
-Alpine.store('modal', {
-    on: false,
- 
-    toggle() {
-        this.on = ! this.on
-    }
-})
 Alpine.start();

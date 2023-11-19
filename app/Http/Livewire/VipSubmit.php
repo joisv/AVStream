@@ -9,6 +9,8 @@ use App\Models\Subscription;
 use DefStudio\Telegraph\Facades\Telegraph;
 use DefStudio\Telegraph\Keyboard\Button;
 use DefStudio\Telegraph\Keyboard\Keyboard;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Illuminate\Support\Str;
@@ -70,8 +72,12 @@ class VipSubmit extends Component
 
 
         try {
+            DB::beginTransaction();
+        
+            // Your database operations go here
             $payment_code = $this->generatePaymentCode(auth()->user()->name);
             $user = auth()->user();
+        
             Subscription::create([
                 'user_id' => $user->id,
                 'plan_id' => $this->plan_id,
@@ -82,22 +88,28 @@ class VipSubmit extends Component
                 'billing_amount' => $this->price,
                 'payment_method' => $this->payment_method,
             ]);
-            
+        
             Telegraph::message("<b>Subscription Created</b>\n\nPayment Code: $payment_code\nUsername: $user->name\nEmail: $user->email\nPayment method: $this->payment_method\nBilling amount: $this->price\n")->send();
-
+        
             Notification::create([
                 'user_id' => $user->id,
                 'title' => 'Successfully subscribed ',
-                'message' => 'Congratulations! You have successfully subscribed. Please copy youre payment code and confirm your payment on the Contact page. Thank you!',
+                'message' => 'Congratulations! You have successfully subscribed. Please copy your payment code and confirm your payment on the Contact page. Thank you!',
                 'is_read' => true
             ]);
-
+        
+            // Commit the transaction if all queries are successful
+            DB::commit();
+        
             $this->modal = false;
             $this->emit('sendNotif');
-            $this->alert('success', 'Succes created subscription check your notification');
+            $this->alert('success', 'Successfully created subscription. Check your notification');
             return redirect()->route('usersubscription.log');
         } catch (\Throwable $th) {
-            $this->alert('error', 'Something went wrong');
+            // Rollback the transaction if an error occurs
+            DB::rollBack();
+            Log::error('Subscription creation failed: ' . $th->getMessage());
+            $this->alert('error', 'Subscription creation failed: '.$th->getMessage());
         }
     }
 

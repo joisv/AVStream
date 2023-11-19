@@ -1,4 +1,4 @@
-<div wire:init="getActressCount" >
+<div wire:init="getActressCount">
     <div class="space-y-4">
         <div class="sm:flex sm:justify-between sm:items-center space-y-2 sm:space-y-0">
             <div class="sm:w-[40%] w-full">
@@ -15,8 +15,8 @@
                         <option value="150">150</option>
                     </select>
                 </div>
-                <x-primary-button x-data @click="$store.modal.toggle()" type="button"
-                    custom="bg-rose-500 hover:bg-rose-600 focus:ring-rose-300">
+                <x-primary-button x-data="" x-on:click="$dispatch('open-modal', 'modal-create')"
+                    type="button" custom="bg-rose-500 hover:bg-rose-600 focus:ring-rose-300">
                     <x-slot name="icon">
                         <x-icons.create />
                     </x-slot>
@@ -26,7 +26,8 @@
                 </x-primary-button>
             </div>
         </div>
-        <div class="min-h-[20vh] w-full p-2 text-white max-w-3xl mx-auto sm:grid sm:grid-cols-2 sm:gap-3 space-y-1 sm:space-y-0 justify-items-center">
+        <div
+            class="min-h-[20vh] w-full p-2 text-white max-w-3xl mx-auto sm:grid sm:grid-cols-2 sm:gap-3 space-y-1 sm:space-y-0 justify-items-center">
             <div class="flex flex-col justify-center items-center bg-gray-900 w-full p-2">
                 <h1 class="text-xl font-semibold">Total Actress</h1>
                 <h4 wire:loading.remove>{{ $actressCount }}</h4>
@@ -36,7 +37,8 @@
             </div>
             <div class="flex flex-col justify-center items-center bg-gray-900 w-full p-2 space-y-2">
                 <h1 class="text-xl font-semibold">Latest updated</h1>
-                <h4 wire:loading.remove class="text-center text-sm font-light">{{ Str::limit($latesActressUpdated, 50, '...') }}</h4>
+                <h4 wire:loading.remove class="text-center text-sm font-light">
+                    {{ Str::limit($latesActressUpdated, 50, '...') }}</h4>
                 <div wire:loading.flex class="w-6 h-6 items-center">
                     <x-icons.loading-circle />
                 </div>
@@ -127,10 +129,9 @@
         <x-modals maxWidth="sm">
             <livewire:actress.edit />
         </x-modals>
-        @push('modal')
-            <x-modal>
-                <livewire:actress.create />
-            </x-modal>
-        @endpush
+        <x-modal-v2 name="modal-create" :show="$errors->isNotEmpty()" focusable maxWidth="sm">
+            <div @mdd.window="show = ! show"></div>
+            <livewire:actress.create />
+        </x-modal-v2>
     </div>
 </div>

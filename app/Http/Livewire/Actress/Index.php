@@ -36,7 +36,7 @@ class Index extends Component
 
         $this->sortField = $field;
     }
-
+    
     public function render()
     {
         return view('livewire.actress.index', [

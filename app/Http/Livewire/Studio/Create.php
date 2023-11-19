@@ -34,6 +34,7 @@ class Create extends Component
             'slug' => $this->setSlugAttribute($this->name)
         ]);
 
+        $this->dispatchBrowserEvent('close');
         $this->emit('closeModal');
         $this->modal = false;
         $this->alert('success', 'Created studio successfully');

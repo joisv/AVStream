@@ -15,7 +15,7 @@
                                     class="object-cover object-center w-full">
                                 @if ($recomendation->isVip)
                                     <div
-                                        class="p-1 rounded-sm absolute bottom-2 left-2 flex space-x-1 items-center">
+                                        class="p-1 rounded-sm absolute bottom-2 left-2 flex space-x-1 items-center bg-rose-500">
                                         <x-icons.crown default="18px" />
                                         <p class="text-white text-xs font-semibold">VIP</p>
                                     </div>
