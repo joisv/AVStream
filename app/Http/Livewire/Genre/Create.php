@@ -16,7 +16,7 @@ class Create extends Component
         $modal = false;
 
     public $rules = [
-        'name' => 'required|min:3|unique:genres,name',
+        'name' => 'required|min:2|unique:genres,name',
     ];
 
     public $listeners = [

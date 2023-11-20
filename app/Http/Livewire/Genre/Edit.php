@@ -16,7 +16,7 @@ class Edit extends Component
     $modal = false;
 
     public $rules = [
-        'name' => 'required|min:3|unique:categories,name',
+        'name' => 'required|min:2|unique:categories,name',
     ];
 
 

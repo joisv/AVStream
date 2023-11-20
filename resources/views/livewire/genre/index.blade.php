@@ -15,7 +15,7 @@
                         <option value="150">150</option>
                     </select>
                 </div>
-                <x-primary-button x-data wire:click="createModal" type="button"
+                <x-primary-button x-data x-on:click="$dispatch('open-modal', 'create-genre')" type="button"
                     custom="bg-rose-500 hover:bg-rose-600 focus:ring-rose-300">
                     <x-slot name="icon">
                         <x-icons.create />
@@ -98,7 +98,9 @@
                 {{ $genres->links() }}
             </div>
         </div>
-        <livewire:genre.create />
-        <livewire:genre.edit />
     </div>
+    <x-modal-v2 name="create-genre" :show="$errors->isNotEmpty()" maxWidth="sm">
+        <livewire:genre.create />
+    </x-modal-v2>
+    <livewire:genre.edit />
 </div>

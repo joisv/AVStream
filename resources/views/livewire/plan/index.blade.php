@@ -87,7 +87,7 @@
                         </x-tables.row>
                     @empty
                         <x-tables.row>
-                            <x-tables.cell colspan="3">
+                            <x-tables.cell colspan="5">
                                 <div class="flex justify-center font-semibold text-2xl p-4">
                                     No plans found...
                                 </div>

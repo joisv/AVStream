@@ -15,7 +15,7 @@
                         <option value="150">150</option>
                     </select>
                 </div>
-                <x-primary-button x-data wire:click="create" type="button"
+                <x-primary-button x-data x-on:click="$dispatch('open-modal', 'create-studio')" type="button"
                     custom="bg-rose-500 hover:bg-rose-600 focus:ring-rose-300">
                     <x-slot name="icon">
                         <x-icons.create />
@@ -97,15 +97,9 @@
                 {{ $studios->links() }}
             </div>
         </div>
-
-        <livewire:studio.create />
-        <livewire:studio.edit />
     </div>
-    @push('script')
-        <script>
-            Livewire.on('closeModal', (data) => {
-                Alpine.store('modal').on = false;
-            });
-        </script>
-    @endpush
+    <x-modal-v2 name="create-studio" :show="$errors->isNotEmpty()" maxWidth="sm">
+        <livewire:studio.create />
+    </x-modal-v2>
+    <livewire:studio.edit />
 </div>
