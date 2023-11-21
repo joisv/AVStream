@@ -102,16 +102,7 @@ class Create extends Component
             'studios' => Studio::search('name', $this->searchStudio)->get()
         ]);
     }
-
-    // public function createActress()
-    // {
-    //     $this->modal = true;
-    // }
-
-    // public function createGenre()
-    // {
-    //     $this->emitTo('genre.create', 'openModal');
-    // }
+    
     public function createStudio()
     {
         $this->emitTo('studio.create', 'createModal');

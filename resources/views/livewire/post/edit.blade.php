@@ -52,7 +52,7 @@ $watch('searchStudio', (value, oldValue) => {
 
                                 </div>
                             @else
-                                <x-primary-button x-data x-on:click="$dispatch('open-modal', 'actress-create')" type="button"
+                                <x-primary-button x-data wire:loading.attr="disabled" x-on:click="$dispatch('open-modal', 'actress-create')" type="button"
                                     custom="disabled:opacity-50 bg-gray-700 hover:bg-gray-600 focus:ring-gray-300">
                                     <x-slot name="child">
                                         create actress
@@ -101,7 +101,7 @@ $watch('searchStudio', (value, oldValue) => {
                                     class="col-span-3 font-semibold text-gray-500 h-full flex items-center justify-center">
                                     <div class="flex space-x-2 items-center">
                                         <h3>No actress found</h3>
-                                        <x-primary-button x-data x-on:click="$dispatch('open-modal', 'actress-create')" type="button"
+                                        <x-primary-button x-data wire:loading.attr="disabled" x-on:click="$dispatch('open-modal', 'actress-create')" type="button"
                                             custom="disabled:opacity-50 bg-gray-700 hover:bg-gray-600 focus:ring-gray-300">
                                             <x-slot name="child">
                                                 create actresses
@@ -123,7 +123,7 @@ $watch('searchStudio', (value, oldValue) => {
                             @if ($genres->isEmpty())
                                 <div></div>
                             @else
-                                <x-primary-button x-data="" x-on:click="$dispatch('open-modal', 'genre-create')" type="button"
+                                <x-primary-button x-data="" wire:loading.attr="disabled" x-on:click="$dispatch('open-modal', 'genre-create')" type="button"
                                     custom="disabled:opacity-50 bg-gray-700 hover:bg-gray-600 focus:ring-gray-300">
                                     <x-slot name="child">
                                         create genre
@@ -173,7 +173,7 @@ $watch('searchStudio', (value, oldValue) => {
                                     class="col-span-3 font-semibold text-gray-500 h-full flex items-center justify-center">
                                     <div class="flex space-x-2 items-center">
                                         <h3>No genres found</h3>
-                                        <x-primary-button x-data="" x-on:click="$dispatch('open-modal', 'genre-create')" type="button"
+                                        <x-primary-button x-data="" wire:loading.attr="disabled" x-on:click="$dispatch('open-modal', 'genre-create')" type="button"
                                             custom="disabled:opacity-50 bg-gray-700 hover:bg-gray-600 focus:ring-gray-300">
                                             <x-slot name="child">
                                                 create genre
@@ -193,7 +193,7 @@ $watch('searchStudio', (value, oldValue) => {
                                 @if ($studios->isEmpty())
                                     <div></div>
                                 @else
-                                    <x-primary-button x-on:click="$dispatch('open-modal', 'studio-create')" type="button"
+                                    <x-primary-button wire:loading.attr="disabled" x-on:click="$dispatch('open-modal', 'studio-create')" type="button"
                                         custom="disabled:opacity-50 bg-gray-700 hover:bg-gray-600 focus:ring-gray-300">
                                         <x-slot name="child">
                                             create studio
@@ -243,7 +243,7 @@ $watch('searchStudio', (value, oldValue) => {
                                     class="col-span-3 font-semibold text-gray-500 h-full flex items-center justify-center">
                                     <div class="flex space-x-2 items-center">
                                         <h3>No studio found</h3>
-                                        <x-primary-button x-on:click="$dispatch('open-modal', 'studio-create')" type="button"
+                                        <x-primary-button wire:loading.attr="disabled" x-on:click="$dispatch('open-modal', 'studio-create')" type="button"
                                             custom="disabled:opacity-50 bg-gray-700 hover:bg-gray-600 focus:ring-gray-300">
                                             <x-slot name="child">
                                                 create studio
@@ -337,15 +337,12 @@ $watch('searchStudio', (value, oldValue) => {
         </div>
     </form>
     <x-modal-v2 name="actress-create" :show="$errors->isNotEmpty()" maxWidth="sm">
-        <div @mdd.window="show = ! show"></div>
         <livewire:actress.create />
     </x-modal-v2>
     <x-modal-v2 name="studio-create" :show="$errors->isNotEmpty()" maxWidth="sm" focusable>
-        <div @close.window="show = ! show"></div>
         <livewire:studio.create />
     </x-modal-v2>
     <x-modal-v2 name="genre-create" :show="$errors->isNotEmpty()" maxWidth="sm" focusable>
-        <div @close.window="show = ! show"></div>
         <livewire:genre.create />
     </x-modal-v2>
 </div>

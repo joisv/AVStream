@@ -47,7 +47,7 @@ class Create extends Component
             'profile' => $this->profile->store('profile'),
         ]);
 
-        $this->dispatchBrowserEvent('mdd');
+        $this->dispatchBrowserEvent('close');
         $this->emit('closeModal');
         $this->alert('success', 'Actress succes created');
         $this->reset(['name', 'cup_size', 'age', 'profile', 'debut', 'height']);

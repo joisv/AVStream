@@ -1,4 +1,5 @@
 <div class="p-3 bg-gray-100 relative">
+    <div @close.window="show = ! show"></div>
     <form wire:submit.prevent="save">
         <div class="space-y-2">
             <x-inputs.label-input for="name">Name</x-input.lable-input>
