@@ -158,7 +158,6 @@
                     <span class="error">{{ $message }}</span>
                 @enderror
             </div>
-            {{-- @dump($is_warning_active) --}}
             <div class="w-full">
               <div class="flex justify-between items-center py-1">
                 <x-inputs.label-input for="summernote_warning" class="text-gray-500">Warning

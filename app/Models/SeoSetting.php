@@ -21,7 +21,9 @@ class SeoSetting extends Model
         'banner_video_url',
         'whatsapp_number',
         'is_warning_active',
-        'warning_message'
+        'warning_message',
+        'info',
+        'is_info_active'
     ];
 
 }
