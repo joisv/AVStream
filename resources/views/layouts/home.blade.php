@@ -86,7 +86,7 @@
         },
         enterWarning: () => {
             $dispatch('closemodal')
-
+    
         }
     
     }" x-init="() => {
@@ -118,104 +118,132 @@
     
     }">
         @include('layouts.home-navigation')
-        @if (request()->is('/'))
-            <div
-                class="md:h-[50vh] relative bg-transparent flex items-center justify-start overflow-hidden mt-[10vh] max-w-screen-2xl w-full">
-                <video src="{{ $setting->banner_video_url }}" autoplay muted="muted" preload="auto" loop="loop"
-                    class="w-full object-top blur-xl opacity-50"></video>
-                <div class="absolute text-gray-200 px-5 md:px-10 sm:w-3/4 md:w-1/2 ">
-                    @auth
-                        @if (auth()->user()->can('can premium content'))
-                            <h1 class="text-2xl sm:text-3xl md:text-4xl font-semibold">Treat yourself to the ultimate
-                                cinematic
-                                experience with our VIP account!</h1>
-                            <div
-                                class="bg-rose-500 flex items-center justify-center rounded-md p-2 text-base sm:text-lg md:text-xl font-semibold space-x-1 w-fit mt-3">
-                                <p>VIP</p>
-                                <x-icons.crown />
-                            </div>
-                        @else
-                            <h1 class="text-2xl sm:text-3xl md:text-4xl font-semibold">Elevate Your Experience with VIP
-                                Membership!</h1>
-                            <a href="{{ route('vip') }}">
-                                <p
-                                    class="bg-rose-500 rounded-md p-2 text-base sm:text-lg md:text-xl font-semibold w-fit mt-3">
-                                    Get full acceess</p>
-                            </a>
-                        @endif
+        @if ($setting->is_info_active)
+        @empty(!$setting->info)
+            <div class="text-white p-2 w-full bg-gray-800 space-y-2">
+                <div class="flex space-x-2 items-center">
+                    <svg width="24px" height="24px" viewBox="0 0 24.00 24.00" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path d="M12 17V11" stroke="#e5e7eb" stroke-width="1.5" stroke-linecap="round"></path>
+                            <circle cx="1" cy="1" r="1" transform="matrix(1 0 0 -1 11 9)"
+                                fill="#e5e7eb">
+                            </circle>
+                            <path
+                                d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.5093 4.43821 21.8356 5.80655 21.9449 8"
+                                stroke="#e5e7eb" stroke-width="1.5" stroke-linecap="round"></path>
+                        </g>
+                    </svg>
+                    <h1 class="text-gray-300 font-bold text-lg">Info</h1>
+                </div>
+                <article
+                    class="prose prose-base lg:prose-lg prose-code:text-rose-500 prose-a:text-blue-600 prose-headings:text-gray-200 prose-blockquote:text-white">
+                    {!! $setting->info !!}
+                </article>
+            </div>
+        @endempty
+    @endif
+    @if (request()->is('/'))
+        <div
+            class="md:h-[50vh] relative bg-transparent flex items-center justify-start overflow-hidden mt-[5vh] max-w-screen-2xl w-full">
+            <video src="{{ $setting->banner_video_url }}" autoplay muted="muted" preload="auto" loop="loop"
+                class="w-full object-top blur-xl opacity-50"></video>
+            <div class="absolute text-gray-200 px-5 md:px-10 sm:w-3/4 md:w-1/2 ">
+                @auth
+                    @if (auth()->user()->can('can premium content'))
+                        <h1 class="text-2xl sm:text-3xl md:text-4xl font-semibold">Treat yourself to the ultimate
+                            cinematic
+                            experience with our VIP account!</h1>
+                        <div
+                            class="bg-rose-500 flex items-center justify-center rounded-md p-2 text-base sm:text-lg md:text-xl font-semibold space-x-1 w-fit mt-3">
+                            <p>VIP</p>
+                            <x-icons.crown />
+                        </div>
                     @else
                         <h1 class="text-2xl sm:text-3xl md:text-4xl font-semibold">Elevate Your Experience with VIP
                             Membership!</h1>
                         <a href="{{ route('vip') }}">
-                            <p class="bg-rose-500 rounded-md p-2 text-base sm:text-lg md:text-xl font-semibold w-fit mt-3">
+                            <p
+                                class="bg-rose-500 rounded-md p-2 text-base sm:text-lg md:text-xl font-semibold w-fit mt-3">
                                 Get full acceess</p>
                         </a>
-                    @endauth
-                </div>
+                    @endif
+                @else
+                    <h1 class="text-2xl sm:text-3xl md:text-4xl font-semibold">Elevate Your Experience with VIP
+                        Membership!</h1>
+                    <a href="{{ route('vip') }}">
+                        <p class="bg-rose-500 rounded-md p-2 text-base sm:text-lg md:text-xl font-semibold w-fit mt-3">
+                            Get full acceess</p>
+                    </a>
+                @endauth
             </div>
-        @endif
-        <div class="xl:max-w-7xl lg:max-w-4xl md:max-w-3xl mx-auto space-y-7">
-            {{ $slot }}
         </div>
+    @endif
+    <div class="xl:max-w-7xl lg:max-w-4xl md:max-w-3xl mx-auto">
+        {{ $slot }}
     </div>
-    <x-modal-v2 name="warning-modal" :show="$errors->isNotEmpty()" maxWidth="lg">
-        <div class="w-full p-3 bg-background text-gray-200 space-y-3" @closemodal.window="show = ! show">
-            <div class="space-y-2">
-                <header>
-                    <h1 class="text-3xl font-bold ">{{ config('app.name') }} is <span class="text-rose-500">adult
-                            only</span> website</h1>
-                </header>
-                <article
-                    class="prose prose-sm md:prose-base prose-code:text-rose-500 prose-a:text-blue-600 prose-headings:text-gray-200">
-                    {!! $setting->warning_message !!}
-                </article>
-            </div>
-            <button x-data="" @click="() => {
+</div>
+<x-modal-v2 name="warning-modal" :show="$errors->isNotEmpty()" maxWidth="lg">
+    <div class="w-full p-3 bg-background text-gray-200 space-y-3" @closemodal.window="show = ! show">
+        <div class="space-y-2">
+            <header>
+                <h1 class="text-3xl font-bold ">{{ config('app.name') }} is <span class="text-rose-500">adult
+                        only</span> website</h1>
+            </header>
+            <article
+                class="prose prose-sm md:prose-base prose-code:text-rose-500 prose-a:text-blue-600 prose-headings:text-gray-200">
+                {!! $setting->warning_message !!}
+            </article>
+        </div>
+        <button x-data=""
+            @click="() => {
                 $dispatch('closemodal')
                 $store.warning.setCookie('warning', 1, 1)
             }"
-                class="p-2 h-fit bg-rose-600 text-gray-200 text-sm md:text-base font-semibold text-center rounded-sm w-full">
-                im 18 or older to enter {{ config('app.name') }}
-            </button>
-        </div>
-    </x-modal-v2>
-    @stack('modal')
-    @include('layouts.home-footer')
-    @livewireScripts
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
-    <script src="https://cdn.rawgit.com/video-dev/hls.js/18bb552/dist/hls.min.js"></script>
-    <x-livewire-alert::scripts />
-    @stack('script')
-    <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.store('warning', {
-                showWarning: true,
+            class="p-2 h-fit bg-rose-600 text-gray-200 text-sm md:text-base font-semibold text-center rounded-sm w-full">
+            im 18 or older to enter {{ config('app.name') }}
+        </button>
+    </div>
+</x-modal-v2>
+@stack('modal')
+@include('layouts.home-footer')
+@livewireScripts
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+<script src="https://cdn.rawgit.com/video-dev/hls.js/18bb552/dist/hls.min.js"></script>
+<x-livewire-alert::scripts />
+@stack('script')
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.store('warning', {
+            showWarning: true,
 
-                setCookie(name, value, days) {
-                    var expires = "";
-                    if (days) {
-                        var date = new Date();
-                        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                        expires = "; expires=" + date.toUTCString();
-                    }
-                    document.cookie = name + "=" + value + expires + "; path=/";
-                },
-
-                checkCookie(name) {
-                    var cookies = document.cookie.split(';');
-                    for (var i = 0; i < cookies.length; i++) {
-                        var cookie = cookies[i].trim();
-                        // Cek apakah cookie sesuai dengan nama yang diinginkan
-                        if (cookie.indexOf(name + '=') === 0) {
-                            return true; // Cookie ditemukan
-                        }
-                    }
-                    return false; // Cookie tidak ditemukan
+            setCookie(name, value, days) {
+                var expires = "";
+                if (days) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    expires = "; expires=" + date.toUTCString();
                 }
-            })
+                document.cookie = name + "=" + value + expires + "; path=/";
+            },
+
+            checkCookie(name) {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Cek apakah cookie sesuai dengan nama yang diinginkan
+                    if (cookie.indexOf(name + '=') === 0) {
+                        return true; // Cookie ditemukan
+                    }
+                }
+                return false; // Cookie tidak ditemukan
+            }
         })
-    </script>
+    })
+</script>
 </body>
 
 </html>

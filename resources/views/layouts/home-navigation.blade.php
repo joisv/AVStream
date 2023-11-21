@@ -2,7 +2,7 @@
     $userName = auth()->check() ? Str::limit(auth()->user()->name, 8, '...') : '';
 @endphp
 
-<div class="md:mb-24 mb-10" x-data="{
+<div class="md:mb-24 mb-16" x-data="{
     watchJav: false,
     category: false,
     myCollection: false,
