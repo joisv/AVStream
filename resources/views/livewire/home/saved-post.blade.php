@@ -52,8 +52,8 @@
                     <a href="{{ route('watch', ['c' => $post->code]) }}">
                         <div
                             class="w-full md:h-44 lg:h-32 xl:h-44 h-28 rounded-sm overflow-hidden cursor-pointer hover:opacity-90 ease-in duration-300">
-                            <img src="{{ asset('storage/' . $post->poster_path) }}" alt="" srcset=""
-                                class="w-full h-full object-cover object-center" loading="lazy">
+                            <img data-src="{{ asset('storage/' . $post->poster_path) }}" alt="" srcset=""
+                                class="lazy w-full h-full object-cover object-center" loading="lazy">
                         </div>
                         <h2 class="font-semibold pt-2">{{ Str::substr($post->title, 0, 35) . '...' }}</h2>
                     </a>

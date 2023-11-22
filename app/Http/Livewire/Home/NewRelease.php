@@ -20,6 +20,7 @@ class NewRelease extends Component
     {
         $this->posts = Post::latest('id')->take($this->take)->get();
         $this->isLoading = false;
+        $this->dispatchBrowserEvent('finish-load');
     }
 
     public function loadMore()

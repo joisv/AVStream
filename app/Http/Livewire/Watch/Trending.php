@@ -12,6 +12,7 @@ class Trending extends Component
     public function getTrending()
     {
         $this->recomendations = Post::orderBy('views', 'desc')->take(8)->get();
+        $this->dispatchBrowserEvent('finish-load');
     }
     
     public function render()

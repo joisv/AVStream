@@ -1,4 +1,4 @@
-<div class="py-6 space-y-3" wire:init="getRecomendations">
+<div class="py-6 space-y-3" wire:init="getRecomendations" @finish-load="$store.warning.lazyLoad.update()">
     <header>
         <h1 class="text-rose-500 font-bold sm:text-2xl text-xl">Recomendation</h1>
     </header>
@@ -9,8 +9,8 @@
                     <a href="{{ route('watch', ['c' => $post->code]) }}">
                         <div
                             class="w-full md:h-44 lg:h-32 xl:h-44 h-28 rounded-sm overflow-hidden cursor-pointer hover:opacity-90 ease-in duration-300 relative">
-                            <img src="{{ asset('storage/' . $post->poster_path) }}" alt="" srcset=""
-                                class="w-full h-full object-cover object-center" loading="lazy">
+                            <img data-src="{{ asset('storage/' . $post->poster_path) }}" alt="" srcset=""
+                                class="lazy w-full h-full object-cover object-center" loading="lazy">
                             @if ($post->isVip)
                                 <div
                                     class="p-1 rounded-sm bg-rose-500 absolute bottom-2 left-2 flex space-x-1 items-center">

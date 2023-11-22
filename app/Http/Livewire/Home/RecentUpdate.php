@@ -20,6 +20,7 @@ class RecentUpdate extends Component
     {
         $this->posts = Post::orderBy('updated_at', 'desc')->take($this->take)->get();
         $this->isLoading = false;
+        $this->dispatchBrowserEvent('load');
     }
 
     public function loadMore()

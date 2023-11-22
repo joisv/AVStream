@@ -3,11 +3,30 @@
 @tailwind utilities;
 
 @layer components {
-    .shadow-me{
+    .shadow-me {
         box-shadow: 6px 6px 4px 0px rgba(246, 246, 246, 0.25)
     }
-    .error{
+
+    .error {
         font-size: small;
         color: rgb(255, 54, 19);
+    }
+
+    img.lazy {
+        opacity: 0;
+    }
+
+    img:not(.initial) {
+        transition: opacity 1s;
+    }
+
+    img.initial,
+    img.loaded,
+    img.error {
+        opacity: 1;
+    }
+
+    img:not([src]) {
+        visibility: hidden;
     }
 }

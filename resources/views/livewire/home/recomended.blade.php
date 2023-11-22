@@ -1,4 +1,4 @@
-<div wire:init="getPosts">
+<div wire:init="getPosts" @finish-mount="$store.warning.lazyLoad.update()">
     <header class="pb-4">
         <h1 class="sm:text-3xl text-2xl text-gray-200 font-semibold">Recomended for you</h1>
     </header>
@@ -9,12 +9,12 @@
                     <a href="{{ route('watch', ['c' => $post->code]) }}">
                         <div
                             class="w-full md:h-44 lg:h-32 xl:h-44 h-28 rounded-sm overflow-hidden cursor-pointer hover:opacity-90 ease-in duration-300 relative">
-                            <img src="{{ asset('storage/' . $post->poster_path) }}" alt="" srcset=""
-                                class="w-full h-full object-cover object-center" loading="lazy">
+                            <img data-src="{{ asset('storage/' . $post->poster_path) }}" alt="" srcset=""
+                                class="w-full h-full object-cover object-center lazy">
                             @if ($post->isVip)
                                 <div
                                     class="p-1 rounded-sm bg-rose-500 absolute bottom-2 left-2 flex space-x-1 items-center">
-                                    <x-icons.crown default="18px"/>
+                                    <x-icons.crown default="18px" />
                                     <p class="text-white text-xs font-semibold">VIP</p>
                                 </div>
                             @endif
@@ -47,18 +47,22 @@
     </div>
 @empty(!$posts)
     <div class="w-full mt-4 p-4">
-        <button wire:click="loadMore" type="button" class="flex justify-center space-x-4 items-center mx-auto group" wire:loading.remove wire:target="loadMore">
+        <button wire:click="loadMore" type="button" class="flex justify-center space-x-4 items-center mx-auto group"
+            wire:loading.remove wire:target="loadMore">
             <div>
-                <h3 class="text-gray-300 font-semibold text-lg sm:text-xl group-hover:text-rose-500 ease-in duration-100">load more</h3>
+                <h3
+                    class="text-gray-300 font-semibold text-lg sm:text-xl group-hover:text-rose-500 ease-in duration-100">
+                    load more</h3>
             </div>
-            <svg class="fill-gray-300 h-7 w-7  group-hover:fill-rose-500 ease-in duration-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+            <svg class="fill-gray-300 h-7 w-7  group-hover:fill-rose-500 ease-in duration-100"
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                 <path fill-rule="evenodd"
                     d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                     clip-rule="evenodd" />
             </svg>
         </button>
         <div class="w-full justify-center" wire:loading.flex wire:target="loadMore">
-            <x-icons.loading-circle default="24px"/>
+            <x-icons.loading-circle default="24px" />
         </div>
     </div>
 @endempty

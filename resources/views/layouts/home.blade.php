@@ -5,36 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {{ $seo ?? '' }}
-
-    {{-- icons --}}
-    {{-- <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ asset('images/icon/apple-touch-icon-57x57.png') }}" />
-    <link rel="apple-touch-icon-precomposed" sizes="114x114"
-        href="{{ asset('images/icon/apple-touch-icon-114x114.png') }}" />
-    <link rel="apple-touch-icon-precomposed" sizes="72x72"
-        href="{{ asset('images/icon/apple-touch-icon-72x72.png') }}" />
-    <link rel="apple-touch-icon-precomposed" sizes="144x144"
-        href="{{ asset('images/icon/apple-touch-icon-144x144.png') }}" />
-    <link rel="apple-touch-icon-precomposed" sizes="60x60"
-        href="{{ asset('images/icon/apple-touch-icon-60x60.png') }}" />
-    <link rel="apple-touch-icon-precomposed" sizes="120x120"
-        href="{{ asset('images/icon/apple-touch-icon-120x120.png') }}" />
-    <link rel="apple-touch-icon-precomposed" sizes="76x76"
-        href="{{ asset('images/icon/apple-touch-icon-76x76.png') }}" />
-    <link rel="apple-touch-icon-precomposed" sizes="152x152"
-        href="{{ asset('images/icon/apple-touch-icon-152x152.png') }}" />
-    <link rel="icon" type="image/png" href="{{ asset('images/icon/favicon-196x196.png') }}" sizes="196x196" />
-    <link rel="icon" type="image/png" href="{{ asset('images/icon/favicon-96x96.png') }}" sizes="96x96" />
-    <link rel="icon" type="image/png" href="{{ asset('images/icon/favicon-32x32.png') }}" sizes="32x32" />
-    <link rel="icon" type="image/png" href="{{ asset('images/icon/favicon-16x16.png') }}" sizes="16x16" />
-    <link rel="icon" type="image/png" href="{{ asset('images/icon/favicon-128.png') }}" sizes="128x128" />
-    <meta name="application-name" content="&nbsp;" />
-    <meta name="msapplication-TileColor" content="#FFFFFF" />
-    <meta name="msapplication-TileImage" content="{{ asset('images/icon/mstile-144x144.png') }}" />
-    <meta name="msapplication-square70x70logo" content="{{ asset('images/icon/mstile-70x70.png') }}" />
-    <meta name="msapplication-square150x150logo" content="{{ asset('images/icon/mstile-150x150.png') }}" />
-    <meta name="msapplication-wide310x150logo" content="{{ asset('images/icon/mstile-310x150.png') }}" />
-    <meta name="msapplication-square310x310logo" content="{{ asset('images/icon/mstile-310x310.png') }}" /> --}}
-
     <link rel="icon" type="image/x-icon"
         href="{{ asset($setting->favicon ? 'storage/' . $setting->favicon : 'images/nyan-cat.gif') }}">
     <!-- Google Tag Manager -->
@@ -102,21 +72,16 @@
             }
     
         });
-    
-        cookie = $store.warning.checkCookie('warning')
-        if (cookie === false && warningSetting) {
-            $store.warning.showWarning = true
-            setTimeout(() => {
+    }"
+        @finish-mount.window="() => {
+            cookie = $store.warning.checkCookie('warning')
+            if (cookie === false && warningSetting) {
+                $store.warning.showWarning = true
                 openModal()
-            }, [3500])
-        } else {
-            $store.warning.showWarning = false
-            {{-- setTimeout(() => {
-                openModal()
-            }, [3500]) --}}
-        }
-    
-    }">
+            } else {
+                $store.warning.showWarning = false
+            }
+        }">
         @include('layouts.home-navigation')
         @if ($setting->is_info_active)
         @empty(!$setting->info)
@@ -213,12 +178,16 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
 <script src="https://cdn.rawgit.com/video-dev/hls.js/18bb552/dist/hls.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.5/dist/lazyload.min.js"></script>
 <x-livewire-alert::scripts />
 @stack('script')
 <script>
     document.addEventListener('alpine:init', () => {
         Alpine.store('warning', {
             showWarning: true,
+            lazyLoad: new LazyLoad({
+                threshold: 0,
+            }),
 
             setCookie(name, value, days) {
                 var expires = "";
