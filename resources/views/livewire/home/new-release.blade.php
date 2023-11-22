@@ -1,4 +1,4 @@
-<div>
+<div wire:init="getPosts()" @finish-load="$store.warning.lazyLoad.update()">
     <header class="pb-4">
         <h1 class="sm:text-3xl text-2xl text-gray-200 font-semibold">New Release</h1>
     </header>
@@ -10,8 +10,8 @@
                     <a href="{{ route('watch', ['c' => $post->code]) }}">
                         <div
                             class="w-full md:h-44 lg:h-32 xl:h-44 h-28 rounded-sm overflow-hidden cursor-pointer hover:opacity-90 ease-in duration-300 relative">
-                            <img src="{{ asset('storage/' . $post->poster_path) }}" alt="" srcset=""
-                                class="w-full h-full object-cover object-center" loading="lazy">
+                            <img data-src="{{ asset('storage/' . $post->poster_path) }}" alt="" srcset=""
+                                class="w-full h-full object-cover object-center lazy" >
                             @if ($post->isVip)
                                 <div
                                     class="p-1 rounded-sm bg-rose-500 absolute bottom-2 left-2 flex space-x-1 items-center">
@@ -64,11 +64,4 @@
         </div>
     </div>
 @endempty
-<script>
-    document.addEventListener('livewire:load', function() {
-
-        @this.getPosts()
-
-    })
-</script>
 </div>

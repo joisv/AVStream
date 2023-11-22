@@ -16,8 +16,8 @@
                     <a href="{{ route('actress', $actress->slug) }}">
                         <div class="text-white flex flex-col items-center" wire:loading.remove>
                             <div class="md:w-24 md:h-24 w-20 h-20 rounded-full overflow-hidden">
-                                <img src="{{ asset('storage/'. $actress->profile) }}" alt="" srcset=""
-                                    class="w-full h-full object-cover object-center">
+                                <img data-src="{{ asset('storage/'. $actress->profile) }}" alt="" srcset=""
+                                    class="lazy w-full h-full object-cover object-center">
                             </div>
                             <div class="text-center">
                                 <h1 class="w-40 mt-4 text-amber-300 opacity-75 font-semibold md:text-xl text-lg">

@@ -20,6 +20,7 @@ class Recomended extends Component
     {
         $this->posts = Post::orderBy('views', 'desc')->take($this->take)->get();
         $this->isLoading = false;
+        $this->dispatchBrowserEvent('finish-mount');
     }
 
     public function loadMore()

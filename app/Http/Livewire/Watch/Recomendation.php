@@ -19,5 +19,6 @@ class Recomendation extends Component
     {
         $random = Genre::inRandomOrder()->first();
         $this->recomendations = $random->posts->take(8);
+        $this->dispatchBrowserEvent('finish-load');
     }
 }

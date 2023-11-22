@@ -19,7 +19,7 @@ class DetailStudio extends Component
         $studio = $this->studio;
         
         return view('livewire.home.detail-studio', [
-            'studios' => $studio->posts()->orderBy($this->sort, 'desc')->paginate(2)
+            'studios' => $studio->posts()->orderBy($this->sort, 'desc')->paginate(12)
         ]);
     }
 }

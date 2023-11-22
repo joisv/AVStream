@@ -1,5 +1,5 @@
 <div>
-    <header class="pb-4">
+    <header class="pb-4" wire:init="getPosts()" @load.window="">
         <h1 class="sm:text-3xl text-2xl text-gray-200 font-semibold">Recent Update</h1>
     </header>
     <div class="grid sm:grid-cols-3 lg:grid-cols-4 grid-cols-2 text-gray-400 gap-2">
@@ -10,8 +10,8 @@
                     <a href="{{ route('watch', ['c' => $post->code]) }}">
                         <div
                             class="w-full md:h-44 lg:h-32 xl:h-44 h-28 rounded-sm overflow-hidden cursor-pointer hover:opacity-90 ease-in duration-300 relative">
-                            <img src="{{ asset('storage/' . $post->poster_path) }}" alt="" srcset=""
-                                class="w-full h-full object-cover object-center" loading="lazy">
+                            <img data-src="{{ asset('storage/' . $post->poster_path) }}" alt="" srcset=""
+                                class="w-full h-full object-cover object-center lazy">
                             @if ($post->isVip)
                                 <div
                                     class="p-1 rounded-sm bg-rose-500 absolute bottom-2 left-2 flex space-x-1 items-center">
@@ -50,7 +50,7 @@
     <div class="w-full mt-4 p-4">
         <button wire:click="loadMore" type="button" class="flex justify-center space-x-4 items-center mx-auto group" wire:loading.remove wire:target="loadMore">
             <div>
-                <h3 class="text-gray-300 font-semibold text-lg sm:text-xl group-hover:text-rose-500 ease-in duration-100">load more</h3>
+                <h3 class="text-gray-300 font-semibold text-lg sm:text-xl group-hover:text-rose-500 ease-in duration-100">load mores</h3>
             </div>
             <svg class="fill-gray-300 h-7 w-7  group-hover:fill-rose-500 ease-in duration-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                 <path fill-rule="evenodd"
@@ -63,11 +63,4 @@
         </div>
     </div>
 @endempty
-<script>
-    document.addEventListener('livewire:load', function() {
-
-        @this.getPosts()
-
-    })
-</script>
 </div>

@@ -17,7 +17,7 @@ class Create extends Component
 {
     use WithFileUploads;
     use LivewireAlert;
-    
+
     public $title,
         $overview,
         $poster_path,
@@ -46,14 +46,14 @@ class Create extends Component
     public $listeners = [
         'closeModal' => 'clearModal'
     ];
-    
+
     public function save()
     {
         Gate::authorize('create', Post::class);
 
         $this->validate();
 
-       $post = Post::create([
+        $post = Post::create([
 
             'title' => $this->title,
             'category_id' => $this->category_id,
@@ -65,7 +65,7 @@ class Create extends Component
             'slug' => $this->setSlugAttribute($this->title)
 
         ]);
-        
+
         if ($this->selectedActresses) {
             $post->actresses()->attach($this->selectedActresses);
         }
@@ -102,13 +102,13 @@ class Create extends Component
             'studios' => Studio::search('name', $this->searchStudio)->get()
         ]);
     }
-    
+
     public function createStudio()
     {
         $this->emitTo('studio.create', 'createModal');
     }
 
-    public function clearModal() 
+    public function clearModal()
     {
         $this->modal = false;
     }

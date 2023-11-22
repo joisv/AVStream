@@ -1,5 +1,5 @@
 <div class="h-fit lg:w-[30%] w-full px-2 sm:p-0 text-gray-300 text font-semibold relative min-h-screen sm:space-y-4 space-y-2"
-    wire:init="getTrending">
+    wire:init="getTrending" @finish-load="$store.warning.lazyLoad.update()">
     <header>
         <h1 class="text-rose-500 font-bold text-xl sm:text-2xl lg:text-xl ">Trending</h1>
     </header>
@@ -11,8 +11,8 @@
                         <div class="flex lg:space-x-2 md:space-x-6 space-x-3 items-start">
                             <div
                                 class="rounded-sm overflow-hidden w-[45%] lg:w-[55%] xl:h-32 sm:h-40 h-24 md:h-44 lg:h-20 relative">
-                                <img src="{{ asset('storage/' . $recomendation->poster_path) }}" alt="" srcset=""
-                                    class="object-cover object-center w-full">
+                                <img data-src="{{ asset('storage/' . $recomendation->poster_path) }}" alt="" srcset=""
+                                    class="lazy object-cover object-center w-full">
                                 @if ($recomendation->isVip)
                                     <div
                                         class="p-1 rounded-sm absolute bottom-2 left-2 flex space-x-1 items-center bg-rose-500">

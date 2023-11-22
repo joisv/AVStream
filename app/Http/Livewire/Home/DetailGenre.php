@@ -23,11 +23,6 @@ class DetailGenre extends Component
             'genres' => $genre->posts()->orderBy($this->sort, 'desc')->paginate(12)
         ]);
     }
-
-    // public function mount()
-    // {
-    //     $this->incrementGenre();
-    // }
     
     public function incrementGenre()
     {
