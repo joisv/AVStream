@@ -1,5 +1,5 @@
 <div>
-    <header class="pb-4" wire:init="getPosts()" @load.window="">
+    <header class="pb-4" wire:init="getPosts()" @load.window="$store.warning.lazyLoad.update()">
         <h1 class="sm:text-3xl text-2xl text-gray-200 font-semibold">Recent Update</h1>
     </header>
     <div class="grid sm:grid-cols-3 lg:grid-cols-4 grid-cols-2 text-gray-400 gap-2">
