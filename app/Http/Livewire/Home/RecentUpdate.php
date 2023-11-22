@@ -16,7 +16,7 @@ class RecentUpdate extends Component
         return view('livewire.home.recent-update');
     }
 
-    public function getPosts()
+    public function getRecentPosts()
     {
         $this->posts = Post::orderBy('updated_at', 'desc')->take($this->take)->get();
         $this->isLoading = false;
@@ -27,6 +27,6 @@ class RecentUpdate extends Component
     {
         $this->isLoading = true;
         $this->take *= 2;
-        $this->getPosts();
+        $this->getRecentPosts();
     }
 }
