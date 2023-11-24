@@ -21,10 +21,10 @@
 <div class="min-h-screen sm:mb-[25vh] mb-[50vh]" x-data="{
     wa_link: 'https://web.whatsapp.com/send',
     phone: @js($whatsapp),
-    invoice_number: @js($usersSubscription->payment_code),
-    user_name: @js($usersSubscription->user->name),
-    billing: @js($usersSubscription->billing_amount),
-    email: @js($usersSubscription->user ? $usersSubscription->user->email : ''),
+    invoice_number: @js($usersSubscription->payment_code ?? ''),
+    user_name: @js($usersSubscription->user->name ?? ''),
+    billing: @js($usersSubscription->billing_amount ?? ''),
+    email: @js($usersSubscription->user->email ?? ''),
     message: '*Confirm payment*',
 
     confirmPayment() {

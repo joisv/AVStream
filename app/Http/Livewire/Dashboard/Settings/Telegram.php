@@ -23,10 +23,10 @@ class Telegram extends Component
         $this->bot = TelegraphBot::first();
         $this->chat = TelegraphChat::first();
 
-        $this->chat_name = $this->chat->name;
-        $this->chat_id = $this->chat->chat_id;
-        $this->bot_name = $this->bot->name;
-        $this->token = $this->bot->token;
+        $this->chat_name = $this->chat?->name;
+        $this->chat_id = $this->chat?->chat_id;
+        $this->bot_name = $this->bot?->name;
+        $this->token = $this->bot?->token;
     }
 
     public function render()
@@ -50,13 +50,13 @@ class Telegram extends Component
                     'name' => $this->bot_name ?? 'AvstreamBot'
                 ]);
             }
-
+            
             if ($this->chat) {
                 $this->chat->update([
                     'chat_id' => $this->chat_id,
                     'name' => $this->chat_name ?? 'AvstreamChat'
                 ]);
-            }
+            } 
             $this->alert('success', 'Telegram bot updated');
         } catch (\Throwable $th) {
             //throw $th;
