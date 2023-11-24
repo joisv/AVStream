@@ -5,10 +5,16 @@
             <div class="space-y-2">
                 <x-inputs.label-input for="chat_id" class="text-gray-500">Chat id</x-inputs.label-input>
                 <x-inputs.text-input id="chat_id" wire:model.defer="chat_id" placeholder="youre chat id" />
+                @error('chat_id')
+                    <div class="error">{{ $message }}</div>
+                @enderror
             </div>
             <div class="space-y-2">
                 <x-inputs.label-input for="token" class="text-gray-500">Bot token</x-inputs.label-input>
                 <x-inputs.text-input id="token" wire:model.defer="token" placeholder="your bot token" />
+                @error('token')
+                    <div class="error">{{ $message }}</div>
+                @enderror
             </div>
 
         </div>
