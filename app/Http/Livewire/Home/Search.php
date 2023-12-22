@@ -27,19 +27,6 @@ class Search extends Component
     public function getSearchResults()
     {
         $keyword = $this->keyword;
-        return Post::with(['genres', 'actresses', 'studios'])
-            ->where(function ($query) use ($keyword) {
-                $query->where('title', 'like', '%' . $keyword . '%')
-                    ->orWhereHas('genres', function ($query) use ($keyword) {
-                        $query->where('name', 'like', '%' . $keyword . '%');
-                    })
-                    ->orWhereHas('actresses', function ($query) use ($keyword) {
-                        $query->where('name', 'like', '%' . $keyword . '%');
-                    })
-                    ->orWhereHas('studios', function ($query) use ($keyword) {
-                        $query->where('name', 'like', '%' . $keyword . '%');
-                    });
-            })
-            ->orderBy($this->sort, 'desc')->paginate(12);
+        return Post::with(['genres', 'actresses', 'studios'])->search(['title', 'code', 'genres.name', 'actresses.name', 'studios.name'], $keyword)->orderBy($this->sort, 'desc')->paginate(12);
     }
 }

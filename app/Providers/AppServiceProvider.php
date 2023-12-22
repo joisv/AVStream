@@ -2,10 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\SeoSetting;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,20 +24,18 @@ class AppServiceProvider extends ServiceProvider
             if (!is_array($fields)) {
                 $fields = [$fields];
             }
-        
+
             return $string ? $this->where(function ($query) use ($fields, $string) {
                 foreach ($fields as $field) {
                     // Jika nama kolom mengandung titik (.), itu menandakan relasi
                     if (strpos($field, '.') !== false) {
                         list($relation, $column) = explode('.', $field);
-                        $query->orWhere(function ($query) use ($relation, $column, $string) {
-                            $query->whereHas($relation, function ($query) use ($column, $string) {
-                                $query->where($column, 'like', '%'.$string.'%');
-                            });
+                        $query->orWhereHas($relation, function ($query) use ($column, $string) {
+                            $query->where($column, 'like', '%' . $string . '%');
                         });
                     } else {
                         // Jika tidak ada titik (.), itu adalah kolom langsung pada tabel saat ini
-                        $query->orWhere($field, 'like', '%'.$string.'%');
+                        $query->orWhere($field, 'like', '%' . $string . '%');
                     }
                 }
             }) : $this;
